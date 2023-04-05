@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/05 08:34:32 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 09:45:44 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdlib.h>
+
+typedef struct s_env
+{
+	char	*home;
+	char	*user;
+	char	*local;
+}	t_env;
 
 /*
 BUILT-INS
