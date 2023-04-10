@@ -3,6 +3,10 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+#include <sys/ioctl.h>
+
 
 int main(void)
 {
@@ -22,8 +26,10 @@ int main(void)
 	//in the below case fd 0 (stdin), 1 (stdout) and 2(stderror) is considered
 	//terminal and return a name
 	char *term;
-	term = ttyname(0);
-    printf("This is terminal %s\n",term);
+	char	*buffer;
+	term = ttyname(1);
+	printf("This is terminal %s\n",term);
+	printf("Return from ttyslot(): %d\n",ttyslot());
 
     return(0);
 }
