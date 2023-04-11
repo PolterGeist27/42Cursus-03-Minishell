@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+         #
+#    By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/02 12:26:28 by pealexan          #+#    #+#              #
-#    Updated: 2023/02/25 03:12:52 by pealexan         ###   ########.fr        #
+#    Updated: 2023/04/11 12:10:57 by diogmart         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,39 +14,38 @@ NAME		= minishell
 LIBFT		= libft.a
 
 #----------DIRS----------#
-SRCDIR = ./src/
+SRCDIR = ./srcs/
 LIBFTDIR = ./libft/
-HEADERDIR = ./headers/
+INCDIR = ./includes/
 
 SRC = 
 
 #--------COMMANDS--------#
-CC = clang
+CC = cc
 CFLAGS = -Wall -Wextra -Werror
-EXTRA = -pthread
 AR = ar rcs
 RM = rm -rf
 
-OBJ = ${SRC:.c=.o}
+OBJS = ${SRC:.c=.o}
 
 #---------RULES---------#
 .c.o:
-			$(CC) $(CFLAGS) -c -I$(HEADERDIR) $< -o ${<:.c=.o}
+			$(CC) $(CFLAGS) -c -I$(INCDIR) $< -o ${<:.c=.o}
 
 all: 		$(NAME)
 
 $(LIBFT):
 			cd $(LIBFTDIR) && $(MAKE)
 
-$(NAME): 	$(OBJ) $(LIBFT) $(MLX)
-			$(CC) $(CFLAGS) $(EXTRA) $(OBJ) $(LIBFTDIR)$(LIBFT) -o $(NAME)
+$(NAME): 	$(OBJ) $(LIBFT)
+			$(CC) $(CFLAGS) $(OBJS) $(LIBFTDIR)$(LIBFT) -o $(NAME)
 
 clean:
-			@$(RM) $(OBJ) $(BONUS_OBJ)
+		@$(RM) $(OBJ) $(BONUS_OBJ)
 			@cd $(LIBFTDIR) && $(MAKE) clean
 
 fclean: 	clean
-			@$(RM) $(NAME) $(BONUS) $(LIBFT)
-			@cd $(LIBFTDIR) && $(MAKE) fclean
+			$(RM) $(NAME) $(BONUS) $(LIBFT)
+			cd $(LIBFTDIR) && $(MAKE) fclean
 
 re: fclean all
