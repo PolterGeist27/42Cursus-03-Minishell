@@ -4,7 +4,7 @@ void	get_envvariables(t_env *env)
 {
 	int	i;
 
-	i = 0;	
+	i = 0;
 	env->user = getenv("USER");
 	env->home = getenv("HOME");
 	env->local = getenv("SESSION_MANAGER");
@@ -20,10 +20,13 @@ int	main(int ac, char **av, char **env)
 {
 	t_env	envvar;
 	char	*cwd;
-	char	*input;
+	// char	*input;
 	char	*buffer;
 	char	*trimcwd;
 	int		i = 0;
+	(void)ac;
+	(void)av;
+	(void)env;
 
 	get_envvariables(&envvar);
 	while (1)

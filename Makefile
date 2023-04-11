@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+         #
+#    By: fvalli-v <fvalli-v@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/02 12:26:28 by pealexan          #+#    #+#              #
-#    Updated: 2023/02/25 03:12:52 by pealexan         ###   ########.fr        #
+#    Updated: 2023/04/11 10:31:00 by fvalli-v         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,12 +18,12 @@ SRCDIR = ./src/
 LIBFTDIR = ./libft/
 HEADERDIR = ./headers/
 
-SRC = 
+SRC = minishell.c
 
 #--------COMMANDS--------#
 CC = clang
 CFLAGS = -Wall -Wextra -Werror
-EXTRA = -pthread
+EXTRA = -pthread -lreadline
 AR = ar rcs
 RM = rm -rf
 
