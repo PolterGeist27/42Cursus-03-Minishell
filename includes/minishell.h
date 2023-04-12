@@ -6,25 +6,32 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/11 12:08:03 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/12 12:37:00 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "headers/libft.h"
+# include "libft.h"
 # include <unistd.h>
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdlib.h>
 
-typedef struct s_env
+typedef struct s_env_info
 {
 	char	*home;
 	char	*user;
 	char	*local;
+}	t_env_info;
+
+typedef struct s_env
+{
+	char	*name;
+	char	*info;
+	char	*raw;
 }	t_env;
 
 /*
@@ -52,5 +59,13 @@ REDIRECTIONS
 PIPES
 	Implement pipes (| character)
 */
+
+//	echo.c
+void	echo(char *arg, int flag);
+
+//	env.c
+t_list	*init_env(char **env);
+t_env	*ft_create_data(char *raw);
+char	*get_name(char *raw);
 
 #endif

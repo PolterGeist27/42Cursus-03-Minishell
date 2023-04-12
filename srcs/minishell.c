@@ -6,51 +6,34 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 12:07:31 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/11 12:07:32 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/12 12:38:50 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
-void	get_envvariables(t_env *env)
+/*
+TODO:
+	- free env;
+
+*/
+
+void	ft_printlist(t_list *list)
 {
-	int	i;
+	t_list *tmp;
 
-	i = 0;	
-	env->user = getenv("USER");
-	env->home = getenv("HOME");
-	env->local = getenv("SESSION_MANAGER");
-	while (*env->local != '/')
-		env->local++;
-	env->local++;
-	while (env->local[i] != '.')
-		i++;
-	env->local[i] = '\0';
+	tmp = list;
+	while (tmp != NULL)
+	{
+		printf("%s\n", ((t_env *)(tmp->content))->raw);
+		tmp = tmp->next;
+	}
 }
 
-int	main(int ac, char **av, char **env)
+int	main(int argc, char **argv, char **env)
 {
-	t_env	envvar;
-	char	*cwd;
-	char	*input;
-	char	*buffer;
-	char	*trimcwd;
-	int		i = 0;
-
-	get_envvariables(&envvar);
-	while (1)
-	{
-    	cwd = getcwd(0, 0);
-		while (cwd[i] == envvar.home[i])
-			i++;
-		trimcwd = ft_strdup(cwd + i);
-    	printf("%s@%s:~%s ", envvar.user, envvar.local, trimcwd);
-    	buffer = readline("$");
-		printf("%s", buffer);
-		free(buffer);
-		free(cwd);
-		free(trimcwd);
-		break;
-	}
+	(void)argc;
+	(void)argv;
+	ft_printlist(init_env(env));
 	return (0);
 }

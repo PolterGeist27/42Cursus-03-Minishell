@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 14:30:36 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/12 12:33:15 by diogmart         ###   ########.fr       */
+/*   Created: 2023/04/11 12:14:43 by diogmart          #+#    #+#             */
+/*   Updated: 2023/04/11 12:36:33 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdio.h>
+#include "../includes/minishell.h"
 
-t_list	*ft_lstnew(void *content)
+void	echo(char *arg, int flag)
 {
-	t_list	*new;
-
-	new = (t_list *)malloc(sizeof(t_list));
-	if (!new)
-		return (NULL);
-	new->content = content;
-	new->next = NULL;
-	return (new);
+	printf("%s", arg);
+	if (flag == 0)
+		printf("\n");
 }

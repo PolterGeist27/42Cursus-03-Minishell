@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   dir.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 14:30:36 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/12 12:33:15 by diogmart         ###   ########.fr       */
+/*   Created: 2023/04/11 12:58:13 by diogmart          #+#    #+#             */
+/*   Updated: 2023/04/11 13:42:14 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdio.h>
+#include "../includes/minishell.h"
 
-t_list	*ft_lstnew(void *content)
+int		cd(char *path)
 {
-	t_list	*new;
+	return (chdir(path));
+}
 
-	new = (t_list *)malloc(sizeof(t_list));
-	if (!new)
-		return (NULL);
-	new->content = content;
-	new->next = NULL;
-	return (new);
+int		pwd(t_env *env)
+{
+	char *path;
+
+	path = getenv("PWD");
+	return(printf("%s\n", path));
 }
