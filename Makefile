@@ -6,7 +6,7 @@
 #    By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/02 12:26:28 by pealexan          #+#    #+#              #
-#    Updated: 2023/04/11 15:51:15 by diogmart         ###   ########.fr        #
+#    Updated: 2023/04/12 15:00:10 by diogmart         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRCDIR = ./srcs/
 LIBFTDIR = ./libft/
 INCDIR = ./includes/
 
+#----------SRCS----------#
 SRC =	minishell \
 		echo \
 		env \
@@ -26,21 +27,31 @@ SRCS = $(addprefix ${SRCDIR}, $(addsuffix .c, ${SRC}))
 
 #--------COMMANDS--------#
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -I $(INCDIR)
 AR = ar rcs
 RM = rm -rf
+MAKEFLAGS += --no-print-directory
 
+#----------OBJS----------#
 OBJS = ${SRCS:.c=.o}
+
+#---------COLORS---------#
+GREEN       =   \033[0;32m
+
 
 #---------RULES---------#
 
+.c.o:
+	@$(CC) $(CFLAGS) -c $< -o ${<:.c=.o}
+
 all: 		$(NAME)
+	@echo "$(GREEN)[Compiled Minishell]"
 
 $(LIBFT):
-			cd $(LIBFTDIR) && $(MAKE)
+			@cd $(LIBFTDIR) && $(MAKE)
 
-$(NAME): 	$(OBJS) $(LIBFT)
-			$(CC) $(CFLAGS) $(OBJS) $(LIBFTDIR)$(LIBFT) -o $(NAME)
+$(NAME): 	$(LIBFT) $(OBJS)
+			@$(CC) $(CFLAGS) $(OBJS) $(LIBFTDIR)$(LIBFT) -o $(NAME)
 
 clean:
 			@$(RM) $(OBJS) $(BONUS_OBJ)

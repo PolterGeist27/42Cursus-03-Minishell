@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/12 12:37:00 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/12 15:21:07 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ typedef struct s_env
 {
 	char	*name;
 	char	*info;
-	char	*raw;
 }	t_env;
 
 /*
@@ -67,5 +66,7 @@ void	echo(char *arg, int flag);
 t_list	*init_env(char **env);
 t_env	*ft_create_data(char *raw);
 char	*get_name(char *raw);
+int		modify_info(t_list *env, char *name, char *changed_info);
+void	free_env(t_list *env);
 
 #endif

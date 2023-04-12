@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 12:07:31 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/12 12:38:50 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/12 15:45:14 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 /*
 TODO:
-	- free env;
-
+	- a lot;
 */
 
 void	ft_printlist(t_list *list)
@@ -25,7 +24,7 @@ void	ft_printlist(t_list *list)
 	tmp = list;
 	while (tmp != NULL)
 	{
-		printf("%s\n", ((t_env *)(tmp->content))->raw);
+		printf("%s\n", ((t_env *)(tmp->content))->info);
 		tmp = tmp->next;
 	}
 }
@@ -34,6 +33,11 @@ int	main(int argc, char **argv, char **env)
 {
 	(void)argc;
 	(void)argv;
-	ft_printlist(init_env(env));
+	t_list	*head;
+
+	head = init_env(env);
+	modify_info(head, "SSH_AUTH_SOCK", "IT WORKSSSS!!!!");
+	ft_printlist(head);
+	free_env(head);
 	return (0);
 }

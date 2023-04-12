@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 15:17:16 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/12 12:40:26 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/12 15:44:27 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,64 @@ t_list	*init_env(char **env)
 	return (head);
 }
 
-t_env	*ft_create_data(char *raw)
+t_env	*ft_create_data(char *info)
 {
 	t_env	*data;
 
 	data = (t_env *)malloc(sizeof(t_env));
-	data->raw = ft_strdup(raw);
-	data->name = get_name(raw);
-	data->info = ft_strchr(raw, '=') + 1;
+	data->name = get_name(info);
+	data->info = ft_strdup(info);
 	return (data);
 }
 
-char	*get_name(char *raw)
+char	*get_name(char *info)
 {
 	char	*name;
 	int		size;
 
 	size = 0;
-	while (raw[size] != '=')
+	while (info[size] != '=')
 		size++;
-	name = (char *)malloc(sizeof(char) * size);
-	ft_strlcpy(name, raw, size);
+	name = (char *)malloc(sizeof(char) * size + 1);
+	ft_strlcpy(name, info, size + 1);
 	return (name);
+}
+
+int	modify_info(t_list *env, char *name, char *changed_info)
+{
+	t_list *tmp;
+
+	if (!env)
+		return (1);
+	tmp = env;
+	while (tmp != NULL)
+	{
+		if (!ft_strncmp(((t_env *)tmp->content)->name, name, ft_strlen(name)))
+		{
+			free(((t_env *)tmp->content)->info);
+			((t_env *)tmp->content)->info = ft_strjoin(ft_strjoin(name, "="), changed_info);
+			return (0);
+		}
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+void	free_env(t_list *env)
+{
+	t_list	*tmp;
+	t_list	*tmp_next;
+
+	if (!env)
+		return ;
+	tmp = env;
+	while (tmp != NULL)
+	{
+		tmp_next = tmp->next;
+		free(((t_env *)tmp->content)->name);
+		free(((t_env *)tmp->content)->info);
+		free(tmp->content);
+		free(tmp);
+		tmp = tmp_next;
+	}
 }

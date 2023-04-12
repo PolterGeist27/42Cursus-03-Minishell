@@ -75,17 +75,26 @@ CC = cc
 LIBC = ar rc
 RM = rm -f
 
+#	Color
+YELLOW      =   \033[0;33m
+
+#	Rules
+
+.c.o:
+	@$(CC) -c $(CFLAGS) $< -o ${<:.c=.o}
+
 all: $(NAME)
+	@echo "$(YELLOW)[Compiled libft]"
 
 $(NAME): $(OBJS)
-	$(LIBC) $(NAME) $(OBJS)
+	@$(LIBC) $(NAME) $(OBJS)
 
 bonus: $(NAME)
 
 clean:
-	$(RM) $(OBJS)
+	@$(RM) $(OBJS)
 
 fclean: clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 
 re: fclean all
