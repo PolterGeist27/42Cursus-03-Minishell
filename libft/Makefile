@@ -6,7 +6,7 @@
 #    By: pealexan <pealexan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/14 08:46:18 by pealexan          #+#    #+#              #
-#    Updated: 2023/02/22 11:57:26 by pealexan         ###   ########.fr        #
+#    Updated: 2023/04/12 14:20:07 by pealexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,7 +99,7 @@ OBJ = ${SRC:.c=.o}
 
 #---------RULES---------#
 .c.o:
-		$(CC) $(CFLAGS) -c -I$(HEADERDIR) $< -o ${<:.c=.o}
+		@$(CC) $(CFLAGS) -c -I$(HEADERDIR) $< -o ${<:.c=.o}
 
 all: 		$(NAME)
 

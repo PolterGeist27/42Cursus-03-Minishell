@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/12 08:23:07 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/12 15:30:21 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdlib.h>
+# include <sys/wait.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
+# include <errno.h>
+# include <string.h>
 
 # define METACHAR "<>& \t\n|()"  //no need to replicate or handle \;
 
@@ -27,6 +33,8 @@ typedef	struct s_minishell
 	char	**args;
 	char	**paths;
 	char	*prompt;
+	int		in_fd;
+	int		out_fd;
 	int		cmd_num;
 	int		pipe_num;
 }	t_minishell;
