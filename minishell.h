@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/05 09:45:44 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/12 08:23:07 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,29 @@
 # include <readline/history.h>
 # include <stdlib.h>
 
+# define METACHAR "<>& \t\n|()"  //no need to replicate or handle \;
+
+typedef	struct s_minishell
+{
+	char	**args;
+	char	**paths;
+	char	*prompt;
+	int		cmd_num;
+	int		pipe_num;
+}	t_minishell;
+
+
 typedef struct s_env
 {
 	char	*home;
 	char	*user;
 	char	*local;
 }	t_env;
+
+void	get_prompt(t_env *envinfo, t_minishell *mini);
+char	*get_cwd(t_env *envinfo);
+void	init_mini(t_minishell *mini, char **env);
+void	get_envvariables(t_env *env);
 
 /*
 BUILT-INS
