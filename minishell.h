@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pealexan <pealexan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/12 15:30:21 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/13 14:47:04 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,14 @@
 
 # define METACHAR "<>& \t\n|()"  //no need to replicate or handle \;
 
+typedef struct s_command
+{
+	char	*command;
+	char	**arguments;
+	int		in_fd;
+	int		out_fd;
+}	t_command;
+
 typedef	struct s_minishell
 {
 	char	**args;
@@ -37,6 +45,7 @@ typedef	struct s_minishell
 	int		out_fd;
 	int		cmd_num;
 	int		pipe_num;
+	int		*pipe_fd;
 }	t_minishell;
 
 
@@ -51,6 +60,18 @@ void	get_prompt(t_env *envinfo, t_minishell *mini);
 char	*get_cwd(t_env *envinfo);
 void	init_mini(t_minishell *mini, char **env);
 void	get_envvariables(t_env *env);
+void	execute_single_cmd(t_minishell *mini, char *buffer);
+char	*getcommand(char *arg, t_minishell *mini);
+char	**parse_input(t_minishell *mini, char *input);
+void	execute_cmds(t_minishell *mini, char **env);
+void	processes(t_minishell *mini, char **env, char *input);
+void	close_pipes(t_minishell *mini);
+void	open_pipes(t_minishell *mini);
+void	split_line(t_minishell *mini, char *buffer);
+void	count_pipes(t_minishell *mini, char *buffer);
+void	heredoc(char *limiter, t_minishell *mini);
+void	init_mini(t_minishell *mini, char **env);
+
 
 /*
 BUILT-INS
