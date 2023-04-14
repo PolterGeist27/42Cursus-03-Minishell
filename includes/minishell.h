@@ -6,7 +6,7 @@
 /*   By: kfaustin <kfaustin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:29:44 by kfaustin          #+#    #+#             */
-/*   Updated: 2023/04/11 12:07:07 by kfaustin         ###   ########.fr       */
+/*   Updated: 2023/04/13 14:18:56 by kfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 // * Includes *
 # include "../libft/libft.h"
+# include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
 // * Macros *
-
 typedef struct s_root
 {
 	char	*user;
@@ -27,6 +27,6 @@ typedef struct s_root
 	char	*local;
 }		t_root;
 
-
 // * Functions *
+void	display_app_prompt(t_root *root);
 #endif
