@@ -6,7 +6,7 @@
 #    By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/02 12:26:28 by pealexan          #+#    #+#              #
-#    Updated: 2023/04/14 11:11:06 by diogmart         ###   ########.fr        #
+#    Updated: 2023/04/14 12:20:01 by diogmart         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ LIBFTDIR = ./libft/
 INCDIR = ./includes/
 
 #----------SRCS----------#
-SRC =	minishell \
+SRC =	main \
 		echo \
 		env \
 		utils \

@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/14 11:09:28 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/14 12:04:20 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,6 @@ void	free_env(t_list *env);
 
 //	utils.c
 void	add_to_env(t_list **env, char *info);
+void	ft_printlist(t_list *list);
 
 #endif
