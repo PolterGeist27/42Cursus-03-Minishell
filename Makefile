@@ -6,7 +6,7 @@
 #    By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/02 12:26:28 by pealexan          #+#    #+#              #
-#    Updated: 2023/04/12 15:00:10 by diogmart         ###   ########.fr        #
+#    Updated: 2023/04/14 11:11:06 by diogmart         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ INCDIR = ./includes/
 SRC =	minishell \
 		echo \
 		env \
+		utils \
 
 SRCS = $(addprefix ${SRCDIR}, $(addsuffix .c, ${SRC}))
 

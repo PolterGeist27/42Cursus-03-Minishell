@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 15:17:16 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/12 15:44:27 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/14 11:14:33 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ char	*get_name(char *info)
 
 int	modify_info(t_list *env, char *name, char *changed_info)
 {
-	t_list *tmp;
+	t_list	*tmp;
+	char	*new_name;
 
 	if (!env)
 		return (1);
@@ -67,7 +68,9 @@ int	modify_info(t_list *env, char *name, char *changed_info)
 		if (!ft_strncmp(((t_env *)tmp->content)->name, name, ft_strlen(name)))
 		{
 			free(((t_env *)tmp->content)->info);
-			((t_env *)tmp->content)->info = ft_strjoin(ft_strjoin(name, "="), changed_info);
+			new_name = ft_strjoin(name, "=");
+			((t_env *)tmp->content)->info = ft_strjoin(new_name, changed_info);
+			free(new_name);
 			return (0);
 		}
 		tmp = tmp->next;

@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/12 15:21:07 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/14 11:09:28 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,8 @@ t_env	*ft_create_data(char *raw);
 char	*get_name(char *raw);
 int		modify_info(t_list *env, char *name, char *changed_info);
 void	free_env(t_list *env);
+
+//	utils.c
+void	add_to_env(t_list **env, char *info);
 
 #endif
