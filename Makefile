@@ -25,13 +25,13 @@ SRC		= main.c utils.c
 OBJ		= $(addprefix $(SRCDIR), $(SRC:.c=.o))
 
 # Libft
-LIBDIR	= ./libft/
+LIBDIR	= ./includes/libft/
 LIBAFT	= libft.a
 
 all: $(NAME)
 
 $(NAME): $(OBJ) libft
-		$(CC) $(CFLAGS) $(LIBAFT) $(OBJ) -o $(NAME)
+		$(CC) $(CFLAGS) $(LIBAFT) $(OBJ) -o $(NAME) $(EFLAGS)
 
 libft:
 		make -C $(LIBDIR)
