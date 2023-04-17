@@ -31,7 +31,7 @@ LIBAFT	= libft.a
 all: $(NAME)
 
 $(NAME): $(OBJ) libft
-		$(CC) $(CFLAGS) $(LIBAFT) $(OBJ) -o $(NAME) $(EFLAGS)
+		$(CC) $(CFLAGS) $(OBJ) $(LIBAFT) $(EFLAGS) -o $(NAME)
 
 libft:
 		make -C $(LIBDIR)
@@ -41,6 +41,7 @@ clean:
 		$(RM) $(OBJ)
 
 fclean: clean
+		make -C $(LIBDIR) fclean
 		$(RM) $(LIBAFT)
 		$(RM) $(NAME)
 

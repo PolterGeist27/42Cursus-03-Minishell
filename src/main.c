@@ -14,13 +14,25 @@
 
 int	main(int argc, char **argv, char **env)
 {
+	char	*input;
+	t_root	root;
+
 	(void)argc;
 	(void)argv;
 	(void)env;
-	char	*input;
-	t_root	app;
-
+	env_to_list(&root, env);
 	while (1)
+	{
+		input = readline(display_prompt(&root));
+		if (!input)
+			break ;
+	}
+	while (root.list)
+	{
+		printf("(%d): %s - %s\n", root.list->index, root.list->key, root.list->value);
+		root.list = root.list->next;
+	}
+/*	while (1)
 	{
 		display_app_prompt(&app);
 		input = readline("$ ");
@@ -31,6 +43,6 @@ int	main(int argc, char **argv, char **env)
 			break ;
 		}
 		free (input);
-	}
+	}*/
 	return (0);
 }

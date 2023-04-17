@@ -14,19 +14,34 @@
 # define MINISHELL_H
 
 // * Includes *
-# include "../libft/libft.h"
+# include "./libft/libft.h"
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
 // * Macros *
+typedef struct s_env	t_env;
+
+struct s_env
+{
+	int		index;
+	char	*key;
+	char	*value;
+	t_env	*next;
+};
+
 typedef struct s_root
 {
+	char	*prompt;
 	char	*user;
+	char	*s_manager;
 	char	*home;
-	char	*local;
+	char	*path;
+	t_env	*list;
 }		t_root;
 
 // * Functions *
-void	display_app_prompt(t_root *root);
+void	env_to_list(t_root *root, char **env);
+void	putstring_exit(char *str, int flag);
+char	*display_prompt(t_root *root);
 #endif
