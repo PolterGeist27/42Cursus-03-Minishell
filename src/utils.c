@@ -136,7 +136,7 @@ static void	deal_root_env(t_root *root)
 	while (root->s_manager[i] != '/')
 		i++;
 	j = 0;
-	while (root->s_manager[j] != '.' || root->s_manager[j] != ':')
+	while (root->s_manager[j] != '.' && root->s_manager[j] != ':')
 		j++;
 	tmp = ft_substr(root->s_manager, (i + 1), (j - (i + 1)));
 	free (root->s_manager);
