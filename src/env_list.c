@@ -6,7 +6,7 @@
 /*   By: kfaustin <kfaustin@student.42porto.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:27:09 by kfaustin          #+#    #+#             */
-/*   Updated: 2023/04/19 10:27:09 by kfaustin         ###   ########.fr       */
+/*   Updated: 2023/04/19 14:04:49 by kfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ static void	init_key_value(char **key, char **value, char *str)
 	*value = ft_substr(str, (i + 1), ft_strlen(str) - i);
 }
 
-static void	init_env_node(t_env **node, char *key, char *value, int i)
+static void	init_env_node(t_env **node, char **key, char **value, int i)
 {
 	*node = (t_env *)malloc(sizeof(t_env));
 	if (!(*node))
 		putstring_exit("Error: Malloc of *node fails\n", 1);
 	(*node)->index = i;
-	(*node)->key = key;
-	(*node)->value = value;
+	(*node)->key = *key;
+	(*node)->value = *value;
 	(*node)->next = NULL;
 }
 
@@ -64,7 +64,7 @@ void	env_to_list(t_root *root, char **env)
 	while (env[++i])
 	{
 		init_key_value(&key, &value, env[i]);
-		init_env_node(&node, key, value, i);
+		init_env_node(&node, &key, &value, i);
 		stack_env_list(root, node);
 	}
 }

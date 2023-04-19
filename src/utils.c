@@ -6,7 +6,7 @@
 /*   By: kfaustin <kfaustin@student.42porto.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 12:12:39 by kfaustin          #+#    #+#             */
-/*   Updated: 2023/04/19 12:38:31 by kfaustin         ###   ########.fr       */
+/*   Updated: 2023/04/19 15:35:13 by kfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,29 @@ void	putstring_exit(char *str, int flag)
 {
 	ft_putstr_fd(str, 2);
 	exit(flag);
+}
+
+void	free_t_env(t_env *list)
+{
+	t_env *header;
+
+	while (list)
+	{
+		header = list->next;
+		free (list->key);
+		free (list->value);
+		free (list);
+		list = header;
+	}
+}
+
+void	free_t_root(t_root *root)
+{
+	free (root->prompt);
+	free (root->user);
+	free (root->s_manager);
+	free (root->home);
+	free (root->path);
 }
 
 static void	s_manager_prompt(t_root *root)
@@ -68,17 +91,40 @@ static void	prompt_prompt(t_root *root)
 	char	*tmp1;
 	char	*tmp2;
 	char	*tmp3;
-	char	*tmp4;
 
 	tmp1 = ft_strjoin(root->user, "@");
 	tmp2 = ft_strjoin(root->s_manager, ":");
 	tmp3 = ft_strjoin(tmp1, tmp2);
-	tmp4 = ft_strjoin(root->path, "$ ");
-	root->prompt = ft_strjoin(tmp3, tmp4);
 	free (tmp1);
 	free (tmp2);
+	tmp1 = ft_strjoin(root->path, "$ ");
+	root->prompt = ft_strjoin(tmp3, tmp1);
 	free (tmp3);
-	free (tmp4);
+	free (tmp1);
+
+	/*
+	int		i;
+	int		j;
+	free(root->prompt);
+	root->prompt = (char *)malloc(sizeof(char)
+			* (((ft_strlen(root->user) + 1)
+			+ (ft_strlen(root->s_manager) + 1)
+			+ (ft_strlen(root->path) + 1)) + 3));
+	i = 0;
+	j = 0;
+	while (root->user[j])
+		root->prompt[i++] = root->user[j++];
+	root->prompt[i] = '@';
+	j = 0;
+	while (root->s_manager[j])
+		root->prompt[i++] = root->s_manager[j++];
+	root->prompt[i] = ':';
+	j = 0;
+	while (root->path[j])
+		root->prompt[i++] = root->path[j++];
+	root->path[i++] = '$';
+	root->path[i++] = ' ';
+	root->path[i] = '\0';*/
 }
 
 char	*display_prompt(t_root *root)
@@ -92,9 +138,5 @@ char	*display_prompt(t_root *root)
 	if (!root->path)
 		putstring_exit("Error: Path prompt is NULL\n", 1);
 	prompt_prompt(root);
-	free (root->user);
-	free (root->s_manager);
-	free (root->home);
-	free (root->path);
 	return (root->prompt);
 }

@@ -6,7 +6,7 @@
 /*   By: kfaustin <kfaustin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:29:44 by kfaustin          #+#    #+#             */
-/*   Updated: 2023/04/13 14:18:56 by kfaustin         ###   ########.fr       */
+/*   Updated: 2023/04/19 15:31:47 by kfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,6 @@ char	*get_value_from_key(t_env *header, char *key);
 // * utils.c
 void	putstring_exit(char *str, int flag);
 char	*display_prompt(t_root *root);
+void	free_t_env(t_env *list);
+void	free_t_root(t_root *root);
 #endif
