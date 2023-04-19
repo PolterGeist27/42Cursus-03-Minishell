@@ -21,7 +21,7 @@ RM		= rm -rf
 
 # Sources, objects and dir
 SRCDIR	= ./src/
-SRC		= main.c utils.c
+SRC		= env_list.c list_handle.c main.c utils.c
 OBJ		= $(addprefix $(SRCDIR), $(SRC:.c=.o))
 
 # Libft

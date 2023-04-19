@@ -1,40 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   list_handle.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kfaustin <kfaustin@student.42porto.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/14 10:57:37 by kfaustin          #+#    #+#             */
-/*   Updated: 2023/04/19 13:44:18 by kfaustin         ###   ########.fr       */
+/*   Created: 2023/04/19 10:37:33 by kfaustin          #+#    #+#             */
+/*   Updated: 2023/04/19 10:39:58 by kfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	main(int argc, char **argv, char **env)
+char	*get_value_from_key(t_env *header, char *key)
 {
-	char	*input;
-	t_root	root;
+	t_env	*tmp;
+	char	*str;
 
-	(void)argc;
-	(void)argv;
-	(void)env;
-	env_to_list(&root, env);
-	while (1)
+	tmp = header;
+	while (tmp)
 	{
-		input = readline(display_prompt(&root));
-		printf("%s\n", input);
-		if (!input)
+		if (ft_strncmp(tmp->key, key, (ft_strlen(key) + 1)) == 0)
 		{
-			free (input);
-			break ;
+			str = ft_strdup(tmp->value);
+			return (str);
 		}
+		tmp = tmp->next;
 	}
-	while (root.list)
-	{
-		printf("(%d): %s - %s\n", root.list->index, root.list->key, root.list->value);
-		root.list = root.list->next;
-	}
-	return (0);
+	return (NULL);
 }

@@ -40,8 +40,12 @@ typedef struct s_root
 	t_env	*list;
 }		t_root;
 
-// * Functions *
+// *** Functions ***
+// * env_list.c
 void	env_to_list(t_root *root, char **env);
+// * list_handle.c
+char	*get_value_from_key(t_env *header, char *key);
+// * utils.c
 void	putstring_exit(char *str, int flag);
 char	*display_prompt(t_root *root);
 #endif
