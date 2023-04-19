@@ -6,7 +6,7 @@
 /*   By: kfaustin <kfaustin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:29:44 by kfaustin          #+#    #+#             */
-/*   Updated: 2023/04/19 15:31:47 by kfaustin         ###   ########.fr       */
+/*   Updated: 2023/04/19 16:01:43 by kfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ typedef struct s_root
 // *** Functions ***
 // * env_list.c
 void	env_to_list(t_root *root, char **env);
+void	init_env_node(t_env **node, char *key, char *value, int i);
+void	stack_env_list(t_root *root, t_env *node);
 // * list_handle.c
 char	*get_value_from_key(t_env *header, char *key);
 // * utils.c
