@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:59:10 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/14 12:02:46 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/19 14:32:14 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,25 @@ void	ft_printlist(t_list *list)
 		printf("%s\n", ((t_env *)(tmp->content))->info);
 		tmp = tmp->next;
 	}
+}
+
+char	*get_info_env(t_list **env, char *name)
+{
+	char	*info;
+	int		i;
+	t_list	*tmp;
+
+	tmp = *env;
+	i = 0;
+	while (tmp != NULL)
+	{
+		if (!ft_strncmp(((t_env *)(tmp->content))->name, name, ft_strlen(name)))
+		{
+			info = ft_strchr(((t_env *)(tmp->content))->info, '=');
+			info++;
+			return (info);
+		}
+		tmp = tmp->next;
+	}
+	return (NULL);
 }

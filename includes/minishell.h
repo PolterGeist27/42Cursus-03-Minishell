@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/14 12:04:20 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/19 14:29:28 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,27 @@ typedef struct s_env
 	char	*info;
 }	t_env;
 
+//	echo.c
+void	echo(char *arg, int flag);
+
+//	env.c
+t_list	*init_env(char **env);
+t_env	*ft_create_data(char *raw);
+char	*get_name(char *raw);
+int		modify_info(t_list *env, char *name, char *changed_info);
+void	free_env(t_list *env);
+
+//	env_utils.c
+void	add_to_env(t_list **env, char *info);
+void	ft_printlist(t_list *list);
+char	*get_info_env(t_list **env, char *name);
+
+//	dir.c
+int		cd(t_list **env, char *path);
+int		pwd(t_list **env);
+
+#endif
+
 /*
 BUILT-INS
 	◦ echo with option -n
@@ -58,19 +79,3 @@ REDIRECTIONS
 PIPES
 	Implement pipes (| character)
 */
-
-//	echo.c
-void	echo(char *arg, int flag);
-
-//	env.c
-t_list	*init_env(char **env);
-t_env	*ft_create_data(char *raw);
-char	*get_name(char *raw);
-int		modify_info(t_list *env, char *name, char *changed_info);
-void	free_env(t_list *env);
-
-//	utils.c
-void	add_to_env(t_list **env, char *info);
-void	ft_printlist(t_list *list);
-
-#endif

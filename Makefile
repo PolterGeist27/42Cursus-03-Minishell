@@ -6,7 +6,7 @@
 #    By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/02 12:26:28 by pealexan          #+#    #+#              #
-#    Updated: 2023/04/14 12:20:01 by diogmart         ###   ########.fr        #
+#    Updated: 2023/04/19 14:29:40 by diogmart         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ INCDIR = ./includes/
 SRC =	main \
 		echo \
 		env \
-		utils \
+		env_utils \
+		dir \
 
 SRCS = $(addprefix ${SRCDIR}, $(addsuffix .c, ${SRC}))
 
