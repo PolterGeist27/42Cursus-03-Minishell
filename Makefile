@@ -6,7 +6,7 @@
 #    By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/02 12:26:28 by pealexan          #+#    #+#              #
-#    Updated: 2023/04/20 15:37:46 by diogmart         ###   ########.fr        #
+#    Updated: 2023/04/20 16:22:18 by diogmart         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRCS = $(addprefix ${SRCDIR}, $(addsuffix .c, ${SRC}))
 #--------COMMANDS--------#
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I $(INCDIR)
+EXTRA = -lreadline
 AR = ar rcs
 RM = rm -rf
 MAKEFLAGS += --no-print-directory
@@ -55,7 +56,7 @@ $(LIBFT):
 			@cd $(LIBFTDIR) && $(MAKE)
 
 $(NAME): 	$(LIBFT) $(OBJS)
-			@$(CC) $(CFLAGS) $(OBJS) $(LIBFTDIR)$(LIBFT) -o $(NAME)
+			@$(CC) $(CFLAGS) $(EXTRA) $(OBJS) $(LIBFTDIR)$(LIBFT) -o $(NAME)
 
 clean:
 			@$(RM) $(OBJS) $(BONUS_OBJ)
