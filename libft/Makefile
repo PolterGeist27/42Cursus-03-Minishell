@@ -1,100 +1,118 @@
-DIRPRINT = ./srcs/printf/
-
-DIRGNL = ./srcs/get_next_line/
-
-DIRINCS = ./includes/
-
-DIRLIB = ./srcs/libft/
-
-SRC =	ft_memset \
-		ft_bzero \
-		ft_memcpy \
-		ft_memmove \
-		ft_memchr \
-		ft_memcmp \
-		ft_strlen \
-		ft_strlcpy \
-		ft_strlcat \
-		ft_strchr \
-		ft_strrchr \
-		ft_strnstr \
-		ft_strncmp \
-		ft_atoi \
-		ft_isalpha \
-		ft_isdigit \
-		ft_isalnum \
-		ft_isascii \
-		ft_isprint \
-		ft_toupper \
-		ft_tolower \
-		ft_calloc \
-		ft_strdup \
-		ft_substr \
-		ft_strjoin \
-		ft_strtrim \
-		ft_split \
-		ft_itoa \
-		ft_striteri \
-		ft_strmapi \
-		ft_putchar_fd \
-		ft_putstr_fd \
-		ft_putendl_fd \
-		ft_putnbr_fd \
-		ft_lstnew \
-		ft_lstadd_front \
-		ft_lstsize \
-		ft_lstlast \
-		ft_lstadd_back \
-		ft_lstdelone \
-		ft_lstclear \
-		ft_lstiter \
-		ft_lstmap \
-
-GNL =	get_next_line_bonus
-
-PRINT = ft_printf \
-		token_utils \
-		print_c \
-		print_i \
-		printf_utils \
-		print_u \
-		print_percent \
-		print_s \
-		print_p \
-		print_x \
-
-SRCS =	$(addprefix ${DIRLIB}, $(addsuffix .c, ${SRC}))		\
-		$(addprefix ${DIRGNL}, $(addsuffix .c, ${GNL}))		\
-		$(addprefix ${DIRPRINT}, $(addsuffix .c, ${PRINT}))	\
-
-OBJS = $(SRCS:.c=.o)
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/11/14 08:46:18 by pealexan          #+#    #+#              #
+#    Updated: 2023/04/20 15:55:05 by diogmart         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
 NAME = libft.a
-CFLAGS = -Wall -Wextra -Werror -I $(DIRINCS)
+
+#----------DIRS----------#
+HEADERDIR = ../includes/
+
+SRC =	ft_abs.c \
+	ft_atoi.c \
+	ft_atol.c \
+	ft_bzero.c \
+	ft_calloc.c \
+	ft_free_split.c \
+	ft_getlength.c \
+	ft_isalnum.c \
+	ft_isalpha.c \
+	ft_isascii.c \
+	ft_isdigit.c \
+	ft_isprint.c \
+	ft_isquote.c \
+	ft_isspace.c \
+	ft_itoa.c \
+	ft_lstadd_back.c \
+	ft_lstadd_front.c \
+	ft_lstclear.c \
+	ft_lstdelone.c \
+	ft_lstiter.c \
+	ft_lstlast.c \
+	ft_lstmap.c \
+	ft_lstnew.c \
+	ft_lstsize.c \
+	ft_max.c \
+	ft_memchr.c \
+	ft_memcmp.c \
+	ft_memcpy.c \
+	ft_memmove.c \
+	ft_memset.c \
+	ft_min.c \
+	ft_putchar_fd.c \
+	ft_putendl_fd.c \
+	ft_putnbr_fd.c \
+	ft_putstr_fd.c \
+	ft_split.c \
+	ft_strchr.c \
+	ft_strdup.c \
+	ft_striteri.c \
+	ft_strjoin.c \
+	ft_strlcat.c \
+	ft_strlcpy.c \
+	ft_strlen.c \
+	ft_strmapi.c \
+	ft_strncmp.c \
+	ft_strnstr.c \
+	ft_strrchr.c \
+	ft_strtrim.c \
+	ft_substr.c \
+	ft_tolower.c \
+	ft_toupper.c \
+	ft_utoa.c \
+	ft_wordcount.c \
+	get_next_line.c \
+	get_next_line_multifd.c \
+	ft_printf/ft_format_lowerhexa.c \
+	ft_printf/ft_format_putaddress2.c \
+	ft_printf/ft_format_putaddress.c \
+	ft_printf/ft_format_putchar.c \
+	ft_printf/ft_format_putnbr.c \
+	ft_printf/ft_format_putposnbr.c \
+	ft_printf/ft_format_putstr.c \
+	ft_printf/ft_format_putunsignnbr.c \
+	ft_printf/ft_format_upperhexa.c \
+	ft_printf/ft_get_format.c \
+	ft_printf/ft_get_hexastr.c \
+	ft_printf/ft_printf.c \
+	ft_printf/ft_putaddress.c \
+	ft_printf/ft_putchar.c \
+	ft_printf/ft_puthexa.c \
+	ft_printf/ft_putnbr.c \
+	ft_printf/ft_putstr.c \
+	ft_printf/ft_putunsignednbr.c \
+
+#--------COMMANDS--------#
 CC = cc
-LIBC = ar rc
-RM = rm -f
+CFLAGS = -Wall -Wextra -Werror
+AR = ar rcs
+RM = rm -rf
 
-#	Color
-YELLOW      =   \033[0;33m
+OBJ = ${SRC:.c=.o}
 
-#	Rules
+YELLOW	=	\033[0;33m
 
+#---------RULES---------#
 .c.o:
-	@$(CC) -c $(CFLAGS) $< -o ${<:.c=.o}
+		@$(CC) $(CFLAGS) -c -I$(HEADERDIR) $< -o ${<:.c=.o}
 
-all: $(NAME)
-	@echo "$(YELLOW)[Compiled libft]"
+all: 		$(NAME)
+		@echo "$(YELLOW)[Compiled libft]"
 
-$(NAME): $(OBJS)
-	@$(LIBC) $(NAME) $(OBJS)
-
-bonus: $(NAME)
+$(NAME): 	$(OBJ)
+		@$(AR) $(NAME) $(OBJ)
 
 clean:
-	@$(RM) $(OBJS)
+		@$(RM) $(OBJ)
 
-fclean: clean
-	@$(RM) $(NAME)
+fclean: 	clean
+		@$(RM) $(NAME)
 
-re: fclean all
+re: 		fclean all

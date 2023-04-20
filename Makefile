@@ -6,7 +6,7 @@
 #    By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/02 12:26:28 by pealexan          #+#    #+#              #
-#    Updated: 2023/04/19 14:29:40 by diogmart         ###   ########.fr        #
+#    Updated: 2023/04/20 15:37:46 by diogmart         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,8 @@ SRC =	main \
 		env \
 		env_utils \
 		dir \
+		minishell \
+		prompt \
 
 SRCS = $(addprefix ${SRCDIR}, $(addsuffix .c, ${SRC}))
 

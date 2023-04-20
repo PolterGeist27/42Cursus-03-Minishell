@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/19 14:29:28 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/20 15:53:01 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,35 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdlib.h>
+# include <sys/wait.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
+# include <errno.h>
+# include <string.h>
+
+# define METACHAR "<>& \t\n|()"  //no need to replicate or handle \;
+
+typedef struct s_command
+{
+	char	*command;
+	char	**arguments;
+	int		in_fd;
+	int		out_fd;
+}	t_command;
+
+typedef	struct s_minishell
+{
+	char	**args;
+	char	**paths;
+	char	*prompt;
+	int		in_fd;
+	int		out_fd;
+	int		cmd_num;
+	int		pipe_num;
+	int		*pipe_fd;
+}	t_minishell;
+
 
 typedef struct s_env_info
 {
@@ -31,6 +60,11 @@ typedef struct s_env
 {
 	char	*name;
 	char	*info;
+	// Pedro:
+	char	*home;
+	char	*user;
+	char	*local;
+	// end
 }	t_env;
 
 //	echo.c
@@ -51,6 +85,24 @@ char	*get_info_env(t_list **env, char *name);
 //	dir.c
 int		cd(t_list **env, char *path);
 int		pwd(t_list **env);
+
+// Pedro:
+
+void	get_prompt(t_env *envinfo, t_minishell *mini);
+char	*get_cwd(t_env *envinfo);
+void	init_mini(t_minishell *mini, char **env);
+void	get_envvariables(t_env *env);
+void	execute_single_cmd(t_minishell *mini, char *buffer);
+char	*getcommand(char *arg, t_minishell *mini);
+char	**parse_input(t_minishell *mini, char *input);
+void	execute_cmds(t_minishell *mini, char **env);
+void	processes(t_minishell *mini, char **env, char *input);
+void	close_pipes(t_minishell *mini);
+void	open_pipes(t_minishell *mini);
+void	split_line(t_minishell *mini, char *buffer);
+void	count_pipes(t_minishell *mini, char *buffer);
+void	heredoc(char *limiter, t_minishell *mini);
+void	init_mini(t_minishell *mini, char **env);
 
 #endif
 
