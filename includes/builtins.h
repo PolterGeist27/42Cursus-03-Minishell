@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kfaustin <kfaustin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kfaustin <kfaustin@student.42porto.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/11 11:20:55 by kfaustin          #+#    #+#             */
-/*   Updated: 2023/04/11 11:53:39 by kfaustin         ###   ########.fr       */
+/*   Created: 2023/04/21 11:02:49 by kfaustin          #+#    #+#             */
+/*   Updated: 2023/04/21 11:05:35 by kfaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#ifndef BUILTINS_H
+# define BUILTINS_H
 
-int	main(int argc, char **argv)
-{
-	
+# include "minishell.h"
 
-	return (0);
-}
+
+
+#endif
