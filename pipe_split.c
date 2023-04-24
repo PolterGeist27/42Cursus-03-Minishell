@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	ft_wordcount_meta(const char *str, char c)
+int	ft_wordcount_meta(char *str, char c)
 {
 	int	i;
 	int	wordcount;
@@ -15,22 +15,25 @@ int	ft_wordcount_meta(const char *str, char c)
 			quote = str[i];
 		else if (ft_strrchr("\"\'", str[i]) && quote == str[i])
 			quote = 0;
-        if (!quote)
-        {
-            while (str[i] && str[i] == c)
-                i++;
-            if (str[i])
-                wordcount++;
-            while (str[i] && str[i] != c)
-                i++;
-        }
-        else
+        while (str[i] && str[i] == c && !quote)
             i++;
+        if (str[i] && !quote)
+            wordcount++;
+        while (str[i] && str[i] != c && !quote)
+		{
+			if (ft_strrchr("\"\'", str[i]) && !quote)
+				quote = str[i];
+			else if (ft_strrchr("\"\'", str[i]) && quote == str[i])
+				quote = 0;
+            i++;
+		}
+        //else
+        i++;
 	}
 	return (wordcount);
 }
 
-static int	ft_wordlen(const char *str, char c)
+static int	ft_wordlen(char *str, char c)
 {
 	int	i;
 
@@ -40,17 +43,18 @@ static int	ft_wordlen(const char *str, char c)
 	return (i);
 }
 
-static void	get_word(const char *s, char c, char **words, int j, int *i)
+static char	*get_word(char *s, char c, char **words, int j)
 {
-	while (s[*i] && s[*i] == c)
-		(*i)++;
-	if (s[*i])
+	while (*s && *s == c)
+		s++;
+	if (*s)
 		words[j] = ft_substr(s, 0, ft_wordlen(s, c));
-	while (s[*i] && s[*i] != c)
-		(*i)++;
+	while (*s && *s != c)
+		s++;
+	return (s);
 }
 
-char	**ft_split_meta(const char *s, char c)
+char	**ft_split_meta(char *s, char c)
 {
 	char	**words;
 	int		wdcount;
@@ -63,29 +67,22 @@ char	**ft_split_meta(const char *s, char c)
 	quote = 0;
 	if (!s)
 		return (0);
-	wdcount = ft_wordcount_meta(s, c);
-	words = malloc(sizeof(char *) * (wdcount + 1));
+	words = malloc(sizeof(char *) * (ft_wordcount_meta(s, c) + 1));
 	if (!words)
 		return (0);
-	while (s[i])
+	while (*s)
 	{
-		if (ft_strrchr("\"\'", s[i]) && !quote)
-			quote = s[i];
-		else if (ft_strrchr("\"\'", s[i]) && quote == s[i])
+		if (ft_strrchr("\"\'", *s) && !quote)
+			quote = *s;
+		else if (ft_strrchr("\"\'", *s) && quote == *s)
 			quote = 0;
 		if (!quote)
 		{
-			get_word(s, c, words, j, &i);
+			s = get_word(s, c, words, j);
 			j++;
 		}
-        else
-            i++;
-		//while (*s && *s == c && !quote)
-		//	s++;
-		//if (*s)
-		//	words[j++] = ft_substr(s, 0, ft_wordlen(s, c));
-		//while (*s && *s != c && !quote)
-		//	s++;
+		else
+        	s++;
 	}
 	words[j] = 0;
 	return (words);
@@ -93,7 +90,7 @@ char	**ft_split_meta(const char *s, char c)
 
 int main(void)
 {
-	char *str = "ls a | cat a asda ";
+	char *str = "ls a | cat a as\"da | ls\" ";
 	char **split;
 	int i = -1;
 
