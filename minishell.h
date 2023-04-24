@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/13 14:47:04 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/21 08:41:58 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,26 @@
 # include <errno.h>
 # include <string.h>
 
-# define METACHAR "<>& \t\n|()"  //no need to replicate or handle \;
+# define METACHAR "><|"  //no need to replicate or handle \;
+# define REDIR "><"
+# define GGREATER ">>"
+# define LLOWER "<<"
+# define NOTHANDLE "&;(){}*\\"
+
+
+# define UNTOKEN "minishell: syntax error near unexpected token `"
+# define NOSUPPORT "minishell: no support for operator `"
+
+typedef struct s_redir
+{
+	int		*type;
+	char	*file;
+}	t_redir;
 
 typedef struct s_command
 {
-	char	*command;
-	char	**arguments;
-	int		in_fd;
-	int		out_fd;
+	char	*words;
+	t_list	*redir;
 }	t_command;
 
 typedef	struct s_minishell

@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 08:46:22 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/13 17:21:33 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/19 19:18:50 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,27 +255,160 @@ void	execute_single_cmd(t_minishell *mini, char *buffer)
 	}
 }
 
+
+
+
+
+
+bool	has_operator(char *input)
+{
+	size_t	i;
+
+	i = 0;
+	while (input[i])
+	{
+		if (is_onstr(OPERATORS, input[i]))
+			return (true);
+		i += 1;
+	}
+	return (false);
+}
+
+bool	invalid_syntax_on_operator(char *input)
+{
+	size_t	i;
+	bool	in_quotes;
+
+	i = 0;
+	in_quotes = false;
+	while (has_operator(&input[i]))
+	{
+		if (is_onstr(QUOTES, input[i]))
+			in_quotes = !in_quotes;
+		if (is_onstr(OPERATORS, input[i]) && !in_quotes)
+		{
+			if (input[i] == input[i + 1])
+				i += 2;
+			else
+				i += 1;
+			if (input[i] == ' ')
+			{
+				while (input[i] && input[i] == ' ')
+					i += 1;
+				if (is_onstr(OPERATORS, input[i]))
+					return (unexpected_token(input[i]));
+			}
+			if (is_onstr(OPERATORS, input[i]))
+				return (unexpected_token(input[i]));
+		}
+		i += 1;
+	}
+	return (false);
+}
+
+bool	invalid_syntax2(char *input)
+{
+	size_t	i;
+	bool	in_quotes;
+
+	i = 0;
+	in_quotes = false;
+	while (input[i])
+	{
+		if (is_onstr(QUOTES, input[i]))
+			in_quotes = !in_quotes;
+		if (((input[i] == '>' && input[i + 1] == '<')
+				|| (input[i] == '<' && input[i + 1] == '>')
+				|| (input[i] == '|' && input[i + 1] == '|')) && !in_quotes)
+			return (unexpected_token(input[i + 1]));
+		else if ((input[i] == '{' || input[i] == '}'
+				|| input[i] == '(' || input[i] == ')'
+				|| input[i] == '[' || input[i] == ']'
+				|| input[i] == ';' || input[i] == '&' || input[i] == '*')
+			&& !in_quotes)
+			return (unexpected_token(input[i]));
+		i += 1;
+	}
+	return (false);
+}
+
+
+
+
+int	invalid_syntax(char *input)
+{
+	int	valid;
+
+	valid = 1;
+	if (input[0] == '|' || input[ft_strlen(input) - 1] == '|')
+		return (syntax_error_token('|'));
+	if (is_onstr(REDIRECTS, input[ft_strlen(input) - 1]))
+	{
+		ft_putendl_fd(SYTX_ERR_RDR, STDERR_FILENO);
+		return (2);
+	}
+	return (0);
+}
+
+int	check_quotes(char *str)
+{
+	char	quote;
+
+	quote = 0;
+	while (*str && !quote)
+	{
+		if (*str == '\'' || *str == '"')
+			quote = *str;
+		str++;
+	}
+	while (*str && quote)
+	{
+		if (*str && *str == quote)
+			quote = 0;
+		str++;
+	}
+	if (*str)
+		return (check_quotes(str));
+	else if (!quote)
+		return (0);
+	else
+		return (1);
+}
+
+
+
 int	main(int ac, char **av, char **env)
 {
 	t_env		envinfo;
 	t_minishell	mini;
-	char		*buffer;
+	t_list		*cmd;
+	char		*input;
+	char		*triminput;
 
 	init_mini(&mini, env);
 	get_envvariables(&envinfo);
 	while (1)
 	{
 		get_prompt(&envinfo, &mini);
-		buffer = readline(mini.prompt);
-		add_history(buffer);
+		input = readline(mini.prompt);
+		add_history(input);
+		triminput = ft_strtrim(input, " \t");
+		free(input);
+		if (invalid_input(triminput))
+		{
+			exit_status = 2;
+			free(triminput);
+			exit (2);
+		}
 		//split_line(&mini, buffer);
 		/* if (mini.pipe_num > 0)
 			execute_cmds(&mini, buffer); */
 		//else
-		execute_single_cmd(&mini, buffer);
+		cmd = lexer(triminput);
+		//execute_single_cmd(&mini, buffer);
 		wait(0);
 		free(mini.prompt);
-		free(buffer);
+		free(triminput);
 	}
 	ft_free_split(mini.paths);
 	return (0);
