@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: pealexan <pealexan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/21 08:41:58 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/24 09:03:15 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,20 @@ typedef struct s_env
 	char	*user;
 	char	*local;
 }	t_env;
+
+//error_handling
+int	unexpected_tokens(char *input);
+int	no_support_operators(char *input);
+int	check_quotes(char *input);
+int	invalid_syntax(char *input);
+int	valid_input(char *input);
+
+//error_handling2
+int	syntax_error_operator(char *error, char *operator);
+int	syntax_error_token(char *error, char metachar, int dup);
+int	unexpected_token_redir(char *input, int *i);
+
+
 
 void	get_prompt(t_env *envinfo, t_minishell *mini);
 char	*get_cwd(t_env *envinfo);
