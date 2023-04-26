@@ -6,13 +6,13 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 08:28:52 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/26 08:31:16 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/26 08:39:47 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	ft_wordcount_meta(char *str, char c)
+int	ft_wordcount_meta(char *str, char c)
 {
 	int		i;
 	int		wordcount;

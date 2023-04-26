@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pealexan <pealexan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/24 09:03:15 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/26 16:46:37 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,12 @@
 # define UNTOKEN "minishell: syntax error near unexpected token `"
 # define NOSUPPORT "minishell: no support for operator `"
 
-typedef struct s_redir
-{
-	int		*type;
-	char	*file;
-}	t_redir;
-
 typedef struct s_command
 {
-	char	*words;
-	t_list	*redir;
+	char	**args;
+	char	*command;
+	int		in_fd;
+	int		out_fd;
 }	t_command;
 
 typedef	struct s_minishell
@@ -63,9 +59,13 @@ typedef	struct s_minishell
 
 typedef struct s_env
 {
+	char	*name;
+	char	*info;
+	// Pedro:
 	char	*home;
 	char	*user;
 	char	*local;
+	// end
 }	t_env;
 
 //error_handling
@@ -80,16 +80,49 @@ int	syntax_error_operator(char *error, char *operator);
 int	syntax_error_token(char *error, char metachar, int dup);
 int	unexpected_token_redir(char *input, int *i);
 
+char	*get_info_env(t_list **env, char *name);
+void	ft_printlist(t_list *list);
+void	add_to_env(t_list **env, char *info);
+t_list	*init_env(char **env);
+t_env	*ft_create_data(char *info);
+char	*get_name(char *info);
+int	modify_info(t_list *env, char *name, char *changed_info);
+void	free_env(t_list *env);
 
+
+t_list    *cmd_list(t_minishell *mini, char *input, t_list *env);
+t_command	*get_arguments(char *input, t_minishell *mini);
+char	*get_command(char *arg, t_minishell *mini);
+char	*add_whitespaces(char *str);
+size_t	ft_meta_strlen(char *str);
+
+int	ft_wordcount_meta(char *str, char c);
+char	**split_meta(char *s, char c);
+
+void	input_handler(t_minishell *mini, char *input, t_list *env);
+
+void	execute_single_cmd(t_minishell *mini, t_list *env, char *input);
+
+void	execute_cmd(t_minishell *mini, t_list *env, char *input, int i);
+
+
+void	execute_multi_cmds(t_minishell *mini, t_list *env);
+
+
+void	redirect(int a, int b);
+
+char	**handle_redirs(t_minishell *mini, char *input);
+
+void    command_error(char *command);
 
 void	get_prompt(t_env *envinfo, t_minishell *mini);
 char	*get_cwd(t_env *envinfo);
 void	init_mini(t_minishell *mini, char **env);
 void	get_envvariables(t_env *env);
-void	execute_single_cmd(t_minishell *mini, char *buffer);
+
 char	*getcommand(char *arg, t_minishell *mini);
 char	**parse_input(t_minishell *mini, char *input);
-void	execute_cmds(t_minishell *mini, char **env);
+
 void	processes(t_minishell *mini, char **env, char *input);
 void	close_pipes(t_minishell *mini);
 void	open_pipes(t_minishell *mini);
