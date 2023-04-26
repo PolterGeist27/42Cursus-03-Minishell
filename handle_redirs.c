@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:40:07 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/26 17:06:32 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/26 21:41:03 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,15 @@ char	**handle_redirs(t_minishell *mini, char *input)
 		else if (ft_strncmp(cmd_args[i], "<<", ft_strlen(cmd_args[i])) == 0)
 		{
 			heredoc(cmd_args[i + 1], mini);
+			mini->in_fd = open(".heredoc", O_RDONLY);
+			if (mini->in_fd < 0)
+			{
+				ft_putstr_fd("minishell: ", 2);
+				ft_putstr_fd(".heredoc", 2);
+				ft_putstr_fd(": No such file or directory\n", 2);
+				//clean_function;
+				exit(1);
+			}
 			shift_redir(cmd_args, &i, &count);
 		}
 		i++;

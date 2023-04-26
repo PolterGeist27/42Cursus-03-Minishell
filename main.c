@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 12:07:31 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/26 16:17:18 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/26 21:22:02 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int argc, char **argv, char **sys_env)
 	{
 		i = 0;
 		//get_prompt(&envinfo, &mini);
-		input = readline(">");
+		input = readline(":> ");
 		add_history(input);
 		if (!valid_input(input))
 		{
@@ -48,13 +48,12 @@ int	main(int argc, char **argv, char **sys_env)
 			execute_multi_cmds(&mini, env);
 		else
 			execute_single_cmd(&mini, env, add_whitespaces(mini.args[i]));
-		wait(0);
+		waitpid(-1, 0, 0);
 		//free(mini.prompt);
 		free(input);
 	}
 	//ft_free_split(mini.paths);
 	// end
 	free_env(env);
-	
 	return (0);
 }
