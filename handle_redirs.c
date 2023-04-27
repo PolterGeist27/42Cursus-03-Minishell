@@ -6,13 +6,13 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:40:07 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/26 21:41:03 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/27 08:55:57 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	shift_redir(char **cmd_args, int *i, int *count)
+void	shift_redir(char **cmd_args, int *i, int *count)
 {
 	int	index;
 
@@ -84,19 +84,7 @@ char	**handle_redirs(t_minishell *mini, char *input)
 		else if (ft_strncmp(cmd_args[i], ">>", ft_strlen(cmd_args[i])) == 0)
 			handle_app(cmd_args, mini, &i, &count);
 		else if (ft_strncmp(cmd_args[i], "<<", ft_strlen(cmd_args[i])) == 0)
-		{
-			heredoc(cmd_args[i + 1], mini);
-			mini->in_fd = open(".heredoc", O_RDONLY);
-			if (mini->in_fd < 0)
-			{
-				ft_putstr_fd("minishell: ", 2);
-				ft_putstr_fd(".heredoc", 2);
-				ft_putstr_fd(": No such file or directory\n", 2);
-				//clean_function;
-				exit(1);
-			}
-			shift_redir(cmd_args, &i, &count);
-		}
+			handle_heredoc(cmd_args, mini, &i, &count);
 		i++;
 	}
 	return (cmd_args);

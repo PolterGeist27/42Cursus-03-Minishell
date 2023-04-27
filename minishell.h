@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/26 16:46:37 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/27 08:56:39 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@
 # define UNTOKEN "minishell: syntax error near unexpected token `"
 # define NOSUPPORT "minishell: no support for operator `"
 
-typedef struct s_command
+/* typedef struct s_command
 {
 	char	**args;
 	char	*command;
 	int		in_fd;
 	int		out_fd;
-}	t_command;
+}	t_command; */
 
 typedef	struct s_minishell
 {
@@ -54,6 +54,7 @@ typedef	struct s_minishell
 	int		cmd_num;
 	int		pipe_num;
 	int		*pipe_fd;
+	pid_t		pid;
 }	t_minishell;
 
 
@@ -61,11 +62,6 @@ typedef struct s_env
 {
 	char	*name;
 	char	*info;
-	// Pedro:
-	char	*home;
-	char	*user;
-	char	*local;
-	// end
 }	t_env;
 
 //error_handling
@@ -91,7 +87,6 @@ void	free_env(t_list *env);
 
 
 t_list    *cmd_list(t_minishell *mini, char *input, t_list *env);
-t_command	*get_arguments(char *input, t_minishell *mini);
 char	*get_command(char *arg, t_minishell *mini);
 char	*add_whitespaces(char *str);
 size_t	ft_meta_strlen(char *str);
@@ -122,6 +117,10 @@ void	get_envvariables(t_env *env);
 
 char	*getcommand(char *arg, t_minishell *mini);
 char	**parse_input(t_minishell *mini, char *input);
+
+void	shift_redir(char **cmd_args, int *i, int *count);
+void	handle_heredoc(char **cmd_args, t_minishell *mini, int *i, int *count);
+
 
 void	processes(t_minishell *mini, char **env, char *input);
 void	close_pipes(t_minishell *mini);
