@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:32:31 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/26 17:03:59 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/27 14:07:46 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	command_error(char *command)
 {
 	ft_putstr_fd(command, 2);
+	//free(command);
 	ft_putstr_fd(": command not found\n", 2);
 	exit(127);
 }

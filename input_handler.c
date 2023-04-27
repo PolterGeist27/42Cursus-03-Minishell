@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 10:24:53 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/27 08:55:03 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/27 14:18:04 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,6 @@ void	input_handler(t_minishell *mini, char *input, t_list *env)
 	mini->paths = ft_split(get_info_env(&env, "PATH"), ':');
 	mini->in_fd = 0;
 	mini->out_fd = 1;
+	mini->pipe_fd = 0;
+	mini->pid = 0;
 }

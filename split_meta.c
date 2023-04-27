@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 08:28:52 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/26 08:39:47 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/27 15:29:39 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	ft_wordlen(char *str, char c)
 
 	i = 0;
 	quote = 0;
-	while (str[i] && str[i] != c || quote)
+	while (str[i] && ((str[i] != c) || quote))
 	{
 		if (ft_strrchr("\"\'", str[i]) && !quote)
 			quote = str[i];
@@ -57,12 +57,12 @@ static int	ft_wordlen(char *str, char c)
 	return (i);
 }
 
-static char	*get_word(char *s, char c, char **words, int j)
+static char	*get_word(char *s, char c, char **words)
 {
 	char	quote;
 
 	quote = 0;
-	words[j] = ft_substr(s, 0, ft_wordlen(s, c));
+	*words = ft_substr(s, 0, ft_wordlen(s, c));
 	while (*s && *s != c || quote)
 	{
 		if (ft_strrchr("\"\'", *s) && !quote)
@@ -85,7 +85,8 @@ char	**split_meta(char *s, char c)
 	j = 0;
 	if (!s)
 		return (0);
-	words = malloc(sizeof(char *) * (ft_wordcount_meta(s, c) + 1));
+	wdcount = ft_wordcount_meta(s, c);
+	words = (char **)malloc(sizeof(char *) * (wdcount + 1));
 	if (!words)
 		return (0);
 	while (*s)
@@ -93,7 +94,7 @@ char	**split_meta(char *s, char c)
 		while (*s && *s == c)
 			s++;
 		if (*s)
-			s = get_word(s, c, words, j);
+			s = get_word(s, c, &words[j]);
 		j++;
 	}
 	words[j] = 0;

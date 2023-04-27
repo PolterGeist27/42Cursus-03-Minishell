@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pealexan <pealexan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 12:07:31 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/27 08:49:19 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/27 14:12:52 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,10 @@ int	main(int argc, char **argv, char **sys_env)
 				i = wait(&status);
 			//free(mini.prompt);
 			free(input);
+			ft_free_split(mini.paths);
+			ft_free_split(mini.args);
 		}
-		//ft_free_split(mini.paths);
+		ft_free_split(mini.paths);
 		// end
 		free_env(env);
 	}
