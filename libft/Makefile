@@ -3,19 +3,19 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pealexan <pealexan@student.42.fr>          +#+  +:+       +#+         #
+#    By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/14 08:46:18 by pealexan          #+#    #+#              #
-#    Updated: 2023/04/12 14:20:07 by pealexan         ###   ########.fr        #
+#    Updated: 2023/04/28 08:53:09 by pealexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 
 #----------DIRS----------#
-HEADERDIR = ../headers/
+DIR = ./srcs/
 
-SRC =	ft_abs.c \
+SRCS =	ft_abs.c \
 	ft_atoi.c \
 	ft_atol.c \
 	ft_bzero.c \
@@ -89,6 +89,8 @@ SRC =	ft_abs.c \
 	ft_printf/ft_putstr.c \
 	ft_printf/ft_putunsignednbr.c \
 
+SRC = $(addprefix ${DIR}, ${SRCS})
+
 #--------COMMANDS--------#
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
@@ -97,19 +99,22 @@ RM = rm -rf
 
 OBJ = ${SRC:.c=.o}
 
+YELLOW	=	\033[0;33m
+
 #---------RULES---------#
 .c.o:
-		@$(CC) $(CFLAGS) -c -I$(HEADERDIR) $< -o ${<:.c=.o}
+		@$(CC) $(CFLAGS) -c $< -o ${<:.c=.o}
 
 all: 		$(NAME)
+		@echo "$(YELLOW)[Compiled libft]"
 
 $(NAME): 	$(OBJ)
 		@$(AR) $(NAME) $(OBJ)
-	
+
 clean:
 		@$(RM) $(OBJ)
 
 fclean: 	clean
 		@$(RM) $(NAME)
-	
+
 re: 		fclean all
