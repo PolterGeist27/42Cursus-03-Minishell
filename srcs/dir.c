@@ -1,32 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putunsignednbr.c                                :+:      :+:    :+:   */
+/*   dir.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/08 16:59:53 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/28 09:46:52 by pealexan         ###   ########.fr       */
+/*   Created: 2023/04/12 12:52:05 by diogmart          #+#    #+#             */
+/*   Updated: 2023/04/19 14:32:41 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/libft.h"
 
-int	ft_putunsignednbr(unsigned int nb)
+#include "../includes/minishell.h"
+
+int		cd(t_list **env, char *path)
 {
-	int		count;
-	char	*base;
+	char	*old_pwd;
+	char	*new_pwd;
 
-	count = 0;
-	base = "0123456789";
-	if (nb < 10)
-	{
-		count += ft_putchar(base[nb]);
-	}
-	if (nb >= 10)
-	{
-		count += ft_putnbr(nb / 10);
-		count += ft_putnbr(nb % 10);
-	}
-	return (count);
+	old_pwd = get_info_env(env, "PWD");
+	if (chdir(path))
+		return (1);
+	modify_info(*env, "OLDPWD", old_pwd);
+	new_pwd = getcwd(NULL, 0);
+	modify_info(*env, "PWD", new_pwd);
+	free(new_pwd);
+	return (0);
+}
+
+int		pwd(t_list **env)
+{
+	char	*path;
+
+	path = get_info_env(env, "PWD");
+	return(printf("%s\n", path));
 }
