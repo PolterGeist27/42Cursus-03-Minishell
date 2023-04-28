@@ -6,13 +6,13 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 12:21:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/28 09:47:21 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/28 14:28:28 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/libft.h"
 
-int	ft_abs(int n)
+int ft_abs(int n)
 {
 	if (n < 0)
 		return (-n);
