@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 12:07:31 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/28 14:32:57 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/28 18:20:08 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	main(int argc, char **argv, char **sys_env)
 {
 	t_minishell	mini;
-	pid_t			i;
+	pid_t		i;
 	int			status;
 
 	if (argc == 1)
@@ -26,7 +26,7 @@ int	main(int argc, char **argv, char **sys_env)
 			i = 1;
 			mini.env = init_env(sys_env);
 			if (!read_input(&mini, mini.env))
-				continue;
+				continue ;
 			executer(&mini, mini.env);
 			while (i > 0)
 				i = wait(&status);

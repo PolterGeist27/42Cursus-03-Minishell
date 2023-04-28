@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/28 18:09:58 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/28 18:19:00 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,10 @@
 # define LLOWER "<<"
 # define NOTHANDLE "&;(){}*\\"
 
-
 # define UNTOKEN "minishell: syntax error near unexpected token `"
 # define NOSUPPORT "minishell: no support for operator `"
 
-typedef	struct s_minishell
+typedef struct s_minishell
 {
 	char	**args;
 	char	**paths;
@@ -96,7 +95,7 @@ char	*get_name(char *info);
 /// @param name 
 /// @param changed_info 
 /// @return 0 on success, 1 if there's no list
-int	modify_info(t_list *env, char *name, char *changed_info);
+int		modify_info(t_list *env, char *name, char *changed_info);
 
 /// @brief Cleans all allocated memory for the list
 /// @param env 
@@ -107,28 +106,28 @@ void	free_env(t_list *env);
 /// @brief Passes input through several validity checks
 /// @param input 
 /// @return 0 if not valid, 1 if valid
-int	valid_input(char *input);
+int		valid_input(char *input);
 
 /// @brief Checks simple syntax like, metacharacter on start or end of input
 /// @param input 
 /// @return 1 if not valid, 0 if valid
-int	invalid_syntax(char *input);
+int		invalid_syntax(char *input);
 
 /// @brief Checks if there are any unclosed quotes
 /// @param input 
 /// @return 1 if unclosed quptes, 0 if valid
-int	check_quotes(char *input);
+int		check_quotes(char *input);
 
 /// @brief Checks input for operators that are not supported by the scope of
 /// the project
 /// @param input 
 /// @return 1 if not valid, 0 if valid
-int	no_support_operators(char *input);
+int		no_support_operators(char *input);
 
 /// @brief Checks input for any unexpeteced token errors like in bash
 /// @param input 
 /// @return 1 if not valid, 0 if valid
-int	unexpected_tokens(char *input);
+int		unexpected_tokens(char *input);
 
 /*ERROR_HANDLING2-------------------------------------------------------------*/
 
@@ -137,7 +136,7 @@ int	unexpected_tokens(char *input);
 /// @param error 
 /// @param operator
 /// @return 1 to signify not valid
-int	syntax_error_operator(char *error, char *operator);
+int		syntax_error_operator(char *error, char *operator);
 
 /// @brief Prints the error message pointed to by @param error and the its
 /// respective @param metachar, if @param dup, prints @param metachar twice
@@ -145,13 +144,13 @@ int	syntax_error_operator(char *error, char *operator);
 /// @param metachar 
 /// @param dup 
 /// @return 1 to signify not valid
-int	syntax_error_token(char *error, char metachar, int dup);
+int		syntax_error_token(char *error, char metachar, int dup);
 
 /// @brief Checks input for unexpected tokens tied to redirections
 /// @param input 
 /// @param i 
 /// @return 1 if not valid, 0 if valid
-int	unexpected_token_redir(char *input, int *i);
+int		unexpected_token_redir(char *input, int *i);
 
 /*EXECUTER_UTILS--------------------------------------------------------------*/
 
@@ -214,9 +213,15 @@ void	execute_single_cmd(t_minishell *mini, t_list *env, char *input);
 /// @param env
 void	executer(t_minishell *mini, t_list *env);
 
+/*EXPANDER--------------------------------------------------------------------*/
 
-char    *expander(char *arg, t_minishell *mini);
-
+/// @brief Checks arg for any '$' and expands the variable to the respective
+/// value found in env, takes quotes into consideration.
+/// Expansion does not happen if '$' is found between single quotes.
+/// @param arg 
+/// @param mini 
+/// @return A new string with the epanded variables from env
+char	*expander(char *arg, t_minishell *mini);
 
 /*HANDLE_HEREDOC--------------------------------------------------------------*/
 
@@ -254,7 +259,7 @@ void	input_handler(t_minishell *mini, char *input, t_list *env);
 /// @param mini
 /// @param env
 /// @return 0 if no valid input, 1 if valid 
-int	read_input(t_minishell *mini, t_list *env);
+int		read_input(t_minishell *mini, t_list *env);
 
 /*PARSER_UTILS----------------------------------------------------------------*/
 
@@ -271,8 +276,7 @@ size_t	ft_meta_strlen(char *str);
 /// @brief Checks @param name to see if the command is a built-in
 /// @param name
 /// @return 1 if it is a built-in, 0 if not
-int is_builtin(char *name);
-
+int		is_builtin(char *name);
 
 /*SPLIT_META------------------------------------------------------------------*/
 
@@ -281,7 +285,7 @@ int is_builtin(char *name);
 /// @param str 
 /// @param c 
 /// @return Number of words
-int	ft_wordcount_meta(char *str, char c);
+int		ft_wordcount_meta(char *str, char c);
 
 /// @brief Splits @param s by @param c, takes quotes into account
 /// @param s 
@@ -289,9 +293,17 @@ int	ft_wordcount_meta(char *str, char c);
 /// @return The matrix of all the words
 char	**split_meta(char *s, char c);
 
+/*UTILS-----------------------------------------------------------------------*/
 
-
+/// @brief Checks the quote value and modifies it accordingly
+/// @param c 
+/// @param quote 
+/// @return New quote value
 char	quote_value(char c, char quote);
+
+/// @brief Checks @param c to see if is a digit or a letter, or '_'
+/// @param c 
+/// @return 1 if true
 int		isalnumextra(int c);
 
 #endif

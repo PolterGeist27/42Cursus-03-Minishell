@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 10:24:53 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/28 12:14:23 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/28 18:25:29 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	input_handler(t_minishell *mini, char *input, t_list *env)
 int	read_input(t_minishell *mini, t_list *env)
 {
 	char		*input;
-	
+
 	input = readline(":> ");
 	if (!input)
 		return (0);

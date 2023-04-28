@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:40:07 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/28 16:06:03 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/28 18:24:53 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ static void	handle_app(char **cmd_args, t_minishell *mini, int *i, int *count)
 		free(file);
 	}
 	else
-		mini->out_fd = open(cmd_args[*i + 1], O_RDWR | O_CREAT | O_APPEND, S_IRWXU);
+		mini->out_fd = open(cmd_args[*i + 1], O_RDWR | O_CREAT | O_APPEND,
+				S_IRWXU);
 	if (mini->out_fd < 0)
 	{
 		ft_putstr_fd("Error creating file\n", 2);
@@ -60,7 +61,8 @@ static void	handle_out(char **cmd_args, t_minishell *mini, int *i, int *count)
 		free(file);
 	}
 	else
-		mini->out_fd = open(cmd_args[*i + 1], O_RDWR | O_CREAT | O_TRUNC, S_IRWXU);
+		mini->out_fd = open(cmd_args[*i + 1], O_RDWR | O_CREAT | O_TRUNC,
+				S_IRWXU);
 	if (mini->out_fd < 0)
 	{
 		ft_putstr_fd("Error creating file\n", 2);

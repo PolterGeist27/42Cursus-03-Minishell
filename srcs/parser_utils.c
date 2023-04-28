@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 14:18:50 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/28 17:34:18 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/28 18:25:11 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ size_t	ft_meta_strlen(char *str)
 	return (len);
 }
 
-int is_builtin(char *name)
+int	is_builtin(char *name)
 {
 	size_t	len;
 
