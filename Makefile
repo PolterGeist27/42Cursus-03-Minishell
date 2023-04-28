@@ -6,7 +6,7 @@
 #    By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/02 12:26:28 by pealexan          #+#    #+#              #
-#    Updated: 2023/04/28 09:55:51 by pealexan         ###   ########.fr        #
+#    Updated: 2023/04/28 12:23:44 by pealexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRC =	env_utils \
 		error_handling2 \
 		executer_utils \
 		executer \
+		expander \
 		handle_heredoc \
 		handle_redirs \
 		input_handler \

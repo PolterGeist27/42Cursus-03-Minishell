@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/28 09:52:30 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/28 13:02:33 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ typedef	struct s_minishell
 	int		cmd_num;
 	int		pipe_num;
 	int		*pipe_fd;
-	pid_t		pid;
+	pid_t	pid;
+	t_list	*env;
 }	t_minishell;
 
 typedef struct s_env
@@ -165,6 +166,11 @@ void	open_pipes(t_minishell *mini);
 /// @param mini
 void	close_pipes(t_minishell *mini);
 
+/// @brief Handles redirections accordingly to the order of pipes
+/// @param mini 
+/// @param i 
+void	redirections(t_minishell *mini, int i);
+
 /// @brief Redirects input by using dup2
 /// @param a
 /// @param b
@@ -206,6 +212,9 @@ void	execute_single_cmd(t_minishell *mini, t_list *env, char *input);
 /// @param mini
 /// @param env
 void	executer(t_minishell *mini, t_list *env);
+
+
+char	*expander(char *cmd, t_list **env);
 
 /*HANDLE_HEREDOC--------------------------------------------------------------*/
 

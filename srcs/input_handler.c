@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 10:24:53 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/28 09:56:44 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/28 12:14:23 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	read_input(t_minishell *mini, t_list *env)
 	char		*input;
 	
 	input = readline(":> ");
+	if (!input)
+		return (0);
 	if (ft_strlen(input) > 0)
 		add_history(input);
 	if (!valid_input(input))

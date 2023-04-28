@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:32:31 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/28 08:54:16 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/28 13:01:41 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,17 @@ void	close_pipes(t_minishell *mini)
 		close(mini->pipe_fd[i]);
 		i++;
 	}
+}
+
+void	redirections(t_minishell *mini, int i)
+{
+	if (i == 0)
+		redirect(mini->in_fd, mini->pipe_fd[1]);
+	else if (i == mini->cmd_num - 1)
+		redirect(mini->pipe_fd[2 * i - 2], mini->out_fd);
+	else
+		redirect(mini->pipe_fd[2 * i - 2], mini->pipe_fd[2 * i + 1]);
+	close_pipes(mini);
 }
 
 void	redirect(int a, int b)

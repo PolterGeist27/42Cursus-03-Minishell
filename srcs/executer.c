@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:17:38 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/28 11:59:30 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/28 13:01:46 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,22 +42,20 @@ void	execute_cmd(t_minishell *mini, t_list *env, char *input, int i)
 	int		pid;
 	char	**cmd_args;
 	char	*command;
+	int		j;
 
+	j = -1;
 	(void)env;
 	pid = fork();
 	if (pid == 0)
 	{
-		if (i == 0)
-			redirect(mini->in_fd, mini->pipe_fd[1]);
-		else if (i == mini->cmd_num - 1)
-			redirect(mini->pipe_fd[2 * i - 2], mini->out_fd);
-		else
-			redirect(mini->pipe_fd[2 * i - 2], mini->pipe_fd[2 * i + 1]);
-		close_pipes(mini);
+		redirections(mini, i);
 		cmd_args = handle_redirs(mini, input);
 		free(input);
 		redirect(mini->in_fd, mini->out_fd);
-		//cmd_args = expander
+		while (cmd_args[++j])
+			if (ft_strrchr(cmd_args[j], '$'))
+				cmd_args[i] = expander(cmd_args[j], &env);
 		/* if (is_builtin(cmd_args[0]))
 			execute_builtin(mini, env, cmd_args[0]); */
 		command = get_command(cmd_args[0], mini);
@@ -98,15 +96,19 @@ void	execute_single_cmd(t_minishell *mini, t_list *env, char *input)
 	int		pid;
 	char	**cmd_args;
 	char	*command;
+	int		i;
 
 	(void)env;
+	i = -1;
 	pid = fork();
 	if (pid == 0)
 	{
 		cmd_args = handle_redirs(mini, input);
 		dup2(mini->in_fd, STDIN_FILENO);
 		dup2(mini->out_fd, STDOUT_FILENO);
-		//cmd_args = expander
+		while (cmd_args[++i])
+			if (ft_strrchr(cmd_args[i], '$'))
+				cmd_args[i] = expander(cmd_args[i], &env);
 		/* if (is_builtin(cmd_args[0]))
 			execute_builtin(mini, env, cmd_args[0]); */
 		command = get_command(cmd_args[0], mini);
