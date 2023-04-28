@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:59:10 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/19 14:32:14 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/28 14:32:24 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	add_to_env(t_list **env, char *info)
 {
-	t_list *new;
+	t_list	*new;
 
 	new = ft_lstnew(ft_create_data(info));
 	ft_lstadd_back(env, new);
@@ -22,7 +22,7 @@ void	add_to_env(t_list **env, char *info)
 
 void	ft_printlist(t_list *list)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	tmp = list;
 	while (tmp != NULL)
@@ -35,11 +35,9 @@ void	ft_printlist(t_list *list)
 char	*get_info_env(t_list **env, char *name)
 {
 	char	*info;
-	int		i;
 	t_list	*tmp;
 
 	tmp = *env;
-	i = 0;
 	while (tmp != NULL)
 	{
 		if (!ft_strncmp(((t_env *)(tmp->content))->name, name, ft_strlen(name)))

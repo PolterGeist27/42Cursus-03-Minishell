@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/20 15:53:01 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/28 20:17:12 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,18 @@
 # include <errno.h>
 # include <string.h>
 
-# define METACHAR "<>& \t\n|()"  //no need to replicate or handle \;
+# define METACHAR "><|"  //no need to replicate or handle \;
+# define REDIR "><"
+# define GGREATER ">>"
+# define LLOWER "<<"
+# define NOTHANDLE "&;(){}*\\"
 
-typedef struct s_command
-{
-	char	*command;
-	char	**arguments;
-	int		in_fd;
-	int		out_fd;
-}	t_command;
+# define UNTOKEN "minishell: syntax error near unexpected token `"
+# define NOSUPPORT "minishell: no support for operator `"
 
-typedef	struct s_minishell
+extern int	g_exit_status;
+
+typedef struct s_minishell
 {
 	char	**args;
 	char	**paths;
@@ -46,88 +47,270 @@ typedef	struct s_minishell
 	int		cmd_num;
 	int		pipe_num;
 	int		*pipe_fd;
+	pid_t	pid;
+	t_list	*env;
+	int		counter;
 }	t_minishell;
-
-
-typedef struct s_env_info
-{
-	char	*home;
-	char	*user;
-	char	*local;
-}	t_env_info;
 
 typedef struct s_env
 {
 	char	*name;
 	char	*info;
-	// Pedro:
-	char	*home;
-	char	*user;
-	char	*local;
-	// end
 }	t_env;
 
-//	echo.c
-void	echo(char *arg, int flag);
+/*ENV_UTILS-------------------------------------------------------------------*/
 
-//	env.c
-t_list	*init_env(char **env);
-t_env	*ft_create_data(char *raw);
-char	*get_name(char *raw);
-int		modify_info(t_list *env, char *name, char *changed_info);
-void	free_env(t_list *env);
-
-//	env_utils.c
-void	add_to_env(t_list **env, char *info);
-void	ft_printlist(t_list *list);
+/// @brief Searches the list for @param name and returns its information
+/// @param env 
+/// @param name 
+/// @return A char * of the information after the '='
 char	*get_info_env(t_list **env, char *name);
 
-//	dir.c
-int		cd(t_list **env, char *path);
-int		pwd(t_list **env);
+/// @brief Prints the env list
+/// @param list 
+void	ft_printlist(t_list *list);
 
-// Pedro:
+/// @brief Adds a new node to env, same as export
+/// @param env 
+/// @param info 
+void	add_to_env(t_list **env, char *info);
 
-void	get_prompt(t_env *envinfo, t_minishell *mini);
-char	*get_cwd(t_env *envinfo);
-void	init_mini(t_minishell *mini, char **env);
-void	get_envvariables(t_env *env);
-void	execute_single_cmd(t_minishell *mini, char *buffer);
-char	*getcommand(char *arg, t_minishell *mini);
-char	**parse_input(t_minishell *mini, char *input);
-void	execute_cmds(t_minishell *mini, char **env);
-void	processes(t_minishell *mini, char **env, char *input);
-void	close_pipes(t_minishell *mini);
+/*ENV-------------------------------------------------------------------------*/
+
+/// @brief Initializes the env list
+/// @param env 
+/// @return Head of the list
+t_list	*init_env(char **env);
+
+/// @brief Creates a node for the list
+/// @param info 
+/// @return The new node
+t_env	*ft_create_data(char *info);
+
+/// @brief Parses info in search of '=', copies the string before the '='
+/// @param info 
+/// @return The string before '='
+char	*get_name(char *info);
+
+/// @brief Alters a node pointed by name and changes its info. Same as export
+/// @param env 
+/// @param name 
+/// @param changed_info 
+/// @return 0 on success, 1 if there's no list
+int		modify_info(t_list *env, char *name, char *changed_info);
+
+/// @brief Cleans all allocated memory for the list
+/// @param env 
+void	free_env(t_list *env);
+
+/*ERROR_HANDLING--------------------------------------------------------------*/
+
+/// @brief Passes input through several validity checks
+/// @param input 
+/// @return 0 if not valid, 1 if valid
+int		valid_input(char *input);
+
+/// @brief Checks simple syntax like, metacharacter on start or end of input
+/// @param input 
+/// @return 1 if not valid, 0 if valid
+int		invalid_syntax(char *input);
+
+/// @brief Checks if there are any unclosed quotes
+/// @param input 
+/// @return 1 if unclosed quptes, 0 if valid
+int		check_quotes(char *input);
+
+/// @brief Checks input for operators that are not supported by the scope of
+/// the project
+/// @param input 
+/// @return 1 if not valid, 0 if valid
+int		no_support_operators(char *input);
+
+/// @brief Checks input for any unexpeteced token errors like in bash
+/// @param input 
+/// @return 1 if not valid, 0 if valid
+int		unexpected_tokens(char *input);
+
+/*ERROR_HANDLING2-------------------------------------------------------------*/
+
+/// @brief Prints the error message pointed to by @param error and the its
+/// respective @param operator
+/// @param error 
+/// @param operator
+/// @return 1 to signify not valid
+int		syntax_error_operator(char *error, char *operator);
+
+/// @brief Prints the error message pointed to by @param error and the its
+/// respective @param metachar, if @param dup, prints @param metachar twice
+/// @param error 
+/// @param metachar 
+/// @param dup 
+/// @return 1 to signify not valid
+int		syntax_error_token(char *error, char metachar, int dup);
+
+/// @brief Checks input for unexpected tokens tied to redirections
+/// @param input 
+/// @param i 
+/// @return 1 if not valid, 0 if valid
+int		unexpected_token_redir(char *input, int *i);
+
+/*EXECUTER_UTILS--------------------------------------------------------------*/
+
+/// @brief Prints command not found error, sets exit_status to 127
+/// @param command
+void	command_error(char *command);
+
+/// @brief Opens all necessary pipes
+/// @param	mini
 void	open_pipes(t_minishell *mini);
-void	split_line(t_minishell *mini, char *buffer);
-void	count_pipes(t_minishell *mini, char *buffer);
-void	heredoc(char *limiter, t_minishell *mini);
-void	init_mini(t_minishell *mini, char **env);
+
+/// @brief Closes all pipes so they are not listening for information
+/// @param mini
+void	close_pipes(t_minishell *mini);
+
+/// @brief Handles redirections accordingly to the order of pipes
+/// @param mini 
+/// @param i 
+void	redirections(t_minishell *mini, int i);
+
+/// @brief Redirects input by using dup2
+/// @param a
+/// @param b
+void	redirect(int a, int b);
+
+/*EXECUTER--------------------------------------------------------------------*/
+
+/// @brief Uses the PATH env variable to check if user can execute the specified
+/// command
+/// @param arg
+/// @param mini
+/// @return The command that can be executed, if no command is found return 0
+char	*get_command(char *arg, t_minishell *mini);
+
+/// @brief Executes piped commands, first redirects accordingly and then checks 
+/// for a valid command and uses execve to execute it
+/// @param mini
+/// @param env
+/// @param input
+/// @param i
+void	execute_cmd(t_minishell *mini, char *input, int i);
+
+/// @brief Creates all necessary pipes, opens them and passes arguments to 
+/// execute_cmd
+/// @param mini
+/// @param env
+/// @param input
+/// @param i
+void	execute_multi_cmds(t_minishell *mini);
+
+/// @brief Executes when there are no pipes, first redirects accordingly and 
+/// then checks for a valid command and uses execve to execute it 
+/// @param mini
+/// @param env
+/// @param input
+void	execute_single_cmd(t_minishell *mini, char *input);
+
+/// @brief Checks if there are any pipes to call the respective function
+/// @param mini
+/// @param env
+void	executer(t_minishell *mini);
+
+/*EXPANDER--------------------------------------------------------------------*/
+
+/// @brief Checks arg for any '$' and expands the variable to the respective
+/// value found in env, takes quotes into consideration.
+/// Expansion does not happen if '$' is found between single quotes.
+/// @param arg 
+/// @param mini 
+/// @return A new string with the epanded variables from env
+char	*expander(char *arg, t_minishell *mini);
+
+/*HANDLE_HEREDOC--------------------------------------------------------------*/
+
+/// @brief Handles the here_doc functionality similarly to bash
+/// @param cmd_args
+/// @param mini
+/// @param i
+/// @param count
+void	handle_heredoc(char **cmd_args, t_minishell *mini, int *i, int *count);
+
+/*HANDLE_REDIRS---------------------------------------------------------------*/
+
+/// @brief Shifts @param cmd_args accordingly, removing all redirections from it
+/// @param cmd_args
+/// @param i
+/// @param count
+void	shift_redir(char **cmd_args, int *i, int *count);
+
+/// @brief Splits input accordingly and then parses each char* to check if any 
+/// redirections need to be done, calls the respective function for each case
+/// @param mini
+/// @param input
+/// @return The result of the split input without any possible redirections
+char	**handle_redirs(t_minishell *mini, char *input);
+
+/*INPUT_HANDLER---------------------------------------------------------------*/
+
+/// @brief Initializes the needed values for the struct mini
+/// @param mini
+/// @param input
+/// @param env
+void	input_handler(t_minishell *mini, char *input);
+
+/// @brief Reads the input by using readline
+/// @param mini
+/// @param env
+/// @return 0 if no valid input, 1 if valid 
+int		read_input(t_minishell *mini);
+
+/*PARSER_UTILS----------------------------------------------------------------*/
+
+/// @brief Adds whitespaces before and after any redirection operator
+/// @param str
+/// @return The string with the added whitespaces
+char	*add_whitespaces(char *str);
+
+/// @brief Counts the strlen of str and adds +3 if any redir is found
+/// @param str
+/// @return The final size of the string
+size_t	ft_meta_strlen(char *str);
+
+/// @brief Checks @param name to see if the command is a built-in
+/// @param name
+/// @return 1 if it is a built-in, 0 if not
+int		is_builtin(char *name);
+
+/*SPLIT_META------------------------------------------------------------------*/
+
+/// @brief Counts the amonut of words that exist in @param str, takes quotes 
+/// into account
+/// @param str 
+/// @param c 
+/// @return Number of words
+int		ft_wordcount_meta(char *str, char c);
+
+/// @brief Splits @param s by @param c, takes quotes into account
+/// @param s 
+/// @param c 
+/// @return The matrix of all the words
+char	**split_meta(char *s, char c);
+
+/*UTILS-----------------------------------------------------------------------*/
+
+/// @brief Checks the quote value and modifies it accordingly
+/// @param c 
+/// @param quote 
+/// @return New quote value
+char	quote_value(char c, char quote);
+
+/// @brief Checks @param c to see if is a digit or a letter, or '_'
+/// @param c 
+/// @return 1 if true
+int		isalnumextra(int c);
+
+/// @brief Waits for all child processes to terminate, sets the exit_status
+/// accordingly
+/// @param  
+void	get_exit_status(void);
 
 #endif
-
-/*
-BUILT-INS
-	◦ echo with option -n
-	◦ cd with only a relative or absolute path
-	◦ pwd with no options
-	◦ export with no options
-	◦ unset with no options
-	◦ env with no options or arguments
-	◦ exit with no options
-
-SHORTCUTS
-	◦ ctrl-C displays a new prompt on a new line.
-	◦ ctrl-D exits the shell.
-	◦ ctrl-\ does nothing.
-
-REDIRECTIONS
-	◦ < should redirect input.
-	◦ > should redirect output.
-	◦ << should be given a delimiter, then read the input until a line containing the
-		delimiter is seen. However, it doesn’t have to update the history!
-	◦ >> should redirect output in append mode.
-
-PIPES
-	Implement pipes (| character)
-*/

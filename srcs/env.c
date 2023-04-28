@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 15:17:16 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/19 14:27:00 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/28 14:32:32 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_list	*init_env(char **env)
 
 	i = 0;
 	head = NULL;
-	ft_lstadd_back(&head ,ft_lstnew(ft_create_data(env[i])));
+	ft_lstadd_back(&head, ft_lstnew(ft_create_data(env[i])));
 	tmp = head;
 	i++;
 	while (env[i] != NULL)

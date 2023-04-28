@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+         #
+#    By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/14 08:46:18 by pealexan          #+#    #+#              #
-#    Updated: 2023/04/20 16:15:33 by diogmart         ###   ########.fr        #
+#    Updated: 2023/04/28 14:28:20 by pealexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

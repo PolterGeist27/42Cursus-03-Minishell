@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+         #
+#    By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/02 12:26:28 by pealexan          #+#    #+#              #
-#    Updated: 2023/04/20 16:22:18 by diogmart         ###   ########.fr        #
+#    Updated: 2023/04/28 17:44:31 by pealexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,13 +19,20 @@ LIBFTDIR = ./libft/
 INCDIR = ./includes/
 
 #----------SRCS----------#
-SRC =	main \
-		echo \
+SRC =	env_utils \
 		env \
-		env_utils \
-		dir \
-		minishell \
-		prompt \
+		error_handling \
+		error_handling2 \
+		executer_utils \
+		executer \
+		expander \
+		handle_heredoc \
+		handle_redirs \
+		input_handler \
+		main \
+		parser_utils \
+		split_meta \
+		utils \
 
 SRCS = $(addprefix ${SRCDIR}, $(addsuffix .c, ${SRC}))
 
@@ -56,7 +63,7 @@ $(LIBFT):
 			@cd $(LIBFTDIR) && $(MAKE)
 
 $(NAME): 	$(LIBFT) $(OBJS)
-			@$(CC) $(CFLAGS) $(EXTRA) $(OBJS) $(LIBFTDIR)$(LIBFT) -o $(NAME)
+			@$(CC) $(CFLAGS) $(OBJS) $(LIBFTDIR)$(LIBFT) $(EXTRA) -o $(NAME)
 
 clean:
 			@$(RM) $(OBJS) $(BONUS_OBJ)
