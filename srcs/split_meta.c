@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 08:28:52 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/28 09:55:23 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/28 12:09:19 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,7 @@ char	**split_meta(char *s, char c)
 		while (*s && *s == c)
 			s++;
 		if (*s)
-			s = get_word(s, c, &words[j]);
-		j++;
+			s = get_word(s, c, &words[j++]);
 	}
 	words[j] = 0;
 	return (words);
