@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 17:30:23 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/28 18:09:14 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/28 20:17:25 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,18 @@ int	isalnumextra(int c)
 		return (1);
 	else
 		return (0);
+}
+
+void	get_exit_status(void)
+{
+	pid_t	i;
+	int		status;
+
+	i = 1;
+	while (i > 0)
+	{
+		i = waitpid(0, &status, 0);
+		if (WIFEXITED(status))
+			g_exit_status = WEXITSTATUS(status);
+	}
 }

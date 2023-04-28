@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 15:26:25 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/28 18:23:14 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/28 20:13:31 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ static void	total_length2(char *arg, int *i, int *len, t_minishell *mini)
 		free(temp);
 		*i += j;
 	}
-	/* else
+	else
 	{
-		temp = ft_itoa(exit_status);
+		temp = ft_itoa(g_exit_status);
 		len += ft_strlen(temp);
 		free(temp);
-		*i++;
-	} */
+		*i += 1;
+	}
 }
 
 static int	total_length(char *arg, t_minishell *mini)
@@ -59,20 +59,18 @@ static int	total_length(char *arg, t_minishell *mini)
 	return (len);
 }
 
-/* static void expand_exit_status(char *result, t_minishell *mini, int i)
- {
-    int len;
-    int k;
-    char    *value;
-    
-    len = 0;
-    value = ft_itoa(exit_status);
-    k = -1;
-    while (value[++k])
-        result[mini->counter++] = value[k];
-    free(value);
-    i = i + 2;
-} */
+static void	expand_exit_status(char *result, t_minishell *mini, int *i)
+{
+	int		k;
+	char	*value;
+
+	value = ft_itoa(g_exit_status);
+	k = -1;
+	while (value[++k])
+		result[mini->counter++] = value[k];
+	free(value);
+	*i += 1;
+}
 
 static void	expand_variable(char *arg, char *result, int *i, t_minishell *mini)
 {
@@ -97,8 +95,8 @@ static void	expand_variable(char *arg, char *result, int *i, t_minishell *mini)
 				result[mini->counter++] = value[k];
 		}
 	}
-	/* else
-		expand_exit_status(result, mini, i); */
+	else
+		expand_exit_status(result, mini, i);
 }
 
 char	*expander(char *arg, t_minishell *mini)

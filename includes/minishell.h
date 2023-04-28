@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/28 18:19:00 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/28 20:17:12 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@
 
 # define UNTOKEN "minishell: syntax error near unexpected token `"
 # define NOSUPPORT "minishell: no support for operator `"
+
+extern int	g_exit_status;
 
 typedef struct s_minishell
 {
@@ -191,7 +193,7 @@ char	*get_command(char *arg, t_minishell *mini);
 /// @param env
 /// @param input
 /// @param i
-void	execute_cmd(t_minishell *mini, t_list *env, char *input, int i);
+void	execute_cmd(t_minishell *mini, char *input, int i);
 
 /// @brief Creates all necessary pipes, opens them and passes arguments to 
 /// execute_cmd
@@ -199,19 +201,19 @@ void	execute_cmd(t_minishell *mini, t_list *env, char *input, int i);
 /// @param env
 /// @param input
 /// @param i
-void	execute_multi_cmds(t_minishell *mini, t_list *env);
+void	execute_multi_cmds(t_minishell *mini);
 
 /// @brief Executes when there are no pipes, first redirects accordingly and 
 /// then checks for a valid command and uses execve to execute it 
 /// @param mini
 /// @param env
 /// @param input
-void	execute_single_cmd(t_minishell *mini, t_list *env, char *input);
+void	execute_single_cmd(t_minishell *mini, char *input);
 
 /// @brief Checks if there are any pipes to call the respective function
 /// @param mini
 /// @param env
-void	executer(t_minishell *mini, t_list *env);
+void	executer(t_minishell *mini);
 
 /*EXPANDER--------------------------------------------------------------------*/
 
@@ -253,13 +255,13 @@ char	**handle_redirs(t_minishell *mini, char *input);
 /// @param mini
 /// @param input
 /// @param env
-void	input_handler(t_minishell *mini, char *input, t_list *env);
+void	input_handler(t_minishell *mini, char *input);
 
 /// @brief Reads the input by using readline
 /// @param mini
 /// @param env
 /// @return 0 if no valid input, 1 if valid 
-int		read_input(t_minishell *mini, t_list *env);
+int		read_input(t_minishell *mini);
 
 /*PARSER_UTILS----------------------------------------------------------------*/
 
@@ -305,5 +307,10 @@ char	quote_value(char c, char quote);
 /// @param c 
 /// @return 1 if true
 int		isalnumextra(int c);
+
+/// @brief Waits for all child processes to terminate, sets the exit_status
+/// accordingly
+/// @param  
+void	get_exit_status(void);
 
 #endif

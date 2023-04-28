@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:17:38 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/28 16:03:32 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/28 19:46:03 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*get_command(char *arg, t_minishell *mini)
 	return (0);
 }
 
-void	execute_cmd(t_minishell *mini, t_list *env, char *input, int i)
+void	execute_cmd(t_minishell *mini, char *input, int i)
 {
 	int		pid;
 	char	**cmd_args;
@@ -45,7 +45,6 @@ void	execute_cmd(t_minishell *mini, t_list *env, char *input, int i)
 	int		j;
 
 	j = -1;
-	(void)env;
 	pid = fork();
 	if (pid == 0)
 	{
@@ -65,12 +64,11 @@ void	execute_cmd(t_minishell *mini, t_list *env, char *input, int i)
 	}
 }
 
-void	execute_multi_cmds(t_minishell *mini, t_list *env)
+void	execute_multi_cmds(t_minishell *mini)
 {
 	int		i;
 	char	*cmd;
 
-	(void)env;
 	i = 0;
 	mini->pipe_fd = (int *)malloc(sizeof(int) * mini->pipe_num * 2);
 	if (!mini->pipe_fd)
@@ -83,7 +81,7 @@ void	execute_multi_cmds(t_minishell *mini, t_list *env)
 	while (mini->args[i])
 	{
 		cmd = add_whitespaces(mini->args[i]);
-		execute_cmd(mini, env, cmd, i);
+		execute_cmd(mini, cmd, i);
 		free(cmd);
 		i++;
 	}
@@ -91,14 +89,13 @@ void	execute_multi_cmds(t_minishell *mini, t_list *env)
 	free(mini->pipe_fd);
 }
 
-void	execute_single_cmd(t_minishell *mini, t_list *env, char *input)
+void	execute_single_cmd(t_minishell *mini, char *input)
 {
 	int		pid;
 	char	**cmd_args;
 	char	*command;
 	int		i;
 
-	(void)env;
 	i = -1;
 	pid = fork();
 	if (pid == 0)
@@ -118,17 +115,17 @@ void	execute_single_cmd(t_minishell *mini, t_list *env, char *input)
 	}
 }
 
-void	executer(t_minishell *mini, t_list *env)
+void	executer(t_minishell *mini)
 {
 	char	*cmd;
 
 	cmd = 0;
 	if (mini->pipe_num > 0)
-		execute_multi_cmds(mini, env);
+		execute_multi_cmds(mini);
 	else
 	{
 		cmd = add_whitespaces(mini->args[0]);
-		execute_single_cmd(mini, env, cmd);
+		execute_single_cmd(mini, cmd);
 		free(cmd);
 	}
 }
