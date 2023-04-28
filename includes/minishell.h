@@ -6,11 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/04/28 17:31:08 by pealexan         ###   ########.fr       */
-=======
-/*   Updated: 2023/04/28 14:27:52 by pealexan         ###   ########.fr       */
->>>>>>> e11f75c97ece293ebc82574bfe4ebad2647387d8
+/*   Updated: 2023/04/28 18:09:58 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +48,7 @@ typedef	struct s_minishell
 	int		*pipe_fd;
 	pid_t	pid;
 	t_list	*env;
+	int		counter;
 }	t_minishell;
 
 typedef struct s_env
@@ -295,6 +292,6 @@ char	**split_meta(char *s, char c);
 
 
 char	quote_value(char c, char quote);
-
+int		isalnumextra(int c);
 
 #endif
