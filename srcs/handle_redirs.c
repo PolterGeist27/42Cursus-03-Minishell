@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:40:07 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/28 12:50:36 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/28 16:06:03 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	handle_app(char **cmd_args, t_minishell *mini, int *i, int *count)
 
 	if (ft_strrchr(cmd_args[*i + 1], '$'))
 	{
-		file = expander(cmd_args[*i + 1], &mini->env);
+		file = expander(cmd_args[*i + 1], mini);
 		mini->out_fd = open(file, O_RDWR | O_CREAT | O_APPEND, S_IRWXU);
 		free(file);
 	}
@@ -55,7 +55,7 @@ static void	handle_out(char **cmd_args, t_minishell *mini, int *i, int *count)
 
 	if (ft_strrchr(cmd_args[*i + 1], '$'))
 	{
-		file = expander(cmd_args[*i + 1], &mini->env);
+		file = expander(cmd_args[*i + 1], mini);
 		mini->out_fd = open(file, O_RDWR | O_CREAT | O_TRUNC, S_IRWXU);
 		free(file);
 	}
@@ -76,7 +76,7 @@ static void	handle_in(char **cmd_args, t_minishell *mini, int *i, int *count)
 
 	if (ft_strrchr(cmd_args[*i + 1], '$'))
 	{
-		file = expander(cmd_args[*i + 1], &mini->env);
+		file = expander(cmd_args[*i + 1], mini);
 		mini->in_fd = open(file, O_RDONLY);
 		free(file);
 	}

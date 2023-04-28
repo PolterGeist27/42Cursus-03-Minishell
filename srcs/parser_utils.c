@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 14:18:50 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/28 09:39:55 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/28 17:34:18 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,7 @@ char	*add_whitespaces(char *str)
 	result = (char *)malloc(sizeof(char) * (ft_meta_strlen(str) + 1));
 	while (str[i])
 	{
-		if (ft_strrchr("\"\'", str[i]) && !quote)
-			quote = str[i];
-		else if (ft_strrchr("\"\'", str[i]) && quote == str[i])
-			quote = 0;
+		quote = quote_value(str[i], quote);
 		if (!quote && ft_strchr(REDIR, str[i]))
 		{
 			result[j++] = ' ';

@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 08:56:49 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/28 09:51:14 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/28 17:33:51 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ int	unexpected_tokens(char *input)
 	quote = 0;
 	while (input[++i])
 	{
-		if (ft_strrchr("\"\'", input[i]) && !quote)
-			quote = input[i];
-		else if (ft_strrchr("\"\'", input[i]) && quote == input[i])
-			quote = 0;
+		quote = quote_value(input[i], quote);
 		if (input[i] == '|' && input[i + 1] == ' ' && !quote)
 		{
 			i++;
@@ -49,10 +46,7 @@ int	no_support_operators(char *input)
 	quote = 0;
 	while (input[++i])
 	{
-		if (ft_strrchr("\"\'", input[i]) && !quote)
-			quote = input[i];
-		else if (ft_strrchr("\"\'", input[i]) && quote == input[i])
-			quote = 0;
+		quote = quote_value(input[i], quote);
 		if (i + 1 < (int)ft_strlen(input)
 			&& input[i] == '|' && input [i + 1] == '|' && !quote)
 			return (syntax_error_operator(NOSUPPORT, "||"));

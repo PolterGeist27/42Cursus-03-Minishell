@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:17:38 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/28 13:01:46 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/28 16:03:32 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	execute_cmd(t_minishell *mini, t_list *env, char *input, int i)
 		redirect(mini->in_fd, mini->out_fd);
 		while (cmd_args[++j])
 			if (ft_strrchr(cmd_args[j], '$'))
-				cmd_args[i] = expander(cmd_args[j], &env);
+				cmd_args[i] = expander(cmd_args[j], mini);
 		/* if (is_builtin(cmd_args[0]))
 			execute_builtin(mini, env, cmd_args[0]); */
 		command = get_command(cmd_args[0], mini);
@@ -108,7 +108,7 @@ void	execute_single_cmd(t_minishell *mini, t_list *env, char *input)
 		dup2(mini->out_fd, STDOUT_FILENO);
 		while (cmd_args[++i])
 			if (ft_strrchr(cmd_args[i], '$'))
-				cmd_args[i] = expander(cmd_args[i], &env);
+				cmd_args[i] = expander(cmd_args[i], mini);
 		/* if (is_builtin(cmd_args[0]))
 			execute_builtin(mini, env, cmd_args[0]); */
 		command = get_command(cmd_args[0], mini);

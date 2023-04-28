@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/28 13:02:33 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/28 17:31:08 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,8 @@ void	execute_single_cmd(t_minishell *mini, t_list *env, char *input);
 void	executer(t_minishell *mini, t_list *env);
 
 
-char	*expander(char *cmd, t_list **env);
+char    *expander(char *arg, t_minishell *mini);
+
 
 /*HANDLE_HEREDOC--------------------------------------------------------------*/
 
@@ -286,5 +287,10 @@ int	ft_wordcount_meta(char *str, char c);
 /// @param c 
 /// @return The matrix of all the words
 char	**split_meta(char *s, char c);
+
+
+
+char	quote_value(char c, char quote);
+
 
 #endif

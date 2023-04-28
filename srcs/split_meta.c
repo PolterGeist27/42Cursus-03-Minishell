@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 08:28:52 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/28 12:09:19 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/28 17:35:07 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,7 @@ int	ft_wordcount_meta(char *str, char c)
 			wordcount++;
 		while ((str[i] && str[i] != c) || quote)
 		{
-			if (ft_strrchr("\"\'", str[i]) && !quote)
-				quote = str[i];
-			else if (ft_strrchr("\"\'", str[i]) && quote == str[i])
-				quote = 0;
+			quote = quote_value(str[i], quote);
 			i++;
 		}
 	}
@@ -48,10 +45,7 @@ static int	ft_wordlen(char *str, char c)
 	quote = 0;
 	while ((str[i] && (str[i] != c)) || quote)
 	{
-		if (ft_strrchr("\"\'", str[i]) && !quote)
-			quote = str[i];
-		else if (ft_strrchr("\"\'", str[i]) && quote == str[i])
-			quote = 0;
+		quote = quote_value(str[i], quote);
 		i++;
 	}
 	return (i);
@@ -65,10 +59,7 @@ static char	*get_word(char *s, char c, char **words)
 	*words = ft_substr(s, 0, ft_wordlen(s, c));
 	while ((*s && *s != c) || quote)
 	{
-		if (ft_strrchr("\"\'", *s) && !quote)
-			quote = *s;
-		else if (ft_strrchr("\"\'", *s) && quote == *s)
-			quote = 0;
+		quote = quote_value(*s, quote);
 		s++;
 	}
 	return (s);
