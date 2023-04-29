@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 08:28:52 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/28 17:35:07 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/29 15:09:06 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_wordcount_meta(char *str, char c)
 			i++;
 		if (str[i])
 			wordcount++;
-		while ((str[i] && str[i] != c) || quote)
+		while ((str[i] && str[i] != c) || (str[i] && quote))
 		{
 			quote = quote_value(str[i], quote);
 			i++;
@@ -43,7 +43,7 @@ static int	ft_wordlen(char *str, char c)
 
 	i = 0;
 	quote = 0;
-	while ((str[i] && (str[i] != c)) || quote)
+	while ((str[i] && (str[i] != c)) || (str[i] && quote))
 	{
 		quote = quote_value(str[i], quote);
 		i++;
@@ -57,7 +57,7 @@ static char	*get_word(char *s, char c, char **words)
 
 	quote = 0;
 	*words = ft_substr(s, 0, ft_wordlen(s, c));
-	while ((*s && *s != c) || quote)
+	while ((*s && *s != c) || (*s && quote))
 	{
 		quote = quote_value(*s, quote);
 		s++;

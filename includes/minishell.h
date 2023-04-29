@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/29 12:45:53 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/29 15:46:16 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,6 +277,13 @@ char	**handle_redirs(t_minishell *mini, char *input);
 /// @param env
 /// @return 0 if no valid input, 1 if valid 
 int		read_input(t_minishell *mini);
+
+/*QUOTE_REMOVER---------------------------------------------------------------*/
+
+/// @brief Removes quotes from the string
+/// @param arg 
+/// @return New string with no quotes
+char	*remove_quotes(char *arg);
 
 /*SPLIT_META------------------------------------------------------------------*/
 

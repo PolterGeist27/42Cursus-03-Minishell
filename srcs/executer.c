@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:17:38 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/29 14:02:04 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/29 14:06:03 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ void	execute_multi_cmds(t_minishell *mini)
 		free(cmd);
 		i++;
 	}
-	//free(cmd);
 	close_pipes(mini);
 }
 

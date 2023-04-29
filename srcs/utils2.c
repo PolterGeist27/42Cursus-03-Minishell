@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 14:18:50 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/29 11:48:40 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/29 14:26:47 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@ void	expand_args(char **cmd_args, t_minishell *mini)
 	while (cmd_args[++i])
 		if (ft_strrchr(cmd_args[i], '$'))
 			cmd_args[i] = expander(cmd_args[i], mini);
+	i = -1;
+	while (cmd_args[++i])
+		if (ft_strrchr(cmd_args[i], '\'') || ft_strrchr(cmd_args[i], '\"'))
+			cmd_args[i] = remove_quotes(cmd_args[i]);
 }
 
 char	*add_whitespaces(char *str)

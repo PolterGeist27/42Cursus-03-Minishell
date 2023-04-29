@@ -6,7 +6,7 @@
 #    By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/02 12:26:28 by pealexan          #+#    #+#              #
-#    Updated: 2023/04/29 11:51:04 by pealexan         ###   ########.fr        #
+#    Updated: 2023/04/29 14:23:26 by pealexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRC =	env_utils \
 		handle_redirs \
 		input_handler \
 		main \
+		quote_remover \
 		split_meta \
 		utils \
 		utils2 \
