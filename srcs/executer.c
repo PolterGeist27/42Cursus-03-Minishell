@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:17:38 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/29 13:22:52 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/29 14:02:04 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ void	execute_cmd(t_minishell *mini, char *input, int i)
 	pid = fork();
 	if (pid == 0)
 	{
-		redirections(mini, i);
 		cmd_args = handle_redirs(mini, input);
 		free(input);
+		redirections(mini, i);
 		redirect(mini->in_fd, mini->out_fd);
 		expand_args(cmd_args, mini);
 		if (!cmd_args[0])

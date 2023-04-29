@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 08:50:57 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/29 13:34:58 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/29 13:55:14 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ static void	heredoc(t_minishell *mini, char **cmd_args, char *limiter)
 		if (!ft_strncmp(limiter, buff, ft_strlen(limiter) + 1))
 			break ;
 		ft_putendl_fd(buff, tempfile);
-		/* write(tempfile, buff, ft_strlen(buff));
-		write(tempfile, "\n", 1); */
 		free(buff);
 	}
 	free(buff);

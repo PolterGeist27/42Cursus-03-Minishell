@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:40:07 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/29 13:52:57 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/29 13:59:00 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	shift_redir(char **cmd_args, int *i, int *count)
 	int	index;
 
 	index = *i;
-	if (index <= *count - 2)
+	if (*count - 2 <= 0)
 	{
 		free(cmd_args[0]);
 		free(cmd_args[1]);
