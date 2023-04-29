@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:40:07 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/29 12:16:45 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/29 13:21:20 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ char	**handle_redirs(t_minishell *mini, char *input)
 	i = 0;
 	count = ft_wordcount_meta(input, ' ');
 	cmd_args = split_meta(input, ' ');
-	free(input);
 	while (cmd_args[i])
 	{
 		if (ft_strncmp(cmd_args[i], "<", ft_strlen(cmd_args[i])) == 0)

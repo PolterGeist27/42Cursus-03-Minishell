@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:17:38 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/29 12:52:37 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/29 13:22:52 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	execute_cmd(t_minishell *mini, char *input, int i)
 	{
 		redirections(mini, i);
 		cmd_args = handle_redirs(mini, input);
+		free(input);
 		redirect(mini->in_fd, mini->out_fd);
 		expand_args(cmd_args, mini);
 		if (!cmd_args[0])
@@ -85,7 +86,7 @@ void	execute_multi_cmds(t_minishell *mini)
 		free(cmd);
 		i++;
 	}
-	free(cmd);
+	//free(cmd);
 	close_pipes(mini);
 }
 
@@ -99,6 +100,7 @@ void	execute_single_cmd(t_minishell *mini, char *input)
 	if (pid == 0)
 	{
 		cmd_args = handle_redirs(mini, input);
+		free(input);
 		redirect(mini->in_fd, mini->out_fd);
 		expand_args(cmd_args, mini);
 		if (!cmd_args[0])
