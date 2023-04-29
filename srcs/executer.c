@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:17:38 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/29 12:14:40 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/29 12:46:17 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	execute_cmd(t_minishell *mini, char *input, int i)
 		if (!cmd_args[0])
 			free_child(mini, cmd_args, 1);
 		if (ft_strrchr(cmd_args[0], '/'))
-			if (!check_files(cmd_args[0]))
+			if (!check_files(cmd_args, mini))
 				file_error(cmd_args, mini);
 		/* if (is_builtin(cmd_args[0]))
 			execute_builtin(mini, env, cmd_args[0]); */
@@ -103,7 +103,7 @@ void	execute_single_cmd(t_minishell *mini, char *input)
 		if (!cmd_args[0])
 			free_child(mini, cmd_args, 1);
 		if (ft_strrchr(cmd_args[0], '/'))
-			if (!check_files(cmd_args[0]))
+			if (!check_files(cmd_args, mini))
 				file_error(cmd_args, mini);
 		/* if (is_builtin(cmd_args[0]))
 			execute_builtin(mini, env, cmd_args[0]); */
@@ -125,6 +125,6 @@ void	executer(t_minishell *mini)
 	{
 		cmd = add_whitespaces(mini->args[0]);
 		execute_single_cmd(mini, cmd);
-		free(cmd);
+		//free(cmd);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/29 11:50:39 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/29 12:45:53 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,13 +168,18 @@ void	command_error(char *command, char **cmd_args, t_minishell *mini);
 /// @param mini 
 void	file_error(char ** cmd_args, t_minishell *mini);
 
+/// @brief Prints Is a directory error, sets exit status to 126
+/// @param cmd_args 
+/// @param mini 
+void	is_a_directory(char **cmd_args, t_minishell *mini);
+
 /*EXECUTER_UTILS--------------------------------------------------------------*/
 
 /// @brief Checks if the file pointed to by arg exists
 /// @param arg 
 /// @param mini 
 /// @return 1 if file exists
-int		check_files(char *arg);
+int		check_files(char **args, t_minishell *mini);
 
 /// @brief Opens all necessary pipes
 /// @param	mini

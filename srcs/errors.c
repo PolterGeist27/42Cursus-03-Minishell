@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 10:38:26 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/29 12:17:12 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/29 12:42:34 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,13 @@ void	file_error(char **cmd_args, t_minishell *mini)
 	free_child(mini, cmd_args, 0);
 	g_exit_status = 127;
 	exit(127);
+}
+
+void	is_a_directory(char **cmd_args, t_minishell *mini)
+{
+	ft_putstr_fd(cmd_args[0], 2);
+	ft_putstr_fd(": Is a directory\n", 2);
+	free_child(mini, cmd_args, 0);
+	g_exit_status = 126;
+	exit(126);
 }
