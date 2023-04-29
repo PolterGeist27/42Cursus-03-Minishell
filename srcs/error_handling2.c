@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 08:57:44 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/28 08:54:16 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/29 12:13:07 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	unexpected_token_redir(char *input, int *i)
 	if (input[*i] == ' ')
 		while (input[*i] && input [*i] == ' ')
 			(*i)++;
-	if (input[*i - 1] == '<' && input[*i] == '|')
+	if (input[*i] == '|')
 		return (syntax_error_token(UNTOKEN, '|', 0));
 	else if (input[*i - 1] == '>' && input[*i] == '|')
 		return (syntax_error_operator(NOSUPPORT, ">|"));

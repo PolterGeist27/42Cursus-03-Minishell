@@ -6,7 +6,7 @@
 #    By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/02 12:26:28 by pealexan          #+#    #+#              #
-#    Updated: 2023/04/28 17:44:31 by pealexan         ###   ########.fr        #
+#    Updated: 2023/04/29 11:51:04 by pealexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC =	env_utils \
 		env \
 		error_handling \
 		error_handling2 \
+		errors \
 		executer_utils \
 		executer \
 		expander \
@@ -30,9 +31,9 @@ SRC =	env_utils \
 		handle_redirs \
 		input_handler \
 		main \
-		parser_utils \
 		split_meta \
 		utils \
+		utils2 \
 
 SRCS = $(addprefix ${SRCDIR}, $(addsuffix .c, ${SRC}))
 

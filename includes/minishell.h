@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/28 20:17:12 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/29 11:50:39 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_minishell
 	pid_t	pid;
 	t_list	*env;
 	int		counter;
+	int		heredoc;
 }	t_minishell;
 
 typedef struct s_env
@@ -154,11 +155,26 @@ int		syntax_error_token(char *error, char metachar, int dup);
 /// @return 1 if not valid, 0 if valid
 int		unexpected_token_redir(char *input, int *i);
 
-/*EXECUTER_UTILS--------------------------------------------------------------*/
+/*ERRORS----------------------------------------------------------------------*/
 
 /// @brief Prints command not found error, sets exit_status to 127
-/// @param command
-void	command_error(char *command);
+/// @param command 
+/// @param cmd_args 
+/// @param mini 
+void	command_error(char *command, char **cmd_args, t_minishell *mini);
+
+/// @brief Prints No such file or directory error, sets exit status to 127 
+/// @param cmd_args 
+/// @param mini 
+void	file_error(char ** cmd_args, t_minishell *mini);
+
+/*EXECUTER_UTILS--------------------------------------------------------------*/
+
+/// @brief Checks if the file pointed to by arg exists
+/// @param arg 
+/// @param mini 
+/// @return 1 if file exists
+int		check_files(char *arg);
 
 /// @brief Opens all necessary pipes
 /// @param	mini
@@ -251,34 +267,11 @@ char	**handle_redirs(t_minishell *mini, char *input);
 
 /*INPUT_HANDLER---------------------------------------------------------------*/
 
-/// @brief Initializes the needed values for the struct mini
-/// @param mini
-/// @param input
-/// @param env
-void	input_handler(t_minishell *mini, char *input);
-
 /// @brief Reads the input by using readline
 /// @param mini
 /// @param env
 /// @return 0 if no valid input, 1 if valid 
 int		read_input(t_minishell *mini);
-
-/*PARSER_UTILS----------------------------------------------------------------*/
-
-/// @brief Adds whitespaces before and after any redirection operator
-/// @param str
-/// @return The string with the added whitespaces
-char	*add_whitespaces(char *str);
-
-/// @brief Counts the strlen of str and adds +3 if any redir is found
-/// @param str
-/// @return The final size of the string
-size_t	ft_meta_strlen(char *str);
-
-/// @brief Checks @param name to see if the command is a built-in
-/// @param name
-/// @return 1 if it is a built-in, 0 if not
-int		is_builtin(char *name);
 
 /*SPLIT_META------------------------------------------------------------------*/
 
@@ -312,5 +305,38 @@ int		isalnumextra(int c);
 /// accordingly
 /// @param  
 void	get_exit_status(void);
+
+/// @brief Frees all allocated memory in the child process, exiting it
+/// @param mini 
+/// @param cmd_args 
+/// @param i 
+void	free_child(t_minishell *mini, char **cmd_args, int i);
+
+/// @brief Frees all allocated memory in the main process
+/// @param mini
+void	free_main(t_minishell *mini);
+
+/*UTILS2----------------------------------------------------------------------*/
+
+/// @brief Adds whitespaces before and after any redirection operator
+/// @param str
+/// @return The string with the added whitespaces
+char	*add_whitespaces(char *str);
+
+/// @brief Counts the strlen of str and adds +3 if any redir is found
+/// @param str
+/// @return The final size of the string
+size_t	ft_meta_strlen(char *str);
+
+/// @brief Checks @param name to see if the command is a built-in
+/// @param name
+/// @return 1 if it is a built-in, 0 if not
+int		is_builtin(char *name);
+
+/// @brief Iterates through @param cmd_args and expands if needed, also removes
+/// quotes
+/// @param cmd_args 
+/// @param mini 
+void	expand_args(char **cmd_args, t_minishell *mini);
 
 #endif

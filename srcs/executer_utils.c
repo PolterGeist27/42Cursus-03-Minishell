@@ -6,19 +6,20 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:32:31 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/28 19:56:00 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/29 12:14:58 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	command_error(char *command)
+int	check_files(char *arg)
 {
-	ft_putstr_fd(command, 2);
-	//free(command);
-	ft_putstr_fd(": command not found\n", 2);
-	g_exit_status = 127;
-	exit(127);
+	struct stat	statbuf;
+
+	if (stat(arg, &statbuf) == 0)
+		return (1);
+	else
+		return (0);
 }
 
 void	open_pipes(t_minishell *mini)
@@ -31,7 +32,7 @@ void	open_pipes(t_minishell *mini)
 		if (pipe(mini->pipe_fd + (2 * i)) < 0)
 		{
 			ft_putstr_fd("Pipe creation failed\n", 2);
-			//clean_function
+			free_child(mini, 0, 0);
 			exit(1);
 		}
 		i++;

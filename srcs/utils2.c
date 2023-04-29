@@ -1,16 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_utils.c                                     :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 14:18:50 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/28 18:25:11 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/29 11:48:40 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	expand_args(char **cmd_args, t_minishell *mini)
+{
+	int	i;
+
+	i = -1;
+	while (cmd_args[++i])
+		if (ft_strrchr(cmd_args[i], '$'))
+			cmd_args[i] = expander(cmd_args[i], mini);
+}
 
 char	*add_whitespaces(char *str)
 {

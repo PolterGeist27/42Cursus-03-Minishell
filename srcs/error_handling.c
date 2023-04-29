@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 08:56:49 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/28 17:33:51 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/29 08:42:36 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	unexpected_tokens(char *input)
 		if (input[i] == '|' && input[i + 1] == ' ' && !quote)
 		{
 			i++;
-			while (input[i] == ' ')
+			while (input[i] && input[i] == ' ')
 				i++;
 			if (input[i] == '|')
 				return (syntax_error_token(UNTOKEN, '|', 0));
