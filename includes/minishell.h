@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/29 15:46:16 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/30 17:24:38 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ char	*get_command(char *arg, t_minishell *mini);
 /// @param env
 /// @param input
 /// @param i
-void	execute_cmd(t_minishell *mini, char *input, int i);
+void	execute_cmd(t_minishell *mini, char **cmd_args, int i);
 
 /// @brief Creates all necessary pipes, opens them and passes arguments to 
 /// execute_cmd
@@ -229,7 +229,7 @@ void	execute_multi_cmds(t_minishell *mini);
 /// @param mini
 /// @param env
 /// @param input
-void	execute_single_cmd(t_minishell *mini, char *input);
+void	execute_single_cmd(t_minishell *mini, char **cmd_args);
 
 /// @brief Checks if there are any pipes to call the respective function
 /// @param mini
@@ -350,5 +350,13 @@ int		is_builtin(char *name);
 /// @param cmd_args 
 /// @param mini 
 void	expand_args(char **cmd_args, t_minishell *mini);
+
+
+void	builtin_exit(t_minishell *mini, char **cmd_args, int i);
+void	check_exit(t_minishell *mini, char **args);
+
+void    builtin_env(t_minishell *mini, char **cmd_args);
+int		execute_builtin(t_minishell *mini, char **cmd_args);
+
 
 #endif

@@ -6,7 +6,7 @@
 #    By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/14 08:46:18 by pealexan          #+#    #+#              #
-#    Updated: 2023/04/28 14:28:20 by pealexan         ###   ########.fr        #
+#    Updated: 2023/04/30 16:15:47 by pealexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRCS =	ft_abs.c \
 	ft_isalpha.c \
 	ft_isascii.c \
 	ft_isdigit.c \
+	ft_isnumeric.c \
 	ft_isprint.c \
 	ft_isquote.c \
 	ft_isspace.c \

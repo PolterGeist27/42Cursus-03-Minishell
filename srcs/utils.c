@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 17:30:23 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/29 13:44:09 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/30 17:28:31 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	get_exit_status(void)
 		i = waitpid(0, &status, 0);
 		if (WIFEXITED(status))
 			g_exit_status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			g_exit_status = 128 + WTERMSIG(status);
 	}
 }
 
@@ -55,7 +57,10 @@ void	free_child(t_minishell *mini, char **cmd_args, int i)
 	ft_free_split(mini->args);
 	free_env(mini->env);
 	if (i == 1)
+	{
+		g_exit_status = 1;
 		exit(1);
+	}
 }
 
 void	free_main(t_minishell *mini)

@@ -6,7 +6,7 @@
 #    By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/02 12:26:28 by pealexan          #+#    #+#              #
-#    Updated: 2023/04/29 14:23:26 by pealexan         ###   ########.fr        #
+#    Updated: 2023/04/30 12:05:14 by pealexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRC =	env_utils \
 		error_handling \
 		error_handling2 \
 		errors \
+		executer_builtin \
 		executer_utils \
 		executer \
 		expander \
@@ -35,6 +36,8 @@ SRC =	env_utils \
 		split_meta \
 		utils \
 		utils2 \
+		builtins/builtin_exit \
+		builtins/builtin_env \
 
 SRCS = $(addprefix ${SRCDIR}, $(addsuffix .c, ${SRC}))
 

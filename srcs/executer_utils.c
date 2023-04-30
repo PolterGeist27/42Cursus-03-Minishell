@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:32:31 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/29 12:44:31 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/30 16:48:32 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,18 @@ int	check_files(char **args, t_minishell *mini)
 {
 	struct stat	statbuf;
 
-	if (stat(args[0], &statbuf) == 0)
+	if (ft_strrchr(args[0], '/'))
 	{
-		if (S_ISDIR(statbuf.st_mode))
-			is_a_directory(args, mini);
-		return (1);
+		if (stat(args[0], &statbuf) == 0)
+		{
+			if (S_ISDIR(statbuf.st_mode))
+				is_a_directory(args, mini);
+			return (1);
+		}
+		else
+			return (0);
 	}
-	else
-		return (0);
+	return (1);
 }
 
 void	open_pipes(t_minishell *mini)

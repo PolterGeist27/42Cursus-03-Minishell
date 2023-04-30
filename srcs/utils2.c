@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 14:18:50 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/29 14:26:47 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/30 14:15:21 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,6 @@ int	is_builtin(char *name)
 	if (ft_strncmp(name, "env", len) == 0)
 		return (1);
 	if (ft_strncmp(name, "exit", len) == 0)
-		return (1);
+		return (5);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:40:07 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/29 13:59:00 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/30 16:11:50 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	shift_redir(char **cmd_args, int *i, int *count)
 		cmd_args[index] = ft_strdup(cmd_args[index + 2]);
 		index++;
 	}
+	free(cmd_args[index]);
+	free(cmd_args[index + 1]);
 	*count = *count - 2;
 	cmd_args[index] = 0;
 	*i = -1;
@@ -108,6 +110,7 @@ char	**handle_redirs(t_minishell *mini, char *input)
 	i = 0;
 	count = ft_wordcount_meta(input, ' ');
 	cmd_args = split_meta(input, ' ');
+	free(input);
 	while (cmd_args[i])
 	{
 		if (ft_strncmp(cmd_args[i], "<", ft_strlen(cmd_args[i])) == 0)
