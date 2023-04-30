@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 10:20:43 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/30 19:16:38 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/01 00:17:38 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,6 @@ static void	update_env(t_minishell *mini, char *path)
 	modify_info(mini->env, "PWD", new_pwd);
 	free(old_pwd);
 	free(new_pwd);
-}
-
-void	check_cd(t_minishell *mini, char **cmd_args)
-{
-	int		status;
-	int		i;
-
-	i = 0;
-	while (cmd_args[i])
-		i++;
-	wait(&status);
-	if (WIFEXITED(status))
-		g_exit_status = WEXITSTATUS(status);
-	if (g_exit_status == 0)
-	{
-		if (i == 1)
-			update_env(mini, get_info_env(&mini->env, "HOME"));
-		else
-			update_env(mini, cmd_args[1]);
-	}
 }
 
 static void	cd_error(t_minishell *mini, char **cmd_args)
@@ -64,6 +44,26 @@ static void	cd_error(t_minishell *mini, char **cmd_args)
 		g_exit_status = 1;
 		free_child(mini, cmd_args, 0);
 		exit (1);
+	}
+}
+
+void	check_cd(t_minishell *mini, char **cmd_args)
+{
+	int		status;
+	int		i;
+
+	i = 0;
+	while (cmd_args[i])
+		i++;
+	wait(&status);
+	if (WIFEXITED(status))
+		g_exit_status = WEXITSTATUS(status);
+	if (g_exit_status == 0)
+	{
+		if (i == 1)
+			update_env(mini, get_info_env(&mini->env, "HOME"));
+		else
+			update_env(mini, cmd_args[1]);
 	}
 }
 

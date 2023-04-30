@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:32:31 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/30 16:48:32 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/30 22:10:11 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	check_files(char **args, t_minishell *mini)
 {
 	struct stat	statbuf;
 
-	if (ft_strrchr(args[0], '/'))
+	if (ft_strrchr(args[0], '/') || !mini->paths)
 	{
 		if (stat(args[0], &statbuf) == 0)
 		{

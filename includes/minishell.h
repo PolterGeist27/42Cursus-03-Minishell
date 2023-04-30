@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/30 21:57:12 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/30 23:36:13 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char	*get_name(char *info);
 /// @param name 
 /// @param changed_info 
 /// @return 0 on success, 1 if there's no list
-int		modify_info(t_list *env, char *name, char *changed_info);
+int	modify_info(t_list *env, char *name, char *changed_info);
 
 /// @brief Cleans all allocated memory for the list
 /// @param env 
@@ -415,5 +415,9 @@ void	check_exit(t_minishell *mini, char **args);
 void	builtin_pwd(t_minishell *mini, char **cmd_args);
 
 /*BUILTIN_UNSET---------------------------------------------------------------*/
+
+void	check_unset(t_minishell *mini, char **cmd_args);
+void	builtin_unset(t_minishell *mini, char **cmd_args);
+
 
 #endif
