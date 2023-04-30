@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 14:18:50 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/30 14:15:21 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/30 18:57:51 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,26 +75,4 @@ size_t	ft_meta_strlen(char *str)
 		i++;
 	}
 	return (len);
-}
-
-int	is_builtin(char *name)
-{
-	size_t	len;
-
-	len = ft_strlen(name);
-	if (ft_strncmp(name, "echo", len) == 0)
-		return (1);
-	if (ft_strncmp(name, "cd", len) == 0)
-		return (1);
-	if (ft_strncmp(name, "pwd", len) == 0)
-		return (1);
-	if (ft_strncmp(name, "export", len) == 0)
-		return (1);
-	if (ft_strncmp(name, "unset", len) == 0)
-		return (1);
-	if (ft_strncmp(name, "env", len) == 0)
-		return (1);
-	if (ft_strncmp(name, "exit", len) == 0)
-		return (5);
-	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/30 17:24:38 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/30 19:29:11 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,12 +166,31 @@ void	command_error(char *command, char **cmd_args, t_minishell *mini);
 /// @brief Prints No such file or directory error, sets exit status to 127 
 /// @param cmd_args 
 /// @param mini 
-void	file_error(char ** cmd_args, t_minishell *mini);
+void	file_error(char **cmd_args, t_minishell *mini);
 
 /// @brief Prints Is a directory error, sets exit status to 126
 /// @param cmd_args 
 /// @param mini 
 void	is_a_directory(char **cmd_args, t_minishell *mini);
+
+/*EXECUTER_BUILTIN------------------------------------------------------------*/
+
+/// @brief Executes the corresponding builtin function, @param i is set to
+/// diferentiate printing of "exit" when exit is called.
+/// @param mini 
+/// @param cmd_args 
+/// @param i 
+void	execute_builtin(t_minishell *mini, char **cmd_args, int i);
+
+/// @brief Performs a check on the parent process for the correct builtin
+/// @param mini 
+/// @param cmd_args 
+void	check_builtin(t_minishell *mini, char **cmd_args);
+
+/// @brief Checks @param name to see if the command is a built-in
+/// @param name
+/// @return 1 if it is a built-in, 0 if not
+int		is_builtin(char *name);
 
 /*EXECUTER_UTILS--------------------------------------------------------------*/
 
@@ -326,7 +345,7 @@ void	free_child(t_minishell *mini, char **cmd_args, int i);
 
 /// @brief Frees all allocated memory in the main process
 /// @param mini
-void	free_main(t_minishell *mini);
+void	free_main(t_minishell *mini, int i);
 
 /*UTILS2----------------------------------------------------------------------*/
 
@@ -340,23 +359,61 @@ char	*add_whitespaces(char *str);
 /// @return The final size of the string
 size_t	ft_meta_strlen(char *str);
 
-/// @brief Checks @param name to see if the command is a built-in
-/// @param name
-/// @return 1 if it is a built-in, 0 if not
-int		is_builtin(char *name);
-
 /// @brief Iterates through @param cmd_args and expands if needed, also removes
 /// quotes
 /// @param cmd_args 
 /// @param mini 
 void	expand_args(char **cmd_args, t_minishell *mini);
 
+/*BUILTIN_CD------------------------------------------------------------------*/
 
+/// @brief Performs all error checks for the builtin command "cd", sets 
+/// g_exit_status accordingly
+/// @param mini 
+/// @param cmd_args 
+void	builtin_cd(t_minishell *mini, char **cmd_args);
+
+/// @brief Executes the necessary changes on the parent process based on 
+/// g_exit_status. Changes to a different directory
+/// @param mini 
+/// @param cmd_args 
+void	check_cd(t_minishell *mini, char **cmd_args);
+
+/*BUILTIN_ECHO----------------------------------------------------------------*/
+
+/*BUILTIN_ENV-----------------------------------------------------------------*/
+
+/// @brief Performs all error checks for the builtin command "env", prints
+/// the current env variables
+/// @param mini 
+/// @param cmd_args 
+void	builtin_env(t_minishell *mini, char **cmd_args);
+
+/*BUILTIN_EXIT----------------------------------------------------------------*/
+
+/// @brief Performs all error checks for the builtin command "exit", sets 
+/// g_exit_status accordingly. Exist the shell
+/// @param mini 
+/// @param cmd_args 
+/// @param i 
 void	builtin_exit(t_minishell *mini, char **cmd_args, int i);
+
+/// @brief Executes the necessary changes on the parent process based on 
+/// g_exit_status
+/// @param mini 
+/// @param cmd_args 
 void	check_exit(t_minishell *mini, char **args);
 
-void    builtin_env(t_minishell *mini, char **cmd_args);
-int		execute_builtin(t_minishell *mini, char **cmd_args);
+/*BUILTIN_EXPORT--------------------------------------------------------------*/
 
+/*BUILTIN_PWD-----------------------------------------------------------------*/
+
+/// @brief Performs all error checks for the builtin command "pwd", prints 
+/// the current working directory
+/// @param mini 
+/// @param cmd_args 
+void	builtin_pwd(t_minishell *mini, char **cmd_args);
+
+/*BUILTIN_UNSET---------------------------------------------------------------*/
 
 #endif

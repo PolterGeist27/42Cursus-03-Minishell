@@ -6,7 +6,7 @@
 #    By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/02 12:26:28 by pealexan          #+#    #+#              #
-#    Updated: 2023/04/30 12:05:14 by pealexan         ###   ########.fr        #
+#    Updated: 2023/04/30 18:14:41 by pealexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,8 +36,10 @@ SRC =	env_utils \
 		split_meta \
 		utils \
 		utils2 \
+		builtins/builtin_cd \
 		builtins/builtin_exit \
 		builtins/builtin_env \
+		builtins/builtin_pwd \
 
 SRCS = $(addprefix ${SRCDIR}, $(addsuffix .c, ${SRC}))
 

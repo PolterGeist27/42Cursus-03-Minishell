@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 10:21:35 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/30 17:29:25 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/30 19:14:14 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,15 @@ void	check_exit(t_minishell *mini, char **cmd_args)
 {
 	int		status;
 
-	expand_args(cmd_args, mini);
-	if (is_builtin(cmd_args[0]) == 5)
+	wait(&status);
+	if (WIFEXITED(status))
+		g_exit_status = WEXITSTATUS(status);
+	if (g_exit_status != 1)
 	{
-		wait(&status);
-		if (WIFEXITED(status))
-			g_exit_status = WEXITSTATUS(status);
 		ft_free_split(cmd_args);
-		if (g_exit_status != 1)
-		{
-			free_main(mini);
-			exit (g_exit_status);
-		}
+		free_main(mini, 1);
+		exit (g_exit_status);
 	}
-	else
-		ft_free_split(cmd_args);
 }
 
 static void	exit_error3(t_minishell *mini, char **cmd_args)

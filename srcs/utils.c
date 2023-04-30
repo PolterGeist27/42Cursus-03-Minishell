@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 17:30:23 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/30 17:28:31 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/30 19:14:01 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,13 @@ void	free_child(t_minishell *mini, char **cmd_args, int i)
 	}
 }
 
-void	free_main(t_minishell *mini)
+void	free_main(t_minishell *mini, int i)
 {
 	if (mini->pipe_fd)
 		free(mini->pipe_fd);
 	unlink(".heredoc");
 	ft_free_split(mini->paths);
 	ft_free_split(mini->args);
-	free_env(mini->env);
+	if (i == 1)
+		free_env(mini->env);
 }
