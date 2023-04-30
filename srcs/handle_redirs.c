@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:40:07 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/30 16:11:50 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/30 22:01:26 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	shift_redir(char **cmd_args, int *i, int *count)
 	{
 		free(cmd_args[0]);
 		free(cmd_args[1]);
-	}	
+	}
 	while (index < *count - 2)
 	{
 		free(cmd_args[index]);
@@ -37,14 +37,11 @@ void	shift_redir(char **cmd_args, int *i, int *count)
 
 static void	handle_app(char **cmd_args, t_minishell *mini, int *i, int *count)
 {
-	char	*file;
-
 	if (ft_strrchr(cmd_args[*i + 1], '$'))
 	{
-		file = expander(cmd_args[*i + 1], mini);
-		mini->out_fd = open(file, O_RDWR | O_CREAT | O_APPEND,
+		cmd_args[*i + 1] = expander(cmd_args[*i + 1], mini);
+		mini->out_fd = open(cmd_args[*i + 1], O_RDWR | O_CREAT | O_APPEND,
 				S_IRUSR | S_IWUSR);
-		free(file);
 	}
 	else
 		mini->out_fd = open(cmd_args[*i + 1], O_RDWR | O_CREAT | O_APPEND,
@@ -59,14 +56,11 @@ static void	handle_app(char **cmd_args, t_minishell *mini, int *i, int *count)
 
 static void	handle_out(char **cmd_args, t_minishell *mini, int *i, int *count)
 {
-	char	*file;
-
 	if (ft_strrchr(cmd_args[*i + 1], '$'))
 	{
-		file = expander(cmd_args[*i + 1], mini);
-		mini->out_fd = open(file, O_RDWR | O_CREAT | O_TRUNC,
+		cmd_args[*i + 1] = expander(cmd_args[*i + 1], mini);
+		mini->out_fd = open(cmd_args[*i + 1], O_RDWR | O_CREAT | O_TRUNC,
 				S_IRUSR | S_IWUSR);
-		free(file);
 	}
 	else
 		mini->out_fd = open(cmd_args[*i + 1], O_RDWR | O_CREAT | O_TRUNC,
@@ -81,13 +75,10 @@ static void	handle_out(char **cmd_args, t_minishell *mini, int *i, int *count)
 
 static void	handle_in(char **cmd_args, t_minishell *mini, int *i, int *count)
 {
-	char	*file;
-
 	if (ft_strrchr(cmd_args[*i + 1], '$'))
 	{
-		file = expander(cmd_args[*i + 1], mini);
-		mini->in_fd = open(file, O_RDONLY);
-		free(file);
+		cmd_args[*i + 1] = expander(cmd_args[*i + 1], mini);
+		mini->in_fd = open(cmd_args[*i + 1], O_RDONLY);
 	}
 	else
 		mini->in_fd = open(cmd_args[*i + 1], O_RDONLY);
@@ -108,6 +99,8 @@ char	**handle_redirs(t_minishell *mini, char *input)
 	int		count;
 
 	i = 0;
+	mini->in_fd = 0;
+	mini->out_fd = 1;
 	count = ft_wordcount_meta(input, ' ');
 	cmd_args = split_meta(input, ' ');
 	free(input);
