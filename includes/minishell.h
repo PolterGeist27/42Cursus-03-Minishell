@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/30 23:36:13 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/01 09:16:08 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -380,6 +380,8 @@ void	builtin_cd(t_minishell *mini, char **cmd_args);
 void	check_cd(t_minishell *mini, char **cmd_args);
 
 /*BUILTIN_ECHO----------------------------------------------------------------*/
+
+void	builtin_echo(t_minishell *mini, char **cmd_args);
 
 /*BUILTIN_ENV-----------------------------------------------------------------*/
 
