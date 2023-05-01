@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 10:38:26 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/29 12:42:34 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/01 10:48:54 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	command_error(char *command, char **cmd_args, t_minishell *mini)
 
 void	file_error(char **cmd_args, t_minishell *mini)
 {
+	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd_args[0], 2);
 	ft_putstr_fd(": No such file or directory\n", 2);
 	free_child(mini, cmd_args, 0);
