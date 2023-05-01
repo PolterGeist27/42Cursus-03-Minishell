@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:59:10 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/28 14:32:24 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/01 10:22:29 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ char	*get_info_env(t_list **env, char *name)
 	tmp = *env;
 	while (tmp != NULL)
 	{
-		if (!ft_strncmp(((t_env *)(tmp->content))->name, name, ft_strlen(name)))
+		if (!ft_strncmp(name, ((t_env *)(tmp->content))->name,
+			ft_strlen(((t_env *)(tmp->content))->name)))
 		{
 			info = ft_strchr(((t_env *)(tmp->content))->info, '=');
 			info++;

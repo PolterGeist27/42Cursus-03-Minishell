@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 10:18:58 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/01 09:58:02 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/01 10:38:15 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ static void	echo_multi_args2(char **cmd_args, int i)
 			printf("\n");
 			break ;
 		}
-		ft_putstr(" ");
+		if (cmd_args[j - 1][0] != 0)
+			ft_putstr(" ");
 	}
 }
 
@@ -34,7 +35,8 @@ static void	echo_multi_args(char **cmd_args, int i)
 	int	j;
 
 	j = 1;
-	if (!ft_strncmp(cmd_args[1], "-n", ft_strlen(cmd_args[1])))
+	if (!ft_strncmp(cmd_args[1], "-n", ft_strlen(cmd_args[1]))
+		&& cmd_args[1][0] != 0)
 	{
 		j++;
 		while (cmd_args[j])
@@ -60,7 +62,8 @@ void	builtin_echo(t_minishell *mini, char **cmd_args)
 		printf("\n");
 	else if (i == 2)
 	{
-		if (!ft_strncmp(cmd_args[1], "-n", ft_strlen(cmd_args[1])))
+		if (!ft_strncmp(cmd_args[1], "-n", ft_strlen(cmd_args[1]))
+			&& cmd_args[1][0] != 0)
 			ft_putstr("");
 		else
 			ft_putendl_fd(cmd_args[1], 1);

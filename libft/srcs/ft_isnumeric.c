@@ -6,13 +6,13 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 16:14:09 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/30 16:18:25 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/01 10:41:28 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/libft.h"
 
-int		ft_isnumeric(char *str)
+int	ft_isnumeric(char *str)
 {
 	int	i;
 

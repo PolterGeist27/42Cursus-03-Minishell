@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/01 09:16:08 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/01 10:26:18 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef struct s_env
 
 /*ENV_UTILS-------------------------------------------------------------------*/
 
-/// @brief Searches the list for @param name and returns its information
+/// @brief Searches the list for name and returns its information
 /// @param env 
 /// @param name 
 /// @return A char * of the information after the '='
@@ -134,15 +134,15 @@ int		unexpected_tokens(char *input);
 
 /*ERROR_HANDLING2-------------------------------------------------------------*/
 
-/// @brief Prints the error message pointed to by @param error and the its
-/// respective @param operator
+/// @brief Prints the error message pointed to by error and the its
+/// respective operator
 /// @param error 
 /// @param operator
 /// @return 1 to signify not valid
 int		syntax_error_operator(char *error, char *operator);
 
-/// @brief Prints the error message pointed to by @param error and the its
-/// respective @param metachar, if @param dup, prints @param metachar twice
+/// @brief Prints the error message pointed to by error and the its
+/// respective metachar, if dup, prints metachar twice
 /// @param error 
 /// @param metachar 
 /// @param dup 
@@ -175,7 +175,7 @@ void	is_a_directory(char **cmd_args, t_minishell *mini);
 
 /*EXECUTER_BUILTIN------------------------------------------------------------*/
 
-/// @brief Executes the corresponding builtin function, @param i is set to
+/// @brief Executes the corresponding builtin function, i is set to
 /// diferentiate printing of "exit" when exit is called.
 /// @param mini 
 /// @param cmd_args 
@@ -187,7 +187,7 @@ void	execute_builtin(t_minishell *mini, char **cmd_args, int i);
 /// @param cmd_args 
 void	check_builtin(t_minishell *mini, char **cmd_args);
 
-/// @brief Checks @param name to see if the command is a built-in
+/// @brief Checks name to see if the command is a built-in
 /// @param name
 /// @return 1 if it is a built-in, 0 if not
 int		is_builtin(char *name);
@@ -276,7 +276,7 @@ void	handle_heredoc(char **cmd_args, t_minishell *mini, int *i, int *count);
 
 /*HANDLE_REDIRS---------------------------------------------------------------*/
 
-/// @brief Shifts @param cmd_args accordingly, removing all redirections from it
+/// @brief Shifts cmd_args accordingly, removing all redirections from it
 /// @param cmd_args
 /// @param i
 /// @param count
@@ -306,7 +306,7 @@ char	*remove_quotes(char *arg);
 
 /*SPLIT_META------------------------------------------------------------------*/
 
-/// @brief Counts the amonut of words that exist in @param str, takes quotes 
+/// @brief Counts the amonut of words that exist in str, takes quotes 
 /// into account
 /// @param str 
 /// @param c 
@@ -327,7 +327,7 @@ char	**split_meta(char *s, char c);
 /// @return New quote value
 char	quote_value(char c, char quote);
 
-/// @brief Checks @param c to see if is a digit or a letter, or '_'
+/// @brief Checks c to see if is a digit or a letter, or '_'
 /// @param c 
 /// @return 1 if true
 int		isalnumextra(int c);
@@ -359,7 +359,7 @@ char	*add_whitespaces(char *str);
 /// @return The final size of the string
 size_t	ft_meta_strlen(char *str);
 
-/// @brief Iterates through @param cmd_args and expands if needed, also removes
+/// @brief Iterates through cmd_args and expands if needed, also removes
 /// quotes
 /// @param cmd_args 
 /// @param mini 
@@ -381,6 +381,9 @@ void	check_cd(t_minishell *mini, char **cmd_args);
 
 /*BUILTIN_ECHO----------------------------------------------------------------*/
 
+/// @brief Prints the arguments to the standard output. Same as "echo"
+/// @param mini 
+/// @param cmd_args 
 void	builtin_echo(t_minishell *mini, char **cmd_args);
 
 /*BUILTIN_ENV-----------------------------------------------------------------*/
