@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/01 10:26:18 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/01 15:01:35 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,11 @@ typedef struct s_env
 }	t_env;
 
 /*ENV_UTILS-------------------------------------------------------------------*/
+
+/// @brief Converts the env linked list to a char**
+/// @param mini 
+/// @return The arrays of strings containing env
+char	**convert_env(t_minishell *mini);
 
 /// @brief Searches the list for name and returns its information
 /// @param env 
@@ -411,6 +416,31 @@ void	check_exit(t_minishell *mini, char **args);
 
 /*BUILTIN_EXPORT--------------------------------------------------------------*/
 
+/// @brief Performs all error checks for the builtin command "export", adds
+/// new variables to the env list, also prints declared variables
+/// @param mini 
+/// @param cmd_args 
+void	builtin_export(t_minishell *mini, char **cmd_args);
+
+/*BUILTIN_EXPORT2-------------------------------------------------------------*/
+
+/// @brief Changes the env list accordingly
+/// @param mini 
+/// @param info 
+void	change_env(t_minishell *mini, char *info);
+
+/// @brief Checks if str is a valid input for the export command
+/// @param str 
+/// @return 1 if valid
+int		check_validity(char *str);
+
+/// @brief Executes the necessary changes on the parent process based on 
+/// g_exit_status
+/// @param mini 
+/// @param cmd_args 
+void	check_export(t_minishell *mini, char **cmd_args);
+
+
 /*BUILTIN_PWD-----------------------------------------------------------------*/
 
 /// @brief Performs all error checks for the builtin command "pwd", prints 
@@ -421,8 +451,16 @@ void	builtin_pwd(t_minishell *mini, char **cmd_args);
 
 /*BUILTIN_UNSET---------------------------------------------------------------*/
 
+/// @brief Executes the necessary changes on the parent process based on 
+/// g_exit_status
+/// @param mini 
+/// @param cmd_args 
 void	check_unset(t_minishell *mini, char **cmd_args);
-void	builtin_unset(t_minishell *mini, char **cmd_args);
 
+/// @brief Performs all error checks for the builtin command "unset", removes
+/// a variable from the env list
+/// @param mini 
+/// @param cmd_args 
+void	builtin_unset(t_minishell *mini, char **cmd_args);
 
 #endif

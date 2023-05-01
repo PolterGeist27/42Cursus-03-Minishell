@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 10:16:33 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/01 09:38:21 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/01 14:55:44 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,14 @@ static	void	remove_from_env(t_minishell *mini, char *name)
 	}
 }
 
+static void	unset_error(t_minishell *mini, char **cmd_args)
+{
+	ft_putstr_fd("minishell: unset: no options supported\n", 2);
+	free_child(mini, cmd_args, 0);
+	g_exit_status = 2;
+	exit (2);
+}
+
 void	check_unset(t_minishell *mini, char **cmd_args)
 {
 	int		status;
@@ -61,14 +69,6 @@ void	check_unset(t_minishell *mini, char **cmd_args)
 			}
 		}
 	}
-}
-
-static void	unset_error(t_minishell *mini, char **cmd_args)
-{
-	ft_putstr_fd("minishell: unset: no options supported\n", 2);
-	free_child(mini, cmd_args, 0);
-	g_exit_status = 2;
-	exit (2);
 }
 
 void	builtin_unset(t_minishell *mini, char **cmd_args)

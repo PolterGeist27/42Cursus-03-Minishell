@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 08:20:07 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/01 09:41:19 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/01 14:48:03 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void	check_builtin(t_minishell *mini, char **cmd_args)
 	expand_args(cmd_args, mini);
 	if (is_builtin(cmd_args[0]) == 2)
 		check_cd(mini, cmd_args);
-	/* else if (is_builtin(cmd_args[0]) == 3)
-		check_export(mini, cmd_args); */
+	else if (is_builtin(cmd_args[0]) == 3)
+		check_export(mini, cmd_args);
 	else if (is_builtin(cmd_args[0]) == 4)
 		check_unset(mini, cmd_args);
 	else if (is_builtin(cmd_args[0]) == 5)
@@ -58,8 +58,8 @@ void	execute_builtin(t_minishell *mini, char **cmd_args, int i)
 		builtin_cd(mini, cmd_args);
 	if (ft_strncmp(cmd_args[0], "pwd", len) == 0)
 		builtin_pwd(mini, cmd_args);
-//	if (ft_strncmp(cmd_args[0], "export", len) == 0)
-//		builtin_export(mini, cmd_args);
+	if (ft_strncmp(cmd_args[0], "export", len) == 0)
+		builtin_export(mini, cmd_args);
 	if (ft_strncmp(cmd_args[0], "unset", len) == 0)
 		builtin_unset(mini, cmd_args);
 	if (ft_strncmp(cmd_args[0], "env", len) == 0)

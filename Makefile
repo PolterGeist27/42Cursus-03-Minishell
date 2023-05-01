@@ -6,7 +6,7 @@
 #    By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/02 12:26:28 by pealexan          #+#    #+#              #
-#    Updated: 2023/05/01 09:36:10 by pealexan         ###   ########.fr        #
+#    Updated: 2023/05/01 15:02:07 by pealexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,8 +38,10 @@ SRC =	env_utils \
 		utils2 \
 		builtins/builtin_cd \
 		builtins/builtin_echo \
-		builtins/builtin_exit \
 		builtins/builtin_env \
+		builtins/builtin_exit \
+		builtins/builtin_export \
+		builtins/builtin_export2 \
 		builtins/builtin_pwd \
 		builtins/builtin_unset \
 

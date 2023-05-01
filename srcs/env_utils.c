@@ -6,11 +6,30 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:59:10 by diogmart          #+#    #+#             */
-/*   Updated: 2023/05/01 10:22:29 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/01 14:49:31 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+char	**convert_env(t_minishell *mini)
+{
+	char	**env;
+	t_list	*temp;
+	int		i;
+
+	i = 0;
+	temp = mini->env;
+	env = (char **)malloc(sizeof(char *) * (ft_lstsize(mini->env) + 1));
+	while (temp)
+	{
+		env[i] = ft_strdup(((t_env *)(temp->content))->info);
+		i++;
+		temp = temp->next;
+	}
+	env[i] = 0;
+	return (env);
+}
 
 void	add_to_env(t_list **env, char *info)
 {

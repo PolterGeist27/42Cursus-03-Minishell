@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 10:20:43 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/01 00:17:38 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/01 14:33:19 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,16 @@
 static void	update_env(t_minishell *mini, char *path)
 {
 	char	*old_pwd;
+	char	*temp;
 	char	*new_pwd;
 
-	old_pwd = getcwd(0, 0);
+	temp = getcwd(0, 0);
+	old_pwd = ft_strjoin("OLDPWD=", temp);
+	free(temp);
 	modify_info(mini->env, "OLDPWD", old_pwd);
 	chdir(path);
-	new_pwd = getcwd(0, 0);
+	temp = getcwd(0, 0);
+	new_pwd = ft_strjoin("PWD=", temp);
 	modify_info(mini->env, "PWD", new_pwd);
 	free(old_pwd);
 	free(new_pwd);
