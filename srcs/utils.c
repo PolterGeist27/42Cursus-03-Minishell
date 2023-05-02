@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 17:30:23 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/02 11:37:14 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/02 12:21:00 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	get_exit_status(void)
 	status = 0;
 	while (i > 0)
 	{
-		signal(SIGINT, &handler_child);
+		signal(SIGINT, &handler2);
 		i = waitpid(0, &status, 0);
 		if (WIFEXITED(status))
 			g_exit_status = WEXITSTATUS(status);
@@ -72,7 +72,8 @@ void	free_main(t_minishell *mini, int i)
 	unlink(".heredoc");
 	if (mini->paths)
 		ft_free_split(mini->paths);
-	ft_free_split(mini->args);
+	if (mini->args)
+		ft_free_split(mini->args);
 	if (i == 1)
 		free_env(mini->env);
 }

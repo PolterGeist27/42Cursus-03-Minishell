@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/02 09:42:07 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/02 12:10:03 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,6 +312,7 @@ char	*remove_quotes(char *arg);
 
 /*SIGNALS---------------------------------------------------------------------*/
 
+void	handler2(int sig);
 void	handler(int sig);
 void	handler_child(int sig);
 void	signal_handling(void);

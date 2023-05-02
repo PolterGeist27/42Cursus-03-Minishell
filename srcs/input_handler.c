@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 10:24:53 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/02 07:59:48 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/02 12:14:31 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	read_input(t_minishell *mini)
 	input = readline(prompt);
 	free(prompt);
 	if (!input)
-		return (0);
+		return (-1);
 	if (ft_strlen(input) > 0)
 		add_history(input);
 	trimmed = ft_strtrim(input, " ");

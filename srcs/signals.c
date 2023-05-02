@@ -6,21 +6,33 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 08:57:31 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/02 11:38:39 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/02 12:09:54 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+void	handler2(int sig)
+{
+	if (sig == SIGINT)
+	{
+		ft_putchar_fd('\n', STDOUT_FILENO);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		//rl_redisplay();
+		g_exit_status = 130;
+	}
+}
+
 void	handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		ft_putstr_fd("\n", STDOUT_FILENO);
+		ft_putchar_fd('\n', STDOUT_FILENO);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
-		// exit status 130
+		g_exit_status = 130;
 	}
 }
 
@@ -28,9 +40,9 @@ void	handler_child(int sig)
 {
 	if (sig == SIGINT)
 	{
-		ft_putstr_fd("\n", STDOUT_FILENO);
-		rl_redisplay();
-		//exit(130); //	Don't forget to change exit status
+		ft_putchar_fd('\n', STDOUT_FILENO);
+		g_exit_status = 130;
+		exit(130);
 	}
 }
 
@@ -41,6 +53,7 @@ void	signal_handling(void)
 	sa.sa_flags = SA_RESTART;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_handler = &handler;
+	sigaddset(&sa.sa_mask, SIGINT);
 	sigaction(SIGINT, &sa, NULL);
 	signal(SIGQUIT, SIG_IGN);
 }
