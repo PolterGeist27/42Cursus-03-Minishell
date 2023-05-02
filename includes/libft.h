@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pealexan <pealexan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 15:06:17 by pealexan          #+#    #+#             */
-/*   Updated: 2023/02/22 11:57:03 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/04/30 16:18:29 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int		ft_getlength(unsigned long long n, int base);
 int		ft_wordcount(const char *str, char c);
 int		ft_max(int a, int b);
 int		ft_min(int a, int b);
+int		ft_isnumeric(char *str);
 
 /*-------------------------STRINGS-------------------------*/
 char	**ft_split(char const *s, char c);

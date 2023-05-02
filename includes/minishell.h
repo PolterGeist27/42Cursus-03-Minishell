@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/28 20:17:12 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/02 16:01:00 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <string.h>
+# include <signal.h>
 
 # define METACHAR "><|"  //no need to replicate or handle \;
 # define REDIR "><"
@@ -50,6 +51,8 @@ typedef struct s_minishell
 	pid_t	pid;
 	t_list	*env;
 	int		counter;
+	int		heredoc;
+	int		heredoc_fd;
 }	t_minishell;
 
 typedef struct s_env
@@ -60,7 +63,12 @@ typedef struct s_env
 
 /*ENV_UTILS-------------------------------------------------------------------*/
 
-/// @brief Searches the list for @param name and returns its information
+/// @brief Converts the env linked list to a char**
+/// @param mini 
+/// @return The arrays of strings containing env
+char	**convert_env(t_minishell *mini);
+
+/// @brief Searches the list for name and returns its information
 /// @param env 
 /// @param name 
 /// @return A char * of the information after the '='
@@ -133,15 +141,15 @@ int		unexpected_tokens(char *input);
 
 /*ERROR_HANDLING2-------------------------------------------------------------*/
 
-/// @brief Prints the error message pointed to by @param error and the its
-/// respective @param operator
+/// @brief Prints the error message pointed to by error and the its
+/// respective operator
 /// @param error 
 /// @param operator
 /// @return 1 to signify not valid
 int		syntax_error_operator(char *error, char *operator);
 
-/// @brief Prints the error message pointed to by @param error and the its
-/// respective @param metachar, if @param dup, prints @param metachar twice
+/// @brief Prints the error message pointed to by error and the its
+/// respective metachar, if dup, prints metachar twice
 /// @param error 
 /// @param metachar 
 /// @param dup 
@@ -154,11 +162,50 @@ int		syntax_error_token(char *error, char metachar, int dup);
 /// @return 1 if not valid, 0 if valid
 int		unexpected_token_redir(char *input, int *i);
 
-/*EXECUTER_UTILS--------------------------------------------------------------*/
+/*ERRORS----------------------------------------------------------------------*/
 
 /// @brief Prints command not found error, sets exit_status to 127
-/// @param command
-void	command_error(char *command);
+/// @param command 
+/// @param cmd_args 
+/// @param mini 
+void	command_error(char *command, char **cmd_args, t_minishell *mini);
+
+/// @brief Prints No such file or directory error, sets exit status to 127 
+/// @param cmd_args 
+/// @param mini 
+void	file_error(char **cmd_args, t_minishell *mini);
+
+/// @brief Prints Is a directory error, sets exit status to 126
+/// @param cmd_args 
+/// @param mini 
+void	is_a_directory(char **cmd_args, t_minishell *mini);
+
+/*EXECUTER_BUILTIN------------------------------------------------------------*/
+
+/// @brief Executes the corresponding builtin function, i is set to
+/// diferentiate printing of "exit" when exit is called.
+/// @param mini 
+/// @param cmd_args 
+/// @param i 
+void	execute_builtin(t_minishell *mini, char **cmd_args, int i);
+
+/// @brief Performs a check on the parent process for the correct builtin
+/// @param mini 
+/// @param cmd_args 
+void	check_builtin(t_minishell *mini, char **cmd_args);
+
+/// @brief Checks name to see if the command is a built-in
+/// @param name
+/// @return 1 if it is a built-in, 0 if not
+int		is_builtin(char *name);
+
+/*EXECUTER_UTILS--------------------------------------------------------------*/
+
+/// @brief Checks if the file pointed to by arg exists
+/// @param arg 
+/// @param mini 
+/// @return 1 if file exists
+int		check_files(char **args, t_minishell *mini);
 
 /// @brief Opens all necessary pipes
 /// @param	mini
@@ -193,7 +240,7 @@ char	*get_command(char *arg, t_minishell *mini);
 /// @param env
 /// @param input
 /// @param i
-void	execute_cmd(t_minishell *mini, char *input, int i);
+void	execute_cmd(t_minishell *mini, char **cmd_args, int i);
 
 /// @brief Creates all necessary pipes, opens them and passes arguments to 
 /// execute_cmd
@@ -208,7 +255,7 @@ void	execute_multi_cmds(t_minishell *mini);
 /// @param mini
 /// @param env
 /// @param input
-void	execute_single_cmd(t_minishell *mini, char *input);
+void	execute_single_cmd(t_minishell *mini, char **cmd_args);
 
 /// @brief Checks if there are any pipes to call the respective function
 /// @param mini
@@ -236,7 +283,7 @@ void	handle_heredoc(char **cmd_args, t_minishell *mini, int *i, int *count);
 
 /*HANDLE_REDIRS---------------------------------------------------------------*/
 
-/// @brief Shifts @param cmd_args accordingly, removing all redirections from it
+/// @brief Shifts cmd_args accordingly, removing all redirections from it
 /// @param cmd_args
 /// @param i
 /// @param count
@@ -251,45 +298,43 @@ char	**handle_redirs(t_minishell *mini, char *input);
 
 /*INPUT_HANDLER---------------------------------------------------------------*/
 
-/// @brief Initializes the needed values for the struct mini
-/// @param mini
-/// @param input
-/// @param env
-void	input_handler(t_minishell *mini, char *input);
-
 /// @brief Reads the input by using readline
 /// @param mini
 /// @param env
 /// @return 0 if no valid input, 1 if valid 
 int		read_input(t_minishell *mini);
 
-/*PARSER_UTILS----------------------------------------------------------------*/
+/*QUOTE_REMOVER---------------------------------------------------------------*/
 
-/// @brief Adds whitespaces before and after any redirection operator
-/// @param str
-/// @return The string with the added whitespaces
-char	*add_whitespaces(char *str);
+/// @brief Removes quotes from the string
+/// @param arg 
+/// @return New string with no quotes
+char	*remove_quotes(char *arg);
 
-/// @brief Counts the strlen of str and adds +3 if any redir is found
-/// @param str
-/// @return The final size of the string
-size_t	ft_meta_strlen(char *str);
+/*SIGNALS---------------------------------------------------------------------*/
 
-/// @brief Checks @param name to see if the command is a built-in
-/// @param name
-/// @return 1 if it is a built-in, 0 if not
-int		is_builtin(char *name);
+/// @brief Handler for sigint before child termination, to solve double prompt
+/// @param sig
+void	handler_sigint(int sig);
+
+/// @brief Handler for SIGINT
+/// @param sig
+void	handler(int sig);
+
+/// @brief Handles signals accordingly, uses function "handler" for SIGINT and
+/// ignores "SIGQUIT"
+void	signal_handling(void);
 
 /*SPLIT_META------------------------------------------------------------------*/
 
-/// @brief Counts the amonut of words that exist in @param str, takes quotes 
+/// @brief Counts the amonut of words that exist in str, takes quotes 
 /// into account
 /// @param str 
 /// @param c 
 /// @return Number of words
 int		ft_wordcount_meta(char *str, char c);
 
-/// @brief Splits @param s by @param c, takes quotes into account
+/// @brief Splits s by c, takes quotes into account
 /// @param s 
 /// @param c 
 /// @return The matrix of all the words
@@ -303,7 +348,7 @@ char	**split_meta(char *s, char c);
 /// @return New quote value
 char	quote_value(char c, char quote);
 
-/// @brief Checks @param c to see if is a digit or a letter, or '_'
+/// @brief Checks c to see if is a digit or a letter, or '_'
 /// @param c 
 /// @return 1 if true
 int		isalnumextra(int c);
@@ -312,5 +357,131 @@ int		isalnumextra(int c);
 /// accordingly
 /// @param  
 void	get_exit_status(void);
+
+/// @brief Frees all allocated memory in the child process, exiting it
+/// @param mini 
+/// @param cmd_args 
+/// @param i 
+void	free_child(t_minishell *mini, char **cmd_args, int i);
+
+/// @brief Frees all allocated memory in the main process
+/// @param mini
+void	free_main(t_minishell *mini, int i);
+
+/*UTILS2----------------------------------------------------------------------*/
+
+/// @brief Checks if previous command had an heredoc prompt. Changes 
+/// mini.heredoc accordingly
+/// @param mini 
+/// @param i 
+void	check_heredoc(t_minishell *mini, int i);
+
+/// @brief Adds whitespaces before and after any redirection operator
+/// @param str
+/// @return The string with the added whitespaces
+char	*add_whitespaces(char *str);
+
+/// @brief Counts the strlen of str and adds +3 if any redir is found
+/// @param str
+/// @return The final size of the string
+size_t	ft_meta_strlen(char *str);
+
+/// @brief Iterates through cmd_args and expands if needed, also removes
+/// quotes
+/// @param cmd_args 
+/// @param mini 
+void	expand_args(char **cmd_args, t_minishell *mini);
+
+/*BUILTIN_CD------------------------------------------------------------------*/
+
+/// @brief Performs all error checks for the builtin command "cd", sets 
+/// g_exit_status accordingly
+/// @param mini 
+/// @param cmd_args 
+void	builtin_cd(t_minishell *mini, char **cmd_args);
+
+/// @brief Executes the necessary changes on the parent process based on 
+/// g_exit_status. Changes to a different directory
+/// @param mini 
+/// @param cmd_args 
+void	check_cd(t_minishell *mini, char **cmd_args);
+
+/*BUILTIN_ECHO----------------------------------------------------------------*/
+
+/// @brief Prints the arguments to the standard output. Same as "echo"
+/// @param mini 
+/// @param cmd_args 
+void	builtin_echo(t_minishell *mini, char **cmd_args);
+
+/*BUILTIN_ENV-----------------------------------------------------------------*/
+
+/// @brief Performs all error checks for the builtin command "env", prints
+/// the current env variables
+/// @param mini 
+/// @param cmd_args 
+void	builtin_env(t_minishell *mini, char **cmd_args);
+
+/*BUILTIN_EXIT----------------------------------------------------------------*/
+
+/// @brief Performs all error checks for the builtin command "exit", sets 
+/// g_exit_status accordingly. Exist the shell
+/// @param mini 
+/// @param cmd_args 
+/// @param i 
+void	builtin_exit(t_minishell *mini, char **cmd_args, int i);
+
+/// @brief Executes the necessary changes on the parent process based on 
+/// g_exit_status
+/// @param mini 
+/// @param cmd_args 
+void	check_exit(t_minishell *mini, char **args);
+
+/*BUILTIN_EXPORT--------------------------------------------------------------*/
+
+/// @brief Performs all error checks for the builtin command "export", adds
+/// new variables to the env list, also prints declared variables
+/// @param mini 
+/// @param cmd_args 
+void	builtin_export(t_minishell *mini, char **cmd_args);
+
+/*BUILTIN_EXPORT2-------------------------------------------------------------*/
+
+/// @brief Changes the env list accordingly
+/// @param mini 
+/// @param info 
+void	change_env(t_minishell *mini, char *info);
+
+/// @brief Checks if str is a valid input for the export command
+/// @param str 
+/// @return 1 if valid
+int		check_validity(char *str);
+
+/// @brief Executes the necessary changes on the parent process based on 
+/// g_exit_status
+/// @param mini 
+/// @param cmd_args 
+void	check_export(t_minishell *mini, char **cmd_args);
+
+/*BUILTIN_PWD-----------------------------------------------------------------*/
+
+/// @brief Performs all error checks for the builtin command "pwd", prints 
+/// the current working directory
+/// @param mini 
+/// @param cmd_args 
+void	builtin_pwd(t_minishell *mini, char **cmd_args);
+
+/*BUILTIN_UNSET---------------------------------------------------------------*/
+
+/// @brief Executes the necessary changes on the parent process based on 
+/// g_exit_status
+/// @param mini 
+/// @param cmd_args 
+void	check_unset(t_minishell *mini, char **cmd_args);
+
+/// @brief Performs all error checks for the builtin command "unset", removes
+/// a variable from the env list
+/// @param mini 
+/// @param cmd_args 
+void	builtin_unset(t_minishell *mini, char **cmd_args);
 
 #endif

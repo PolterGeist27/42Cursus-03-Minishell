@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   ft_isnumeric.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/02 12:21:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/01 10:41:44 by pealexan         ###   ########.fr       */
+/*   Created: 2023/04/30 16:14:09 by pealexan          #+#    #+#             */
+/*   Updated: 2023/05/01 10:41:28 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/libft.h"
 
-int	ft_abs(int n)
+int	ft_isnumeric(char *str)
 {
-	if (n < 0)
-		return (-n);
-	return (n);
+	int	i;
+
+	i = -1;
+	while (str[++i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
+	}
+	return (1);
 }

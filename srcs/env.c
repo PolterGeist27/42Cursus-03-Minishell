@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 15:17:16 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/28 14:32:32 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/01 14:38:16 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,13 @@ int	modify_info(t_list *env, char *name, char *changed_info)
 		{
 			free(((t_env *)tmp->content)->info);
 			new_name = ft_strjoin(name, "=");
-			((t_env *)tmp->content)->info = ft_strjoin(new_name, changed_info);
+			((t_env *)tmp->content)->info = ft_strdup(changed_info);
 			free(new_name);
 			return (0);
 		}
 		tmp = tmp->next;
 	}
+	ft_lstadd_back(&env, ft_lstnew(ft_create_data(changed_info)));
 	return (0);
 }
 
