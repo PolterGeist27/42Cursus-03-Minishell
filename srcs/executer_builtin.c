@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 08:20:07 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/01 14:48:03 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/02 08:11:36 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	is_builtin(char *name)
 
 void	check_builtin(t_minishell *mini, char **cmd_args)
 {
+	if (!cmd_args[0])
+		return ;
 	expand_args(cmd_args, mini);
 	if (is_builtin(cmd_args[0]) == 2)
 		check_cd(mini, cmd_args);

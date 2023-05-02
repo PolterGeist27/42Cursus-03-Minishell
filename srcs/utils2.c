@@ -6,11 +6,32 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 14:18:50 by diogmart          #+#    #+#             */
-/*   Updated: 2023/05/01 12:45:18 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/02 08:00:02 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	check_heredoc(t_minishell *mini, int i)
+{
+	int		j;
+	char	*temp;
+	char	**cmd_args;
+
+	j = -1;
+	temp = 0;
+	cmd_args = 0;
+	mini->heredoc = 0;
+	if (i == 0)
+		return ;
+	temp = add_whitespaces(mini->args[i - 1]);
+	cmd_args = split_meta(temp, ' ');
+	while (cmd_args[++j])
+		if (ft_strncmp(cmd_args[j], "<<", ft_strlen(cmd_args[j])) == 0)
+			mini->heredoc = 1;
+	free(temp);
+	ft_free_split(cmd_args);
+}
 
 void	expand_args(char **cmd_args, t_minishell *mini)
 {

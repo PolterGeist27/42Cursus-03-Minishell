@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/01 15:01:35 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/02 07:59:00 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,7 +318,7 @@ char	*remove_quotes(char *arg);
 /// @return Number of words
 int		ft_wordcount_meta(char *str, char c);
 
-/// @brief Splits @param s by @param c, takes quotes into account
+/// @brief Splits s by c, takes quotes into account
 /// @param s 
 /// @param c 
 /// @return The matrix of all the words
@@ -353,6 +353,12 @@ void	free_child(t_minishell *mini, char **cmd_args, int i);
 void	free_main(t_minishell *mini, int i);
 
 /*UTILS2----------------------------------------------------------------------*/
+
+/// @brief Checks if previous command had an heredoc prompt. Changes 
+/// mini.heredoc accordingly
+/// @param mini 
+/// @param i 
+void	check_heredoc(t_minishell *mini, int i);
 
 /// @brief Adds whitespaces before and after any redirection operator
 /// @param str
