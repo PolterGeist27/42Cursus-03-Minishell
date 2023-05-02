@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:17:38 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/02 12:30:06 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/02 15:46:43 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	execute_cmd(t_minishell *mini, char **cmd_args, int i)
 	pid = fork();
 	if (pid == 0)
 	{
+		signal(SIGQUIT, SIG_DFL);
 		if (mini->heredoc)
 			wait(0);
 		redirections(mini, i);
@@ -98,7 +99,7 @@ void	execute_single_cmd(t_minishell *mini, char **cmd_args)
 	pid = fork();
 	if (pid == 0)
 	{
-		//signal(SIGINT, &handler);
+		signal(SIGQUIT, SIG_DFL);
 		redirect(mini->in_fd, mini->out_fd);
 		expand_args(cmd_args, mini);
 		if (!cmd_args[0])

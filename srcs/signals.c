@@ -6,21 +6,19 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 08:57:31 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/02 12:09:54 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/02 15:51:01 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	handler2(int sig)
+void	handler_sigint(int sig)
 {
 	if (sig == SIGINT)
 	{
 		ft_putchar_fd('\n', STDOUT_FILENO);
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		//rl_redisplay();
-		g_exit_status = 130;
 	}
 }
 
@@ -36,20 +34,10 @@ void	handler(int sig)
 	}
 }
 
-void	handler_child(int sig)
-{
-	if (sig == SIGINT)
-	{
-		ft_putchar_fd('\n', STDOUT_FILENO);
-		g_exit_status = 130;
-		exit(130);
-	}
-}
-
 void	signal_handling(void)
 {
 	struct sigaction	sa;
-	
+
 	sa.sa_flags = SA_RESTART;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_handler = &handler;

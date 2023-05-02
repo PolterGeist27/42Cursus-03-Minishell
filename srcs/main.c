@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 12:07:31 by diogmart          #+#    #+#             */
-/*   Updated: 2023/05/02 12:30:20 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/02 15:49:43 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,16 @@ int	main(int argc, char **argv, char **sys_env)
 		printf("minishell: wrong number of arguments\n");
 	else
 	{
-		signal_handling();
 		mini.env = init_env(sys_env);
 		while (1)
 		{
 			i = 0;
-			signal(SIGINT, &handler);
+			signal_handling();
 			i = read_input(&mini);
 			if (!i)
 				continue ;
 			else if (i == -1)
-				break ; 
+				break ;
 			executer(&mini);
 			free_main(&mini, 0);
 		}

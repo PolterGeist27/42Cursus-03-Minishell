@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/02 12:10:03 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/02 16:01:00 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_minishell
 	t_list	*env;
 	int		counter;
 	int		heredoc;
+	int		heredoc_fd;
 }	t_minishell;
 
 typedef struct s_env
@@ -104,7 +105,7 @@ char	*get_name(char *info);
 /// @param name 
 /// @param changed_info 
 /// @return 0 on success, 1 if there's no list
-int	modify_info(t_list *env, char *name, char *changed_info);
+int		modify_info(t_list *env, char *name, char *changed_info);
 
 /// @brief Cleans all allocated memory for the list
 /// @param env 
@@ -312,9 +313,16 @@ char	*remove_quotes(char *arg);
 
 /*SIGNALS---------------------------------------------------------------------*/
 
-void	handler2(int sig);
+/// @brief Handler for sigint before child termination, to solve double prompt
+/// @param sig
+void	handler_sigint(int sig);
+
+/// @brief Handler for SIGINT
+/// @param sig
 void	handler(int sig);
-void	handler_child(int sig);
+
+/// @brief Handles signals accordingly, uses function "handler" for SIGINT and
+/// ignores "SIGQUIT"
 void	signal_handling(void);
 
 /*SPLIT_META------------------------------------------------------------------*/
@@ -453,7 +461,6 @@ int		check_validity(char *str);
 /// @param mini 
 /// @param cmd_args 
 void	check_export(t_minishell *mini, char **cmd_args);
-
 
 /*BUILTIN_PWD-----------------------------------------------------------------*/
 
