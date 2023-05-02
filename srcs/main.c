@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 12:07:31 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/30 19:14:19 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/02 11:31:42 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ int	main(int argc, char **argv, char **sys_env)
 	t_minishell	mini;
 
 	(void)argv;
+	signal_handling();
 	if (argc == 1)
 	{
+		signal(SIGINT, &handler);
 		mini.env = init_env(sys_env);
 		while (1)
 		{

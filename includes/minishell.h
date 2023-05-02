@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/02 07:59:00 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/02 09:42:07 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <string.h>
+# include <signal.h>
 
 # define METACHAR "><|"  //no need to replicate or handle \;
 # define REDIR "><"
@@ -308,6 +309,12 @@ int		read_input(t_minishell *mini);
 /// @param arg 
 /// @return New string with no quotes
 char	*remove_quotes(char *arg);
+
+/*SIGNALS---------------------------------------------------------------------*/
+
+void	handler(int sig);
+void	handler_child(int sig);
+void	signal_handling(void);
 
 /*SPLIT_META------------------------------------------------------------------*/
 

@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 17:30:23 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/01 12:47:21 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/02 11:37:14 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	get_exit_status(void)
 	status = 0;
 	while (i > 0)
 	{
+		signal(SIGINT, &handler_child);
 		i = waitpid(0, &status, 0);
 		if (WIFEXITED(status))
 			g_exit_status = WEXITSTATUS(status);

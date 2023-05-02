@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:17:38 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/02 08:53:22 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/02 12:01:49 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	execute_cmd(t_minishell *mini, char **cmd_args, int i)
 		command = get_command(cmd_args[0], mini);
 		if (!command)
 			command_error(cmd_args[0], cmd_args, mini);
-		execve(command, cmd_args, 0);
+		execve(command, cmd_args, convert_env(mini));
 	}
 }
 
@@ -98,6 +98,7 @@ void	execute_single_cmd(t_minishell *mini, char **cmd_args)
 	pid = fork();
 	if (pid == 0)
 	{
+		//signal(SIGINT, &handler);
 		redirect(mini->in_fd, mini->out_fd);
 		expand_args(cmd_args, mini);
 		if (!cmd_args[0])
@@ -109,7 +110,7 @@ void	execute_single_cmd(t_minishell *mini, char **cmd_args)
 		command = get_command(cmd_args[0], mini);
 		if (!command)
 			command_error(cmd_args[0], cmd_args, mini);
-		execve(command, cmd_args, 0);
+		execve(command, cmd_args, convert_env(mini));
 	}
 }
 
