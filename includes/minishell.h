@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/03 08:48:23 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/03 11:01:40 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_minishell
 	int		counter;
 	int		heredoc;
 	int		heredoc_fd;
+	char	**cmd_args;
 }	t_minishell;
 
 typedef struct s_env
@@ -372,6 +373,11 @@ void	free_child(t_minishell *mini, char **cmd_args, int i);
 void	free_main(t_minishell *mini, int i);
 
 /*UTILS2----------------------------------------------------------------------*/
+
+/// @brief Removes redirections from the argument list
+/// @param input 
+/// @return The matrix of all arguments
+char	**remove_redirs(char *input);
 
 /// @brief Checks if previous command had an heredoc prompt. Changes 
 /// mini.heredoc accordingly

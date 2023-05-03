@@ -6,11 +6,35 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 14:18:50 by diogmart          #+#    #+#             */
-/*   Updated: 2023/05/02 08:00:02 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/03 11:00:30 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+char	**remove_redirs(char *input)
+{
+	char	**cmd_args;
+	int		i;
+	int		count;
+
+	i = 0;
+	count = ft_wordcount_meta(input, ' ');
+	cmd_args = split_meta(input, ' ');
+	while (cmd_args[i])
+	{
+		if (ft_strncmp(cmd_args[i], "<", ft_strlen(cmd_args[i])) == 0)
+			shift_redir(cmd_args, &i, &count);
+		else if (ft_strncmp(cmd_args[i], ">", ft_strlen(cmd_args[i])) == 0)
+			shift_redir(cmd_args, &i, &count);
+		else if (ft_strncmp(cmd_args[i], ">>", ft_strlen(cmd_args[i])) == 0)
+			shift_redir(cmd_args, &i, &count);
+		else if (ft_strncmp(cmd_args[i], "<<", ft_strlen(cmd_args[i])) == 0)
+			shift_redir(cmd_args, &i, &count);
+		i++;
+	}
+	return (cmd_args);
+}
 
 void	check_heredoc(t_minishell *mini, int i)
 {
