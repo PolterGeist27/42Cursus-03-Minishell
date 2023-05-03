@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/02 16:01:00 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/03 08:48:23 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,7 +240,7 @@ char	*get_command(char *arg, t_minishell *mini);
 /// @param env
 /// @param input
 /// @param i
-void	execute_cmd(t_minishell *mini, char **cmd_args, int i);
+void	execute_cmd(t_minishell *mini, char *cmd, int i);
 
 /// @brief Creates all necessary pipes, opens them and passes arguments to 
 /// execute_cmd
@@ -255,7 +255,7 @@ void	execute_multi_cmds(t_minishell *mini);
 /// @param mini
 /// @param env
 /// @param input
-void	execute_single_cmd(t_minishell *mini, char **cmd_args);
+void	execute_single_cmd(t_minishell *mini, char *cmd);
 
 /// @brief Checks if there are any pipes to call the respective function
 /// @param mini
@@ -312,6 +312,9 @@ int		read_input(t_minishell *mini);
 char	*remove_quotes(char *arg);
 
 /*SIGNALS---------------------------------------------------------------------*/
+
+///  @brief Restores SIGINT and SIGQUIT to default action
+void	signal_default(void);
 
 /// @brief Handler for sigint before child termination, to solve double prompt
 /// @param sig

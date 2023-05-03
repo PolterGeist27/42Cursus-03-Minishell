@@ -6,11 +6,17 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 08:57:31 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/02 15:51:01 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/03 08:46:48 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	signal_default(void)
+{
+	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
+}
 
 void	handler_sigint(int sig)
 {
