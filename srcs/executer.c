@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:17:38 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/03 11:00:11 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/03 11:55:37 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ void	execute_cmd(t_minishell *mini, char *cmd, int i)
 	char	*command;
 	char	**cmd_args;
 
+	if (mini->heredoc)
+		wait(0);
 	pid = fork();
 	if (pid == 0)
 	{
 		signal_default();
 		cmd_args = handle_redirs(mini, cmd);
-		if (mini->heredoc)
-			wait(0);
 		redirections(mini, i);
 		redirect(mini->in_fd, mini->out_fd);
 		expand_args(cmd_args, mini);
@@ -71,7 +71,6 @@ void	execute_multi_cmds(t_minishell *mini)
 {
 	int		i;
 	char	*cmd;
-	char	**cmd_args;
 
 	i = 0;
 	mini->pipe_fd = (int *)malloc(sizeof(int) * mini->pipe_num * 2);
@@ -85,10 +84,8 @@ void	execute_multi_cmds(t_minishell *mini)
 	{
 		cmd = add_whitespaces(mini->args[i]);
 		check_heredoc(mini, i);
-		cmd_args = split_meta(cmd, ' ');
 		execute_cmd(mini, cmd, i);
 		free(cmd);
-		ft_free_split(cmd_args);
 		i++;
 	}
 	close_pipes(mini);
