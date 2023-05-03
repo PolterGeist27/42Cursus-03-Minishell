@@ -60,6 +60,6 @@ void	execute_builtin(t_minishell *mini, char **cmd_args, int i)
 		builtin_unset(mini, cmd_args);
 	if (ft_strncmp(cmd_args[0], "env", ft_strlen("env")) == 0)
 		builtin_env(mini, cmd_args);
-	if (ft_strncmp(cmd_args[0], "exit", ft_strlen("env")) == 0)
+	if (ft_strncmp(cmd_args[0], "exit", ft_strlen("exit")) == 0)
 		builtin_exit(mini, cmd_args, i);
 }
