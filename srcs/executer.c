@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:17:38 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/02 15:46:43 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/03 09:27:37 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,17 @@ char	*get_command(char *arg, t_minishell *mini)
 	return (0);
 }
 
-void	execute_cmd(t_minishell *mini, char **cmd_args, int i)
+void	execute_cmd(t_minishell *mini, char *cmd, int i)
 {
 	int		pid;
 	char	*command;
+	char	**cmd_args;
 
 	pid = fork();
 	if (pid == 0)
 	{
-		signal(SIGQUIT, SIG_DFL);
+		signal_default();
+		cmd_args = handle_redirs(mini, cmd);
 		if (mini->heredoc)
 			wait(0);
 		redirections(mini, i);
@@ -54,10 +56,10 @@ void	execute_cmd(t_minishell *mini, char **cmd_args, int i)
 		expand_args(cmd_args, mini);
 		if (!cmd_args[0])
 			free_child(mini, cmd_args, 1);
-		if (!check_files(cmd_args, mini))
-			file_error(cmd_args, mini);
 		if (is_builtin(cmd_args[0]))
 			execute_builtin(mini, cmd_args, 0);
+		if (!check_files(cmd_args, mini))
+			file_error(cmd_args, mini);
 		command = get_command(cmd_args[0], mini);
 		if (!command)
 			command_error(cmd_args[0], cmd_args, mini);
@@ -83,31 +85,34 @@ void	execute_multi_cmds(t_minishell *mini)
 	{
 		cmd = add_whitespaces(mini->args[i]);
 		check_heredoc(mini, i);
-		cmd_args = handle_redirs(mini, cmd);
-		execute_cmd(mini, cmd_args, i);
+		cmd_args = split_meta(cmd, ' ');
+		execute_cmd(mini, cmd, i);
+		free(cmd);
 		ft_free_split(cmd_args);
 		i++;
 	}
 	close_pipes(mini);
 }
 
-void	execute_single_cmd(t_minishell *mini, char **cmd_args)
+void	execute_single_cmd(t_minishell *mini, char *cmd)
 {
 	int		pid;
 	char	*command;
+	char	**cmd_args;
 
 	pid = fork();
 	if (pid == 0)
 	{
-		signal(SIGQUIT, SIG_DFL);
+		signal_default();
+		cmd_args = handle_redirs(mini, cmd);
 		redirect(mini->in_fd, mini->out_fd);
 		expand_args(cmd_args, mini);
 		if (!cmd_args[0])
 			free_child(mini, cmd_args, 1);
-		if (!check_files(cmd_args, mini))
-			file_error(cmd_args, mini);
 		if (is_builtin(cmd_args[0]))
 			execute_builtin(mini, cmd_args, 1);
+		if (!check_files(cmd_args, mini))
+			file_error(cmd_args, mini);
 		command = get_command(cmd_args[0], mini);
 		if (!command)
 			command_error(cmd_args[0], cmd_args, mini);
@@ -126,8 +131,9 @@ void	executer(t_minishell *mini)
 	else
 	{
 		cmd = add_whitespaces(mini->args[0]);
-		cmd_args = handle_redirs(mini, cmd);
-		execute_single_cmd(mini, cmd_args);
+		cmd_args = split_meta(cmd, ' ');
+		execute_single_cmd(mini, cmd);
+		free(cmd);
 		check_builtin(mini, cmd_args);
 		ft_free_split(cmd_args);
 	}
