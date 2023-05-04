@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 15:17:16 by diogmart          #+#    #+#             */
-/*   Updated: 2023/05/01 14:38:16 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/04 12:52:17 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,23 +57,24 @@ char	*get_name(char *info)
 
 int	modify_info(t_list *env, char *name, char *changed_info)
 {
-	t_list	*tmp;
+	t_list	*tp;
 	char	*new_name;
 
 	if (!env)
 		return (1);
-	tmp = env;
-	while (tmp != NULL)
+	tp = env;
+	while (tp != NULL)
 	{
-		if (!ft_strncmp(((t_env *)tmp->content)->name, name, ft_strlen(name)))
+		if ((ft_strlen(((t_env *)tp->content)->name) == ft_strlen(name))
+			&& !ft_strncmp(((t_env *)tp->content)->name, name, ft_strlen(name)))
 		{
-			free(((t_env *)tmp->content)->info);
+			free(((t_env *)tp->content)->info);
 			new_name = ft_strjoin(name, "=");
-			((t_env *)tmp->content)->info = ft_strdup(changed_info);
+			((t_env *)tp->content)->info = ft_strdup(changed_info);
 			free(new_name);
 			return (0);
 		}
-		tmp = tmp->next;
+		tp = tp->next;
 	}
 	ft_lstadd_back(&env, ft_lstnew(ft_create_data(changed_info)));
 	return (0);

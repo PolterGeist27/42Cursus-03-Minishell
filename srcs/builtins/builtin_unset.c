@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 10:16:33 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/01 14:55:44 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/04 12:52:58 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,28 @@
 
 static	void	remove_from_env(t_minishell *mini, char *name)
 {
-	t_list	*tmp;
+	t_list	*tp;
 	t_list	*previous;
 
-	tmp = mini->env;
+	tp = mini->env;
 	previous = 0;
-	while (tmp)
+	while (tp)
 	{
-		if (!ft_strncmp(((t_env *)tmp->content)->name, name, ft_strlen(name)))
+		if ((ft_strlen(((t_env *)tp->content)->name) == ft_strlen(name))
+			&& !ft_strncmp(((t_env *)tp->content)->name, name, ft_strlen(name)))
 		{
 			if (previous != 0)
-				previous->next = tmp->next;
+				previous->next = tp->next;
 			else
-				mini->env = tmp->next;
-			free(((t_env *)tmp->content)->name);
-			free(((t_env *)tmp->content)->info);
-			free(((t_env *)tmp->content));
-			free(tmp);
+				mini->env = tp->next;
+			free(((t_env *)tp->content)->name);
+			free(((t_env *)tp->content)->info);
+			free(((t_env *)tp->content));
+			free(tp);
 			return ;
 		}
-		previous = tmp;
-		tmp = tmp->next;
+		previous = tp;
+		tp = tp->next;
 	}
 }
 
