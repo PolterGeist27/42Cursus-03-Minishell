@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 08:57:44 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/29 12:13:07 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/07 12:56:10 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ int	unexpected_token_redir(char *input, int *i)
 		return (syntax_error_token(UNTOKEN, '|', 0));
 	else if (input[*i - 1] == '>' && input[*i] == '|')
 		return (syntax_error_operator(NOSUPPORT, ">|"));
-	else if (ft_strrchr(REDIR, input[*i]) && input[*i] != input[*i + 1])
-		return (syntax_error_token(UNTOKEN, input[*i], 0));
 	else if (ft_strrchr(REDIR, input[*i]) && !input[*i])
 		return (syntax_error_operator(UNTOKEN, "newline"));
+	else if (ft_strrchr(REDIR, input[*i]) && input[*i] != input[*i + 1])
+		return (syntax_error_token(UNTOKEN, input[*i], 0));
 	else if (ft_strrchr(REDIR, input[*i]) && input[*i] == input[*i + 1])
 		return (syntax_error_token(UNTOKEN, input[*i + 1], 1));
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 10:24:53 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/02 12:14:31 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/07 12:37:43 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 static void	input_handler(t_minishell *mini, char *input)
 {
-	int		i;
-
-	i = -1;
 	mini->heredoc = 0;
 	mini->cmd_num = ft_wordcount_meta(input, '|');
 	mini->pipe_num = mini->cmd_num - 1;
