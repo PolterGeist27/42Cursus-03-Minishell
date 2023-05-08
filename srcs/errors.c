@@ -6,11 +6,20 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 10:38:26 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/01 10:48:54 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/08 15:43:31 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	cd_error2(t_minishell *mini, char **cmd_args)
+{
+	ft_putstr_fd("minishell: cd: ", 2);
+	ft_putstr_fd(cmd_args[1], 2);
+	ft_putstr_fd(": Invalid option\n", 2);
+	free_child(mini, cmd_args, 0);
+	exit (2);
+}
 
 void	command_error(char *command, char **cmd_args, t_minishell *mini)
 {

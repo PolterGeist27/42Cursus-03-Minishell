@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/08 14:14:11 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/05/08 15:43:34 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,11 @@ int		syntax_error_token(char *error, char metachar, int dup);
 int		unexpected_token_redir(char *input, int *i);
 
 /*ERRORS----------------------------------------------------------------------*/
+
+/// @brief Prints an error message for cd
+/// @param mini
+/// @param cmd_args
+void	cd_error2(t_minishell *mini, char **cmd_args);
 
 /// @brief Prints command not found error, sets exit_status to 127
 /// @param command 
