@@ -50,7 +50,7 @@ SRCS = $(addprefix ${SRCDIR}, $(addsuffix .c, ${SRC}))
 
 #--------COMMANDS--------#
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I $(INCDIR)
+CFLAGS = -Wall -Wextra -Werror -I $(INCDIR) -g -fsanitize=address
 EXTRA = -lreadline
 AR = ar rcs
 RM = rm -rf

@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 15:26:25 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/01 10:26:23 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/08 13:31:54 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	total_length2(char *arg, int *i, int *len, t_minishell *mini)
 	else
 	{
 		temp = ft_itoa(g_exit_status);
-		len += ft_strlen(temp);
+		*len += ft_strlen(temp);
 		free(temp);
 		*i += 1;
 	}
