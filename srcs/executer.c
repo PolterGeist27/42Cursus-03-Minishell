@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:17:38 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/03 09:27:37 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/08 14:13:24 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ void	execute_cmd(t_minishell *mini, char *cmd, int i)
 	char	*command;
 	char	**cmd_args;
 
+	if (mini->heredoc)
+		wait(0);
 	pid = fork();
 	if (pid == 0)
 	{
 		signal_default();
 		cmd_args = handle_redirs(mini, cmd);
-		if (mini->heredoc)
-			wait(0);
 		redirections(mini, i);
 		redirect(mini->in_fd, mini->out_fd);
 		expand_args(cmd_args, mini);
@@ -71,7 +71,6 @@ void	execute_multi_cmds(t_minishell *mini)
 {
 	int		i;
 	char	*cmd;
-	char	**cmd_args;
 
 	i = 0;
 	mini->pipe_fd = (int *)malloc(sizeof(int) * mini->pipe_num * 2);
@@ -84,11 +83,10 @@ void	execute_multi_cmds(t_minishell *mini)
 	while (mini->args[i])
 	{
 		cmd = add_whitespaces(mini->args[i]);
+		mini->cmd_args = 0;
 		check_heredoc(mini, i);
-		cmd_args = split_meta(cmd, ' ');
 		execute_cmd(mini, cmd, i);
 		free(cmd);
-		ft_free_split(cmd_args);
 		i++;
 	}
 	close_pipes(mini);
@@ -123,7 +121,6 @@ void	execute_single_cmd(t_minishell *mini, char *cmd)
 void	executer(t_minishell *mini)
 {
 	char	*cmd;
-	char	**cmd_args;
 
 	cmd = 0;
 	if (mini->pipe_num > 0)
@@ -131,11 +128,11 @@ void	executer(t_minishell *mini)
 	else
 	{
 		cmd = add_whitespaces(mini->args[0]);
-		cmd_args = split_meta(cmd, ' ');
+		mini->cmd_args = remove_redirs(cmd);
 		execute_single_cmd(mini, cmd);
 		free(cmd);
-		check_builtin(mini, cmd_args);
-		ft_free_split(cmd_args);
+		check_builtin(mini, mini->cmd_args);
+		ft_free_split(mini->cmd_args);
 	}
 	get_exit_status();
 }

@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 14:20:28 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/01 10:40:52 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/08 14:00:06 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ static int	length_no_quotes(char *arg)
 	quote = 0;
 	while (arg[++i])
 	{
-		if (ft_strrchr("\"\'", arg[i]) && !quote)
+		if (ft_strchr("\"\'", arg[i]) && !quote)
 		{
 			quote = arg[i];
 			len--;
 		}
-		else if (ft_strrchr("\"\'", arg[i]) && quote == arg[i])
+		else if (ft_strchr("\"\'", arg[i]) && quote == arg[i])
 		{
 			len--;
 			quote = 0;
@@ -43,12 +43,10 @@ static void	quote_checker(char *arg, int *i, char *quote)
 	if (ft_strrchr("\"\'", arg[*i]) && !*quote)
 	{
 		*quote = arg[*i];
-		(*i)++;
 	}
 	else if (ft_strrchr("\"\'", arg[*i]) && *quote == arg[*i])
 	{
-		quote = 0;
-		(*i)++;
+		*quote = 0;
 	}
 }
 
@@ -73,9 +71,8 @@ char	*remove_quotes(char *arg)
 		quote_checker(arg, &i, &quote);
 		if (i > (int)ft_strlen(arg) - 1)
 			break ;
-		result[j++] = arg[i];
+		if ((quote && quote != arg[i]) || (!quote && !ft_strchr("\"\'", arg[i])))
+			result[j++] = arg[i];
 	}
-	result[j] = 0;
-	free(arg);
-	return (result);
+	return (result[j] = 0, free(arg), result);
 }

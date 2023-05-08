@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 08:56:49 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/30 16:09:30 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/07 12:52:08 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	invalid_syntax(char *input)
 		return (syntax_error_token(UNTOKEN, '|', 1));
 	if (input[ft_strlen(input) - 1] == '|')
 	{
-		ft_putstr_fd("minishell: pipe handling only between commands\n", 2);
+		ft_putstr_fd("minishell: no support for pipe prompt\n", 2);
 		return (1);
 	}
 	else if (strrchr(REDIR, input[ft_strlen(input) - 1]))
@@ -112,9 +112,9 @@ int	valid_input(char *input)
 		ft_putstr_fd("minishell: unclosed quotes\n", 2);
 		return (0);
 	}
-	if (invalid_syntax(input))
-		return (0);
 	if (no_support_operators(input))
+		return (0);
+	if (invalid_syntax(input))
 		return (0);
 	return (1);
 }
