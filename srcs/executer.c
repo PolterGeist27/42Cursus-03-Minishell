@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:17:38 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/08 14:13:24 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/05/11 13:04:40 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ void	execute_multi_cmds(t_minishell *mini)
 	while (mini->args[i])
 	{
 		cmd = add_whitespaces(mini->args[i]);
-		mini->cmd_args = 0;
 		check_heredoc(mini, i);
 		execute_cmd(mini, cmd, i);
 		free(cmd);
@@ -135,4 +134,5 @@ void	executer(t_minishell *mini)
 		ft_free_split(mini->cmd_args);
 	}
 	get_exit_status();
+	free_main(mini, 0);
 }

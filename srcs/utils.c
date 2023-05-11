@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 17:30:23 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/08 14:02:59 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/05/11 12:35:10 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	free_child(t_minishell *mini, char **cmd_args, int i)
 	if (mini->args)
 		ft_free_split(mini->args);
 	free_env(mini->env);
+	free_export(mini->export);
 	if (i == 1)
 	{
 		g_exit_status = 1;

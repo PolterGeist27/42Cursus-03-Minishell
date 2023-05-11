@@ -6,7 +6,7 @@
 #    By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/02 12:26:28 by pealexan          #+#    #+#              #
-#    Updated: 2023/05/02 09:01:01 by pealexan         ###   ########.fr        #
+#    Updated: 2023/05/11 12:55:59 by pealexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRC =	env_utils \
 		executer_utils \
 		executer \
 		expander \
+		export \
 		handle_heredoc \
 		handle_redirs \
 		input_handler \
@@ -66,7 +67,8 @@ GREEN       =   \033[0;32m
 #---------RULES---------#
 
 .c.o:
-	@$(CC) $(CFLAGS) -c $< -o ${<:.c=.o}
+	@mkdir -p bin/$(dir $<)
+	@$(CC) $(CFLAGS) -c $< -o bin/$*.o
 
 all: 		$(NAME)
 	@echo "$(GREEN)[Compiled Minishell]"
@@ -75,14 +77,14 @@ $(LIBFT):
 			@cd $(LIBFTDIR) && $(MAKE)
 
 $(NAME): 	$(LIBFT) $(OBJS)
-			@$(CC) $(CFLAGS) $(OBJS) $(LIBFTDIR)$(LIBFT) $(EXTRA) -o $(NAME)
+			@$(CC) $(CFLAGS) $(OBJS:%=bin/%) $(LIBFTDIR)$(LIBFT) $(EXTRA) -o $(NAME)
 
 clean:
-			@$(RM) $(OBJS) $(BONUS_OBJ)
+			@$(RM) bin
 			@cd $(LIBFTDIR) && $(MAKE) clean
 
 fclean: 	clean
-			@$(RM) $(NAME) $(BONUS) $(LIBFT)
+			@$(RM) $(NAME) $(BONUS)
 			@cd $(LIBFTDIR) && $(MAKE) fclean
 
 re: fclean all
