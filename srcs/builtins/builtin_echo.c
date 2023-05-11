@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 10:18:58 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/01 10:38:15 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/11 14:31:45 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,11 @@ static void	echo_multi_args(char **cmd_args, int i)
 	int	j;
 
 	j = 1;
-	if (!ft_strncmp(cmd_args[1], "-n", ft_strlen(cmd_args[1]))
-		&& cmd_args[1][0] != 0)
+	if (!ft_strncmp(cmd_args[1], "-n", 2) && cmd_args[1][0] != 0)
 	{
 		j++;
+		while (!ft_strncmp(cmd_args[j], "-n", 2))
+			j++;
 		while (cmd_args[j])
 		{
 			ft_putstr(cmd_args[j++]);
