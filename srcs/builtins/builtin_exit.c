@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 10:21:35 by pealexan          #+#    #+#             */
-/*   Updated: 2023/04/30 19:14:14 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/12 12:36:16 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,6 @@ static void	exit_error3(t_minishell *mini, char **cmd_args)
 	ft_putstr_fd("minishell: exit: ", 2);
 	ft_putstr_fd(cmd_args[1], 2);
 	ft_putstr_fd(": numeric argument required\n", 2);
-	g_exit_status = 2;
-	free_child(mini, cmd_args, 0);
-	exit (g_exit_status);
-}
-
-static void	exit_error2(t_minishell *mini, char **cmd_args)
-{
-	ft_putstr_fd("minishell: exit: no options supported\n", 2);
 	g_exit_status = 2;
 	free_child(mini, cmd_args, 0);
 	exit (g_exit_status);
@@ -75,8 +67,6 @@ void	builtin_exit(t_minishell *mini, char **cmd_args, int x)
 	{
 		if (ft_isnumeric(cmd_args[1]))
 			exit_error1(mini, cmd_args, i);
-		else if (cmd_args[1][0] == '-')
-			exit_error2(mini, cmd_args);
 		else
 			exit_error3(mini, cmd_args);
 	}

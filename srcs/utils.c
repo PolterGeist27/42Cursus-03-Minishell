@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 17:30:23 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/12 10:57:34 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/12 12:37:07 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,18 @@ int	isalnumextra(int c)
 
 void	get_exit_status(t_minishell *mini)
 {
-	int	i;
-	int	status;
+	int		i;
+	pid_t	j;
+	int		status;
 
 	i = 0;
 	status = 0;
 	while (i < mini->cmd_num)
 	{
 		signal(SIGINT, &handler_sigint);
-		waitpid(mini->pid[i], &status, 0);
+		j = waitpid(mini->pid[i], &status, 0);
+		if (j < 0)
+			break ;
 		if (WIFEXITED(status))
 			g_exit_status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
