@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 10:24:53 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/11 11:28:03 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/12 08:53:25 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	input_handler(t_minishell *mini, char *input)
 	mini->in_fd = STDIN_FILENO;
 	mini->out_fd = STDOUT_FILENO;
 	mini->pipe_fd = 0;
-	mini->pid = 0;
+	mini->pid = (pid_t *)malloc(sizeof(pid_t) * mini->cmd_num);
 	mini->cmd_args = 0;
 }
 

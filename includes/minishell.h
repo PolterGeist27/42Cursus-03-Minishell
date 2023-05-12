@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/11 13:03:00 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/12 10:07:38 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_minishell
 	int		cmd_num;
 	int		pipe_num;
 	int		*pipe_fd;
-	pid_t	pid;
+	pid_t	*pid;
 	t_list	*env;
 	t_list	*export;
 	int		counter;
@@ -182,6 +182,8 @@ void	cd_error2(t_minishell *mini, char **cmd_args);
 /// @param cmd_args 
 /// @param mini 
 void	command_error(char *command, char **cmd_args, t_minishell *mini);
+
+void	permission_error(char **cmd_args, t_minishell *mini);
 
 /// @brief Prints No such file or directory error, sets exit status to 127 
 /// @param cmd_args 
@@ -400,7 +402,7 @@ int		isalnumextra(int c);
 /// @brief Waits for all child processes to terminate, sets the exit_status
 /// accordingly
 /// @param  
-void	get_exit_status(void);
+void	get_exit_status(t_minishell *mini);
 
 /// @brief Frees all allocated memory in the child process, exiting it
 /// @param mini 

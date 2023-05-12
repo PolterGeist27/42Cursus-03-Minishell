@@ -6,11 +6,31 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 10:18:58 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/11 14:31:45 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/12 09:54:59 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static int	check_noption(char *arg)
+{
+	int	i;
+
+	i = 0;
+	if (arg[i] == '-')
+	{
+		i++;
+		if (!arg[i])
+			return (0);
+		while (arg[i] == 'n')
+			i++;
+		if (!arg[i])
+			return (1);
+		else
+			return (0);
+	}
+	return (0);
+}
 
 static void	echo_multi_args2(char **cmd_args, int i)
 {
@@ -35,10 +55,10 @@ static void	echo_multi_args(char **cmd_args, int i)
 	int	j;
 
 	j = 1;
-	if (!ft_strncmp(cmd_args[1], "-n", 2) && cmd_args[1][0] != 0)
+	if (check_noption(cmd_args[1]))
 	{
 		j++;
-		while (!ft_strncmp(cmd_args[j], "-n", 2))
+		while (check_noption(cmd_args[j]))
 			j++;
 		while (cmd_args[j])
 		{
@@ -63,8 +83,7 @@ void	builtin_echo(t_minishell *mini, char **cmd_args)
 		printf("\n");
 	else if (i == 2)
 	{
-		if (!ft_strncmp(cmd_args[1], "-n", ft_strlen(cmd_args[1]))
-			&& cmd_args[1][0] != 0)
+		if (check_noption(cmd_args[1]))
 			ft_putstr("");
 		else
 			ft_putendl_fd(cmd_args[1], 1);
