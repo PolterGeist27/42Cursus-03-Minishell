@@ -6,11 +6,38 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 10:16:33 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/04 12:52:58 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/12 12:04:41 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static	void	remove_from_exp(t_minishell *mini, char *name)
+{
+	t_list	*tp;
+	t_list	*previous;
+
+	tp = mini->export;
+	previous = 0;
+	while (tp)
+	{
+		if ((ft_strlen(((t_exp *)tp->content)->name) == ft_strlen(name))
+			&& !ft_strncmp(((t_exp *)tp->content)->name, name, ft_strlen(name)))
+		{
+			if (previous != 0)
+				previous->next = tp->next;
+			else
+				mini->env = tp->next;
+			free(((t_exp *)tp->content)->name);
+			free(((t_exp *)tp->content)->info);
+			free(((t_exp *)tp->content));
+			free(tp);
+			return ;
+		}
+		previous = tp;
+		tp = tp->next;
+	}
+}
 
 static	void	remove_from_env(t_minishell *mini, char *name)
 {
@@ -66,6 +93,7 @@ void	check_unset(t_minishell *mini, char **cmd_args)
 			while (cmd_args[i])
 			{
 				remove_from_env(mini, cmd_args[i]);
+				remove_from_exp(mini, cmd_args[i]);
 				i++;
 			}
 		}

@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 14:47:42 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/12 10:22:26 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/12 12:01:06 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	check_validity(char *str)
 
 	size = 0;
 	i = 0;
-	if (!ft_isalpha(str[0]) || str[0] != '_')
+	if (!ft_isalpha(str[0]) && str[0] != '_')
 		return (0);
 	while (str[size] && str[size] != '=')
 		size++;
