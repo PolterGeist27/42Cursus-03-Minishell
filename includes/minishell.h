@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/12 10:07:38 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/12 10:58:17 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,9 @@ void	cd_error2(t_minishell *mini, char **cmd_args);
 /// @param mini 
 void	command_error(char *command, char **cmd_args, t_minishell *mini);
 
+/// @brief Prints permission denied error, sets exit_status to 126
+/// @param cmd_args 
+/// @param mini 
 void	permission_error(char **cmd_args, t_minishell *mini);
 
 /// @brief Prints No such file or directory error, sets exit status to 127 

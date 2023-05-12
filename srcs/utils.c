@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 17:30:23 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/12 08:55:19 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/12 10:57:34 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ void	get_exit_status(t_minishell *mini)
 	{
 		signal(SIGINT, &handler_sigint);
 		waitpid(mini->pid[i], &status, 0);
-		/* if (i < 0)
-			break ; */
 		if (WIFEXITED(status))
 			g_exit_status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
