@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 10:21:35 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/12 12:36:16 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/15 18:58:31 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,15 @@
 void	check_exit(t_minishell *mini, char **cmd_args)
 {
 	int		status;
+	int		i;
 
+	i = 0;
+	while (cmd_args[i])
+		i++;
 	wait(&status);
 	if (WIFEXITED(status))
 		g_exit_status = WEXITSTATUS(status);
-	if (g_exit_status != 1)
+	if (g_exit_status != 1 || (g_exit_status == 1 && i == 2))
 	{
 		ft_free_split(cmd_args);
 		free_main(mini, 1);
