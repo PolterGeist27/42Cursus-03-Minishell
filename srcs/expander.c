@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 15:26:25 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/08 13:31:54 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/05/15 08:55:41 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static void	total_length2(char *arg, int *i, int *len, t_minishell *mini)
 			j++;
 		temp = ft_substr(arg, *i + 1, j);
 		value = get_info_env(&mini->env, temp);
+		if (j == 0)
+			value = "$";
 		if (value)
 			*len += ft_strlen(value);
 		free(temp);
@@ -86,6 +88,8 @@ static void	expand_variable(char *arg, char *result, int *i, t_minishell *mini)
 			len++;
 		temp = ft_substr(arg, *i + 1, len);
 		value = get_info_env(&mini->env, temp);
+		if (len == 0)
+			value = "$";
 		free(temp);
 		*i += len;
 		if (value)
