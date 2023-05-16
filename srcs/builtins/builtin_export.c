@@ -6,38 +6,36 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 10:17:19 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/01 15:05:08 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/11 12:53:15 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	add_declare(char **env)
+char	*add_declare(char *str)
 {
-	int		i;
 	int		size;
 	char	*name;
 	char	*info;
 
-	i = -1;
-	while (env[++i])
+	size = 0;
+	while (str[size] && str[size] != '=')
+		size++;
+	if (str[size] != '=')
 	{
-		size = 0;
-		while (env[i][size] != '=')
-			size++;
-		name = ft_substr(env[i], 0, size);
-		info = ft_strdup(env[i] + size + 1);
-		free(env[i]);
-		env[i] = ft_strjoin(name, "=\"");
-		free(name);
-		name = ft_strjoin(env[i], info);
-		free(info);
-		free(env[i]);
-		info = ft_strjoin(name, "\"");
-		free(name);
-		env[i] = ft_strjoin("declare -x ", info);
-		free(info);
+		info = ft_strjoin("declare -x ", str);
+		return (info);
 	}
+	name = ft_substr(str, 0, size);
+	info = ft_strjoin(name, "=\"");
+	free(name);
+	name = ft_strjoin(info, str + size + 1);
+	free(info);
+	info = ft_strjoin(name, "\"");
+	free(name);
+	name = ft_strjoin("declare -x ", info);
+	free(info);
+	return (name);
 }
 
 static void	export_error(t_minishell *mini, char **cmd_args)
@@ -53,12 +51,12 @@ static void	export_error(t_minishell *mini, char **cmd_args)
 			ft_putstr_fd("minishell: export: '", 2);
 			ft_putstr_fd(cmd_args[i], 2);
 			ft_putstr_fd("': not a valid identifier\n", 2);
-			g_exit_status = 1;
+			exit(1);
 		}
 		i++;
 	}
 	free_child(mini, cmd_args, 0);
-	exit(g_exit_status);
+	exit(0);
 }
 
 static void	sort_env(char **env)
@@ -91,9 +89,8 @@ static void	export_print(t_minishell *mini, char **cmd_args)
 	char	**env;
 	int		j;
 
-	env = convert_env(mini);
+	env = convert_export(mini);
 	sort_env(env);
-	add_declare(env);
 	j = 0;
 	while (env[j])
 	{
@@ -119,7 +116,6 @@ void	builtin_export(t_minishell *mini, char **cmd_args)
 		if (cmd_args[1][0] == '-')
 		{
 			ft_putstr_fd("minishell: export: no options supported\n", 2);
-			g_exit_status = 2;
 			free_child(mini, cmd_args, 0);
 			exit (2);
 		}

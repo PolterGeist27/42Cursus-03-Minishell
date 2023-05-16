@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 14:20:28 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/08 14:00:06 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/05/12 11:46:01 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*remove_quotes(char *arg)
 	i = -1;
 	j = 0;
 	quote = 0;
-	if (length_no_quotes(arg) == 0)
+	if (length_no_quotes(arg) <= 0)
 	{
 		free(arg);
 		return (ft_strdup(""));

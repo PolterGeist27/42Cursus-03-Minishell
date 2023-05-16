@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 14:47:42 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/01 15:04:21 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/12 12:01:06 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,18 @@ void	change_env(t_minishell *mini, char *info)
 	char	*name;
 
 	size = 0;
-	while (info[size] != '=')
+	while (info[size] && info[size] != '=')
 		size++;
+	if (info[size] != '=')
+	{
+		name = ft_substr(info, 0, size);
+		modify_export(mini->export, name, info);
+		free(name);
+		return ;
+	}
 	name = ft_substr(info, 0, size);
 	modify_info(mini->env, name, info);
+	modify_export(mini->export, name, info);
 	free(name);
 }
 
@@ -29,23 +37,19 @@ int	check_validity(char *str)
 {
 	int		i;
 	int		size;
-	char	*name;
 
 	size = 0;
 	i = 0;
-	while (str[size] != '=')
+	if (!ft_isalpha(str[0]) && str[0] != '_')
+		return (0);
+	while (str[size] && str[size] != '=')
 		size++;
-	name = ft_substr(str, 0, size);
-	while (name[i])
+	while (i < size)
 	{
-		if (!isalnumextra(name[i]))
-		{
-			free(name);
+		if (!isalnumextra(str[i]))
 			return (0);
-		}
 		i++;
 	}
-	free(name);
 	return (1);
 }
 

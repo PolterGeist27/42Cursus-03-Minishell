@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:32:31 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/03 09:12:54 by pealexan         ###   ########.fr       */
+/*   Updated: 2023/05/12 10:43:33 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	check_files(char **args, t_minishell *mini)
 		{
 			if (S_ISDIR(statbuf.st_mode))
 				is_a_directory(args, mini);
+			else if (!(statbuf.st_mode & S_IXUSR))
+				permission_error(args, mini);
 			return (1);
 		}
 		else

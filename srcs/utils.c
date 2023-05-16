@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 17:30:23 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/08 14:02:59 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/05/15 09:18:16 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,20 @@ int	isalnumextra(int c)
 		return (0);
 }
 
-void	get_exit_status(void)
+void	get_exit_status(t_minishell *mini)
 {
-	pid_t	i;
+	int		i;
+	pid_t	j;
 	int		status;
 
-	i = 1;
+	i = 0;
 	status = 0;
-	while (i > 0)
+	while (i < mini->cmd_num)
 	{
 		signal(SIGINT, &handler_sigint);
-		i = waitpid(0, &status, 0);
-		if (i < 0)
-			break ;
+		j = waitpid(mini->pid[i++], &status, 0);
+		if (j < 0)
+			continue ;
 		if (WIFEXITED(status))
 			g_exit_status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
@@ -63,6 +64,8 @@ void	free_child(t_minishell *mini, char **cmd_args, int i)
 	if (mini->args)
 		ft_free_split(mini->args);
 	free_env(mini->env);
+	free(mini->pid);
+	free_export(mini->export);
 	if (i == 1)
 	{
 		g_exit_status = 1;
@@ -72,6 +75,7 @@ void	free_child(t_minishell *mini, char **cmd_args, int i)
 
 void	free_main(t_minishell *mini, int i)
 {
+	free(mini->pid);
 	if (mini->pipe_fd)
 		free(mini->pipe_fd);
 	unlink(".heredoc");

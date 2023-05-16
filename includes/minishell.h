@@ -6,7 +6,7 @@
 /*   By: pealexan <pealexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:26:16 by pealexan          #+#    #+#             */
-/*   Updated: 2023/05/08 14:14:11 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/05/12 10:58:17 by pealexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,20 @@ typedef struct s_minishell
 	int		cmd_num;
 	int		pipe_num;
 	int		*pipe_fd;
-	pid_t	pid;
+	pid_t	*pid;
 	t_list	*env;
+	t_list	*export;
 	int		counter;
 	int		heredoc;
 	int		heredoc_fd;
 	char	**cmd_args;
 }	t_minishell;
+
+typedef struct s_exp
+{
+	char	*name;
+	char	*info;
+}	t_exp;
 
 typedef struct s_env
 {
@@ -165,11 +172,21 @@ int		unexpected_token_redir(char *input, int *i);
 
 /*ERRORS----------------------------------------------------------------------*/
 
+/// @brief Prints an error message for cd
+/// @param mini
+/// @param cmd_args
+void	cd_error2(t_minishell *mini, char **cmd_args);
+
 /// @brief Prints command not found error, sets exit_status to 127
 /// @param command 
 /// @param cmd_args 
 /// @param mini 
 void	command_error(char *command, char **cmd_args, t_minishell *mini);
+
+/// @brief Prints permission denied error, sets exit_status to 126
+/// @param cmd_args 
+/// @param mini 
+void	permission_error(char **cmd_args, t_minishell *mini);
 
 /// @brief Prints No such file or directory error, sets exit status to 127 
 /// @param cmd_args 
@@ -273,6 +290,34 @@ void	executer(t_minishell *mini);
 /// @return A new string with the epanded variables from env
 char	*expander(char *arg, t_minishell *mini);
 
+/*EXPORT----------------------------------------------------------------------*/
+
+/// @brief Initializes the export list
+/// @param env 
+/// @return The new export list
+t_list	*init_export(char **env);
+
+/// @brief Creates each export node
+/// @param info 
+/// @return Returns the new node
+t_exp	*ft_create_export(char *info);
+
+/// @brief Alters a node pointed by name and changes its info. Same as export
+/// @param exp
+/// @param name 
+/// @param changed_info 
+/// @return 0 on success, 1 if there's no list
+int		modify_export(t_list *exp, char *name, char *changed_info);
+
+/// @brief Frees the export list
+/// @param exp 
+void	free_export(t_list *exp);
+
+/// @brief Converts the export list to a char**
+/// @param mini 
+/// @return The char ** with all export nodes 
+char	**convert_export(t_minishell *mini);
+
 /*HANDLE_HEREDOC--------------------------------------------------------------*/
 
 /// @brief Handles the here_doc functionality similarly to bash
@@ -360,7 +405,7 @@ int		isalnumextra(int c);
 /// @brief Waits for all child processes to terminate, sets the exit_status
 /// accordingly
 /// @param  
-void	get_exit_status(void);
+void	get_exit_status(t_minishell *mini);
 
 /// @brief Frees all allocated memory in the child process, exiting it
 /// @param mini 
@@ -446,6 +491,11 @@ void	builtin_exit(t_minishell *mini, char **cmd_args, int i);
 void	check_exit(t_minishell *mini, char **args);
 
 /*BUILTIN_EXPORT--------------------------------------------------------------*/
+
+/// @brief Adds the node formated accordingly to export.
+/// @param str 
+/// @return New formated string
+char	*add_declare(char *str);
 
 /// @brief Performs all error checks for the builtin command "export", adds
 /// new variables to the env list, also prints declared variables
